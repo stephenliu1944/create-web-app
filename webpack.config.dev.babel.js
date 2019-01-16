@@ -6,21 +6,21 @@ import { define } from '@beancommons/define';
 import baseConfig from './webpack.config.base';
 import pkg from './package.json';
 
-const { local, proxy: proxyOpts, define: defineOpts } = pkg.devServer;
+const { servers, proxies, globals } = pkg.devEnvironment;
 
 export default webpackMerge(baseConfig, {
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
         host: '0.0.0.0',
-        port: local,
+        port: servers.local,
         disableHostCheck: true,
         compress: true,             // 开起 gzip 压缩
         inline: true,
         historyApiFallback: true,   // browserHistory路由
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
-            ...proxy(proxyOpts)
+            ...proxy(proxies)
         }
     },
     module: {
@@ -44,7 +44,8 @@ export default webpackMerge(baseConfig, {
         // 配置全局变量
         new webpack.DefinePlugin({
             __DEV__: true,
-            ...define(defineOpts, '__', '__')
+            'process.env.NODE_ENV': JSON.stringify('development'),
+            ...define(globals, '__', '__')
         })
     ]
 });

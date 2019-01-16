@@ -15,9 +15,14 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
+        /** 
+         * HTTP Demo 
+         */
         // 接口请求示例, 熟悉后请删除
         getIPInfo().then((data) => {
-            console.log(data);
+            
+        }, (error) => {
+
         });
     }
 

@@ -4,7 +4,9 @@ import webpackMerge from 'webpack-merge';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import { define } from '@beancommons/define';
 import baseConfig from './webpack.config.base';
-const { define: defineOpts } = pkg.devServer;
+import pkg from './package.json';
+
+const { globals } = pkg.devEnvironment;
 
 export default webpackMerge(baseConfig, {
     mode: 'production',
@@ -36,7 +38,7 @@ export default webpackMerge(baseConfig, {
         new webpack.DefinePlugin({
             __DEV__: false,
             'process.env.NODE_ENV': JSON.stringify('production'),
-            ...define(defineOpts, '__', '__')
+            ...define(globals, '__', "__")
         })
     ]
 });
