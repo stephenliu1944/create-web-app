@@ -19,7 +19,7 @@ export default class Home extends Component {
          * HTTP Demo 
          */
         // 接口请求示例, 熟悉后请删除
-        getIPInfo().then((data) => {
+        getIPInfo('210.75.225.254').then((data) => {
             
         }, (error) => {
 
