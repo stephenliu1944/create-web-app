@@ -1,7 +1,7 @@
-# Scaffolding Project React 项目
+# React Application Scaffolding
 
 ### 项目介绍
-用于开发单页应用的脚手架, 基于React.
+use to create react app.
 
 ### 项目依赖
 ```
@@ -13,6 +13,8 @@ gulp:           v4.x.x
 react           v16
 react-dom       v16
 react-router    v3
+jest            v24
+enzyme          v3
 ```
 
 ### 安装
@@ -95,19 +97,21 @@ src                                         // 项目源码目录
 |-index.jsx                                 // 入口js文件.
 |-template.html                             // 页面模板文件.
 test                                        // 测试代码目录, 目录结构同src
-|-components
+|-commons
+|-containers
     ...
 .eslintignore                               // eslint忽略校验配置文件.
 .eslintrc.json                              // eslint开发环境代码校验配置文件.
 .eslintrc.prod.json                         // eslint生产环境代码校验配置文件, 比开发环境更加严格, 发版和提交代码时会自动执行此配置校验代码.
 .gitignore                                  // git忽略提交配置文件.
-package.json                                // npm配置文件.
-README.md                                   // 项目开发文档.
-jest.config.js                              // jest 配置文件.
-fileTransformer.js                          // jest 文件转换配置文件.
 babel.config.js                             // babel配置文件.
-postcss.config.js                           // postcss插件配置文件.
+enzyme.config.js                            // enzyme 配置文件.
+fileTransformer.js                          // jest 文件转换配置文件.
 gulpfile.babel.js                           // 项目打包, 发布脚本.
+jest.config.js                              // jest 配置文件.
+package.json                                // npm配置文件.
+postcss.config.js                           // postcss插件配置文件.
+README.md                                   // 项目开发文档.
 webpack.config.base.js                      // webpack开发, 生产环境公用部分.
 webpack.config.dev.babel.js                 // webpack开发环境配置文件.
 webpack.config.prod.babel.js                // webpack生产环境配置文件.
@@ -129,8 +133,8 @@ webpack.config.prod.babel.js                // webpack生产环境配置文件.
 ```
 "project": {
     "title": "My App",              // index.html的默认title
-    "rootPath": "root",             // 项目的根路径, 如果配置改属性, 本地调试时需加上此根路径(localhost:8080/root), 用于在多个单页系统中根据根路径来映射项目静态资源, 默认为空.
     "packageName": "www.myapp.com"  // dist目录打包生成出的项目包名.
+    "rootPath": "root",             // 项目的根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/root), 用于在多个单页系统中根据根路径来映射不同子系统的静态资源, 默认为空.
 },
 ```
 

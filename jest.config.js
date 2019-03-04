@@ -6,6 +6,9 @@ module.exports = {
         NODE_ENV: 'test',
         __DEV__: true
     },
+    setupFilesAfterEnv: [
+        '<rootDir>/enzyme.config.js'
+    ],
     // Indicates whether each individual test should be reported during the run
     verbose: true,
     // Automatically clear mock calls and instances between every test
@@ -28,7 +31,7 @@ module.exports = {
         '^images(.*)$': '<rootDir>/src/images$1',
         '^constants(.*)$': '<rootDir>/src/constants$1',
         '^services(.*)$': '<rootDir>/src/services$1',
-        '^components(.*)$': '<rootDir>/src/components$1',
+        '^commons(.*)$': '<rootDir>/src/commons$1',
         '^containers(.*)$': '<rootDir>/src/containers$1',
         '\\.(css|less|scss)$': 'identity-obj-proxy'
     },
