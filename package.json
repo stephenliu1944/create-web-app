@@ -32,7 +32,7 @@
   },
   "lint-staged": {
     "linters": {
-      "src/**/*.js": [
+      "src/**/*.{js,jsx}": [
         "npm run lint:js",
         "git add"
       ]
