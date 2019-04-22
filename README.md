@@ -66,7 +66,7 @@ mock-server                                 // mock服务目录
 |-data                                      // mock数据存放目录
 |-server.js                                 // mock服务配置
 src                                         // 项目源码目录
-|-commons                                   // 公共功能组件目录(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
+|-commonComponents                          // 公共功能组件目录(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
     |-component1
         |-Component1.jsx                    // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
         |-component1.scss                   // 组件引用的scss文件, 文件首字母小写, 驼峰标识.
