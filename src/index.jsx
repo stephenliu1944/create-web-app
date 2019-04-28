@@ -8,7 +8,7 @@ import Root from './routes/Root';
 // 设置全局 http 默认选项。
 settings({
     baseURL: __DEV__ && __DOMAIN__,
-    proxyURL: __DEV__ && proxyHost,
+    proxyPath: __DEV__ && proxyHost,
     isDev: __DEV__
 });
 
