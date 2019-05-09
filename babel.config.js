@@ -4,7 +4,7 @@ const ENV = {
     TEST: 'test'
 };
 
-module.exports = function (api) {
+module.exports = function(api) {
     api.cache(true);
     
     var env = process.env.NODE_ENV;
@@ -20,13 +20,14 @@ module.exports = function (api) {
     ];
     var plugins = [
         '@babel/plugin-transform-runtime', 
+        '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-proposal-class-properties', 
         '@babel/plugin-proposal-optional-chaining',
         '@babel/plugin-proposal-export-default-from',
         '@babel/plugin-proposal-export-namespace-from'
     ];
 
-    switch(env) {
+    switch (env) {
         case ENV.DEVELOPMENT:
             break;
         case ENV.PRODUCTION:        
