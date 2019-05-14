@@ -23,6 +23,9 @@ module.exports = function(api) {
         '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-proposal-class-properties', 
         '@babel/plugin-proposal-optional-chaining',
+        ['@babel/plugin-proposal-pipeline-operator', { 
+            'proposal': 'minimal' 
+        }],
         '@babel/plugin-proposal-export-default-from',
         '@babel/plugin-proposal-export-namespace-from'
     ];

@@ -1,14 +1,14 @@
 import 'images/favicon.ico';
 import 'styles/main.scss';
-import { settings, proxyHost } from '@beancommons/http';
+import http, { helplers } from '@beancommons/http';
 import React from 'react';
 import { render } from 'react-dom';
 import Root from './routes/Root';
 
 // 设置全局 http 默认选项。
-settings({
+http.settings({
     baseURL: __DEV__ && __DOMAIN__,
-    proxyPath: __DEV__ && proxyHost,
+    proxyPath: __DEV__ && helplers.proxyHost,
     isDev: __DEV__
 });
 
