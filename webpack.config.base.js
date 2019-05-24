@@ -32,17 +32,17 @@ export default {
         }
     },
     optimization: {
-        // splitChunks: {
-        //     minSize: 10,
-        //     minChunks: 1,
-        //     cacheGroups: {
-        //         vendors: {
-        //             test: /[\\/]node_modules[\\/]/,
-        //             name: 'vendors',
-        //             chunks: 'all'
-        //         }
-        //     }
-        // },
+        splitChunks: {
+            minSize: 10,
+            minChunks: 1,
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
+        },
         noEmitOnErrors: true
     },
     module: {
@@ -132,7 +132,7 @@ export default {
             title: project.title,
             faviconPath: ASSETS_PATH,
             filename: ROOT_PATH + 'index.html',
-            template: './src/template.html',
+            template: './src/template.html'
         }),
         new CaseSensitivePathsPlugin()                      // 文件大小写检测
     ]
