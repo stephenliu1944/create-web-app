@@ -137,7 +137,6 @@ export default {
         }),
         new StyleLintPlugin({
             context: 'src',
-            files: '**/*.scss',
             fix: true,
             cache: true
         }),
