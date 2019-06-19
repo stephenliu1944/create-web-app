@@ -1,7 +1,7 @@
 {
   "name": "scaffolding-project-react",
   "version": "0.1.0",
-  "description": "用于开发基于React的单页应用脚手架",
+  "description": "This scaffolding is use to develop React app.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@beancommons/http": "^0.5.26",
+    "axios-enhance": "^0.2.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-router": "^3.2.1"
@@ -59,7 +59,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@beancommons/define": "^0.2.1",
-    "@beancommons/proxy": "^0.3.1",
+    "http-proxy-settings": "^0.1.0",
     "autoprefixer": "^9.1.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
@@ -108,10 +108,10 @@
       "mock": 3001
     },
     "proxies": [
-      "http://ip-api.com"
+      {"http://localhost:8080": "http://ip-api.com"}
     ],
     "globals": {
-      "__DOMAIN__": "http://ip-api.com"
+      "__VAR__": "global variable"
     }
   },
   "project": {

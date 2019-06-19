@@ -1,7 +1,7 @@
 # React Application Scaffolding
 
 ### 项目介绍
-use to create react app.
+This scaffolding is use to develop React app.
 
 ### 项目依赖
 ```
