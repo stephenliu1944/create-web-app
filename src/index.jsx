@@ -1,14 +1,13 @@
 import 'images/favicon.ico';
 import 'styles/main.scss';
-import http, { helpers } from '@beancommons/http';
+import http from 'axios-enhance';
 import React from 'react';
 import { render } from 'react-dom';
 import Root from './routes/Root';
 
-// 设置全局 http 默认选项。
+// set http default options
 http.settings({
-    baseURL: __DEV__ && __DOMAIN__,
-    proxyPath: __DEV__ && helpers.proxy.proxyHost(),
+    proxyPath: __DEV__,
     isDev: __DEV__
 });
 

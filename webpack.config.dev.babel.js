@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import { proxy } from '@beancommons/proxy';
+import { settings } from 'http-proxy-settings';
 import { define } from '@beancommons/define';
 import BundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
@@ -21,7 +21,7 @@ export default webpackMerge(baseConfig, {
         historyApiFallback: true,   // browserHistory路由
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
-            ...proxy(proxies)
+            ...settings(proxies)
         }
     },
     module: {
@@ -42,9 +42,9 @@ export default webpackMerge(baseConfig, {
         }]
     },
     plugins: [
-        // 检查打包内容
+        // check package size
         // new BundleAnalyzerPlugin(),
-        // 配置全局变量
+        // set global variable
         new webpack.DefinePlugin({
             __DEV__: true,
             'process.env.NODE_ENV': JSON.stringify('development'),

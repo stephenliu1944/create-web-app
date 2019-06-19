@@ -7,6 +7,10 @@ function _getClass(object) {
     return Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
 }
 
+export function trim(str) {
+    return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
 export function isArray(obj) {
     return _getClass(obj).toLowerCase() === 'array';
 }
@@ -28,14 +32,27 @@ export function isNumber(obj) {
 }
 
 export function isFormData(obj) {
-    try {
-        if (obj instanceof FormData) {
-            return true;
-        }
-    } catch (e) {
-        return false;
-    }
-    return false;
+    return (typeof FormData !== 'undefined') && (obj instanceof FormData);
+}
+
+export function isFile(obj) {
+    return _getClass(obj).toLowerCase() === 'file';
+}
+
+export function isBlob(obj) {
+    return _getClass(obj).toLowerCase() === 'blob';
+}
+
+export function isFunction(obj) {
+    return _getClass(obj).toLowerCase() === 'function';
+}
+
+export function isStream(obj) {
+    return isObject(obj) && isFunction(obj.pipe);
+}
+
+export function isURLSearchParams(obj) {
+    return typeof URLSearchParams !== 'undefined' && obj instanceof URLSearchParams;
 }
 
 export function isIE() {
