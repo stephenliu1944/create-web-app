@@ -135,7 +135,12 @@ export default {
             filename: ROOT_PATH + 'index.html',
             template: './src/template.html'
         }),
-        new StyleLintPlugin(),
+        new StyleLintPlugin({
+            context: 'src',
+            files: '**/*.scss',
+            fix: true,
+            cache: true
+        }),
         new CaseSensitivePathsPlugin()                      // 文件大小写检测
     ]
 };
