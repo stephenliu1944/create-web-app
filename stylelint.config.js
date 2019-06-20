@@ -4,28 +4,34 @@ module.exports = {
         'color-no-invalid-hex': true,
         'font-family-no-duplicate-names': true,
         'font-family-no-missing-generic-family-keyword': true,
+        'function-calc-no-invalid': true,
+        'function-calc-no-unspaced-operator': true,
         'string-no-newline': true,
         'unit-no-unknown': true,
         'property-no-unknown': true,
         'declaration-block-no-duplicate-properties': true,
-        'selector-id-pattern': '[A-Za-z0-9]+',          // id驼峰命名
-        'selector-class-pattern': '[A-Za-z0-9]+',       // class驼峰命名
-        'selector-pseudo-class-case': 'lower',
+        'selector-id-pattern': '^[a-z][a-zA-Z0-9]+$',          // camel case selectors, use the disable commands to turn off the rule.
+        'selector-class-pattern': '^[a-z][a-zA-Z0-9]+$',       // camel case selectors, use the disable commands to turn off the rule.
         'selector-pseudo-class-no-unknown': [true, {
             ignorePseudoClasses: ['global']
         }],
         'selector-pseudo-element-no-unknown': true,
         'selector-type-no-unknown': true,
+        'selector-pseudo-class-case': 'lower',
         'selector-type-case': 'lower',
         'media-feature-name-no-unknown': true,
         'at-rule-no-unknown': true,
         'comment-no-empty': true,
+        'no-descending-specificity': true,
+        'no-duplicate-at-import-rules': true,
+        'no-duplicate-selectors': true,
+        'no-empty-source': true,
+        'no-extra-semicolons': true,
         'string-quotes': 'single',
         'property-case': 'lower',
         'max-empty-lines': 1,
         'no-eol-whitespace': true,
-        'function-name-case': 'lower'
-        // 'indentation': 'tab'
-        // TODO...
+        'function-name-case': 'lower',
+        'indentation': 4
     }
 };
