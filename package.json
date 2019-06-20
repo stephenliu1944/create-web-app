@@ -17,7 +17,8 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.babel.js --colors",
     "mock": "node mock/server.js",
     "start:mock": "concurrently \"cross-env npm start\" \"npm run mock\"",
-    "lint:js": "eslint -c .eslintrc.prod.json --ext .jsx,.js src/ --fix",
+    "lint:js": "eslint -c .eslintrc.prod.json --fix",
+    "lint:css": "stylelint --cache --fix",
     "test": "jest",
     "package": "npm run build:prod && gulp zip",
     "deploy:dev": "npm run package && gulp deploy-dev",
@@ -31,13 +32,14 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "src/**/*.{js,jsx}": [
-        "npm run lint:js",
-        "git add"
-      ]
-    },
-    "ignore": []
+    "src/**/*.{js,jsx}": [
+      "npm run lint:js",
+      "git add"
+    ],
+    "src/**/*.{css,scss}": [
+      "npm run lint:css",
+      "git add"
+    ]
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -92,6 +94,8 @@
     "postcss-nested": "^4.1.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
+    "stylelint": "^10.1.0",
+    "stylelint-webpack-plugin": "^0.10.5",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "url-loader": "^1.1.1",
     "webpack": "^4.19.0",
@@ -106,7 +110,9 @@
       "mock": 3001
     },
     "proxies": [
-      {"http://localhost:8080": "http://ip-api.com"}
+      {
+        "http://localhost:8080": "http://ip-api.com"
+      }
     ],
     "globals": {
       "__VAR__": "global variable"

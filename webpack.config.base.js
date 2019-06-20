@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
+import StyleLintPlugin from 'stylelint-webpack-plugin';
 import { project } from './package.json';
 
 const ROOT_PATH = (project.rootPath && `${project.rootPath}/`) || '';
@@ -133,6 +134,11 @@ export default {
             faviconPath: ASSETS_PATH,
             filename: ROOT_PATH + 'index.html',
             template: './src/template.html'
+        }),
+        new StyleLintPlugin({
+            context: 'src',
+            fix: true,
+            cache: true
         }),
         new CaseSensitivePathsPlugin()                      // 文件大小写检测
     ]
