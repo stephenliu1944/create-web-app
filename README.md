@@ -1,20 +1,21 @@
 # React Application Scaffolding
 
 ### 项目介绍
-This scaffolding is use to develop React app.
+该脚手架用于开发基于 React 的 Web 项目.
 
 ### 项目依赖
 ```
-node:           v8.x.x
-webpack:        v4.x.x
-eslint:         v5.x.x
-babel:          v7.x.x
-gulp:           v4.x.x
+node:           v8
+webpack:        v4
+babel:          v7
+gulp:           v4
 react           v16
 react-dom       v16
 react-router    v3
 jest            v24
 enzyme          v3
+eslint:         v5
+stylelint       v10
 ```
 
 ### 安装
@@ -76,11 +77,11 @@ src                                         // 项目源码目录
 |-constants                                 // 常量目录
     |-common.js                             // 存放一些通用常量
     |-enum.js                               // 存放一些枚举常量
-|-containers                                // 容器组件目录(一个容器组件就是一个页面, 它将各种功能组件组合在一起, 其主要负责组装功能组件, 接口调用以及页面的状态管理).
+|-containers                                // 容器组件目录(一个容器组件就是一个页面, 它将各种功能组件组合在一起, 其主要负责组装功能组件, 接口调用以及整个页面的状态管理).
     |-home                                  // 首页容器组件
         |-Home.jsx                          // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
         |-home.scss                         // 组件引用的scss文件, 文件首字母小写, 驼峰标识.
-        |-components                        // 容器组件私有的功能组件(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
+        |-components                        // 容器组件私有的功能组件(大部分功能组件是无状态的, 主要的状态管理和接口请求交由容器组件)
             |-component1
                 |-Component1.jsx
                 |-component1.scss
@@ -100,21 +101,23 @@ test                                        // 测试代码目录, 目录结构�
 |-commons
 |-containers
     ...
-.eslintignore                               // eslint忽略校验配置文件.
-.eslintrc.json                              // eslint开发环境代码校验配置文件.
-.eslintrc.prod.json                         // eslint生产环境代码校验配置文件, 比开发环境更加严格, 发版和提交代码时会自动执行此配置校验代码.
-.gitignore                                  // git忽略提交配置文件.
-babel.config.js                             // babel配置文件.
+.eslintignore                               // eslint 忽略校验配置文件.
+.eslintrc.json                              // eslint 开发环境代码校验配置文件.
+.eslintrc.prod.json                         // eslint 生产环境代码校验配置文件, 比开发环境更加严格, 发版和提交代码时会自动执行此配置校验代码.
+.gitignore                                  // git 忽略提交配置文件.
+.stylelintignore                            // stylelint 忽略校验配置文件.
+babel.config.js                             // babel 配置文件.
 enzyme.config.js                            // enzyme 配置文件.
 fileTransformer.js                          // jest 文件转换配置文件.
 gulpfile.babel.js                           // 项目打包, 发布脚本.
 jest.config.js                              // jest 配置文件.
-package.json                                // npm配置文件.
-postcss.config.js                           // postcss插件配置文件.
+package.json                                // npm 配置文件.
+postcss.config.js                           // postcss 插件配置文件.
 README.md                                   // 项目开发文档.
-webpack.config.base.js                      // webpack开发, 生产环境公用部分.
-webpack.config.dev.babel.js                 // webpack开发环境配置文件.
-webpack.config.prod.babel.js                // webpack生产环境配置文件.
+stylelint.config.js                         // stylelint 校验规则配置文件
+webpack.config.base.js                      // webpack 开发, 生产环境公用部分.
+webpack.config.dev.babel.js                 // webpack 开发环境配置文件.
+webpack.config.prod.babel.js                // webpack 生产环境配置文件.
 ```
 
 ### 启动服务
