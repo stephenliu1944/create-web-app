@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import { settings } from 'http-proxy-settings';
+import { settings } from 'http-proxy-config';
 import { define } from '@beancommons/define';
 import BundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
