@@ -110,7 +110,7 @@
   "devEnvironments": {
     "servers": {
       "local": 8080,
-      "mock": 3001
+      "mock": 3000
     },
     "proxies": {
       "[http://localhost:8080]": "http://ip-api.com"
@@ -121,8 +121,8 @@
   },
   "project": {
     "title": "My App",
-    "packageName": "www.myapp.com",
-    "rootPath": ""
+    "baseURL": "",
+    "packageName": "www.myapp.com"
   },
   "deploy": {
     "dev": {

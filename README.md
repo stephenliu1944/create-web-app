@@ -137,7 +137,7 @@ webpack.config.prod.babel.js                // webpack 生产环境配置文件.
 "project": {
     "title": "My App",              // index.html的默认title
     "packageName": "www.myapp.com"  // dist目录打包生成出的项目包名.
-    "rootPath": "root",             // 项目的根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/root), 用于在多个单页系统中根据根路径来映射不同子系统的静态资源, 默认为空.
+    "baseURL": "root",              // 项目的根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/root), 用于在多个单页系统中根据根路径来映射不同子系统的静态资源, 默认为空.
 },
 ```
 
