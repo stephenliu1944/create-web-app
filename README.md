@@ -119,6 +119,14 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 3. web服务 + mock服务  
 运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
 
+### 代码检测
+1. webpack 编译代码时, 会自动检测 js, jsx, css scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
+2. git commit 时, 会再次执行代码检测, 并自动修复(仅限于支持自动修复的代码)后, 后再提交.
+
+### 单元测试
+对 /test 目录下的所有文件进行单元测试.
+运行 /bin/test.bat (linux 运行 test.sh)  
+
 ### 项目打包
 1. 在 package.json > project 中配置项目相关信息, 详见下方说明.
 2. 运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成打包后的项目文件夹和压缩后的zip文件, 供发版使用.

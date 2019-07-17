@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Component1 from 'commons/component1/Component1';
+import Component1 from 'commonComponents/component1/Component1';
 
 /**
  * Test Demo

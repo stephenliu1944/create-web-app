@@ -112,7 +112,7 @@
       "local": 8080,
       "mock": 3000
     },
-    "proxies": {      
+    "proxies": {
       "(http://localhost:8080)": "http://ip-api.com"
     },
     "globals": {
