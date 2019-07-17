@@ -3,46 +3,6 @@
 ### 项目介绍
 该脚手架用于开发基于 React 的 Web 项目.
 
-### 项目依赖
-```
-node:           v8
-webpack:        v4
-babel:          v7
-gulp:           v4
-react           v16
-react-dom       v16
-react-router    v3
-jest            v24
-enzyme          v3
-eslint:         v5
-stylelint       v10
-```
-
-### 安装
-下载项目后在项目根目录执行
-```  
-npm install
-```
-### FAQ
-1. 如果使用 cnpm install 安装模块, 在启动服务时报错(比如提示模块未找到), 尝试删除 node_modules 目录, 并使用 npm i 重新安装.
-2. 如遇全局模块问题, 可能需要重新安装全局模块, 安装前请先卸载已有版本, 然后执行如下命令:
-```
-npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@7.0.1 gulp@4.0.0
-```
-
-### 快速启动
-进入bin目录:  
-- window 下执行 startup-mock.bat
-- linux 下执行 startup-mock.sh
-
-浏览器输入: http://localhost:8080  
-
-### 服务配置
-web服务端口默认为8080.  
-mock服务端口默认为3001.  
-proxy配置HTTP请求代理到的服务器.
-如遇端口冲突, 可以在package.json > devEnvironments中修改.
-
 ### 目录结构
 ```
 bin                                         // 可执行命令目录.
@@ -65,6 +25,7 @@ build                                       // 代码编译后生成的临时目
 dist                                        // 代码打包后生成的临时目录
 mock                                        // mock服务目录
 |-data                                      // mock数据存放目录
+|-routes.json                               // mock请求路径映射文件
 |-server.js                                 // mock服务配置
 src                                         // 项目源码目录
 |-commonComponents                          // 公共功能组件目录(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
@@ -113,31 +74,59 @@ gulpfile.babel.js                           // 项目打包, 发布脚本.
 jest.config.js                              // jest 配置文件.
 package.json                                // npm 配置文件.
 postcss.config.js                           // postcss 插件配置文件.
-README.md                                   // 项目开发文档.
 stylelint.config.js                         // stylelint 校验规则配置文件
 webpack.config.base.js                      // webpack 开发, 生产环境公用部分.
 webpack.config.dev.babel.js                 // webpack 开发环境配置文件.
 webpack.config.prod.babel.js                // webpack 生产环境配置文件.
+README.md                                   // 脚手架说明文档.
+```
+
+### 项目依赖
+```
+webpack:        v4
+babel:          v7
+gulp:           v4
+react           v16
+react-dom       v16
+react-router    v3
+jest            v24
+enzyme          v3
+eslint:         v5
+stylelint       v10
+```
+
+### 安装
+下载项目后在项目根目录执行
+```  
+npm install
+```
+### FAQ
+1. 如果使用 cnpm install 安装模块, 在启动服务时报错(比如提示模块未找到), 尝试删除 node_modules 目录, 并使用 npm i 重新安装.
+2. 如遇全局模块问题, 可能需要重新安装全局模块, 安装前请先卸载已有版本, 然后执行如下命令:
+```
+npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@7.0.1 gulp@4.0.0
 ```
 
 ### 启动服务
 1. web服务  
-运行 /bin/startup.bat  
+运行 /bin/startup.bat (linux 运行 startup.sh)  
 浏览器访问 localhost:8080 即可,  
-可在 package.json > devEnvironments > local 配置web服务的端口.
-2. web服务 + mock服务  
-运行 /bin/startup-mock.bat (无需再运行 /bin/server.bat).  
-浏览器访问 localhost:8080 即可,  
-可在 package.json > devEnvironments > mock 配置mock服务的端口.
+可在 package.json > devEnvironments > servers > local 配置web服务端口, 默认8080.
+2. mock服务
+运行 /bin/mock.bat (linux 运行 mock.sh)  
+浏览器访问 localhost:3000 即可,  
+可在 package.json > devEnvironments > servers > mock 配置mock服务端口, 默认3000.
+3. web服务 + mock服务  
+运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
 
 ### 项目打包
 1. 在 package.json > project 中配置项目相关信息, 详见下方说明.
-2. 运行 /bin/package.bat或.sh, 会在 /dist 目录生成打包后的项目文件夹和压缩后的zip文件, 供发版使用.
+2. 运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成打包后的项目文件夹和压缩后的zip文件, 供发版使用.
 ```
 "project": {
-    "title": "My App",              // index.html的默认title
+    "title": "My App",              // index.html 默认 title 信息.
+    "baseURL": "root",              // 项目的根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/root), 用于在同一域名下部署多个单页应用时通过路径来区分不同的子系统, 默认为空.
     "packageName": "www.myapp.com"  // dist目录打包生成出的项目包名.
-    "baseURL": "root",              // 项目的根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/root), 用于在多个单页系统中根据根路径来映射不同子系统的静态资源, 默认为空.
 },
 ```
 
@@ -148,8 +137,8 @@ webpack.config.prod.babel.js                // webpack 生产环境配置文件.
     "dev": {            // 发布到开发服务器
         "host":         // 主机IP
         "port":         // 端口
-        "user":         // 服务器登陆账号
-        "pass":         // 服务器登陆密码
+        "user":         // 服务器登陆账号(注意: 勿将账号暴露在公网!)
+        "pass":         // 服务器登陆密码(注意: 勿将密码暴露在公网!)
         "zip":          // 是否以 zip 包的形式发布, 如果为 true 则发布的是个 zip 包, false 发布的是文件夹
         "timeout":      // 服务器连接超时时间
         "remotePath":   // 发布到服务器上的位置
@@ -159,8 +148,8 @@ webpack.config.prod.babel.js                // webpack 生产环境配置文件.
     }
 }
 ```
-2. 运行 /bin/deploy-dev.bat, 发布到 dev 服务器.   
-3. 运行 /bin/deploy-test.bat, 发布到 test 服务器.    
+2. 运行 /bin/deploy-dev.bat, 发布到 dev 服务器.
+3. 运行 /bin/deploy-test.bat, 发布到 test 服务器.
 4. 运行 /bin/deploy-all.bat, 同时发布到 dev 和 test 服务器.
 
 ### linux环境配置(RHEL, CentOS or Fedora)
