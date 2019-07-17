@@ -8,34 +8,34 @@ export default class Home extends Component {
 
     constructor(props) {
         super(props);
-    }
-    // 初始化 state
-    state = {
-        users: []
+        this.state = {
+            region: null
+        };
     }
 
     componentDidMount() {
         /** 
-         * HTTP Demo 
+         * 接口请求示例, 熟悉后请删除
          */
-        // 接口请求示例, 熟悉后请删除
-        getIPInfo('210.75.225.254').then((data) => {
-            
+        getIPInfo('210.75.225.254').then(({ data }) => {
+            this.setState({
+                region: data
+            });
         }, (error) => {
-
+            console.error(error);
         });
     }
 
     render() {
-        var { users = [] } = this.state;
+        var { region } = this.state;
 
         return (
             <div className={styles.home}>
-                首页
+                <h1>Home</h1>
                 {/* 图片引入示例, 熟悉后请删除 */}
                 <img src={demoPNG} />
                 {/* 子组件使用以及参数传递示例, 熟悉后请删除 */}
-                <Component1 users={users} />
+                <Component1 region={region} />
             </div>
         );
     }

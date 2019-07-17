@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "axios-enhance": "^0.2.2",
+    "axios-enhanced": "^0.1.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-router": "^3.2.1"
@@ -112,7 +112,7 @@
       "local": 8080,
       "mock": 3000
     },
-    "proxies": {
+    "proxies": {      
       "(http://localhost:8080)": "http://ip-api.com"
     },
     "globals": {

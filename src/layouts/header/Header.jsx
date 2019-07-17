@@ -15,7 +15,7 @@ export default class Header extends Component {
     render() {
         return (
             <div className={styles.header}>
-                头部
+                <h1>Header</h1>
             </div>
         );
     }

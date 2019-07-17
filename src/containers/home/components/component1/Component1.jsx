@@ -1,6 +1,9 @@
 import styles from './component1.scss';
 import React, { Component } from 'react';
 
+/** 
+ * 示例代码, 熟悉后请删除
+ */
 export default class Component1 extends Component {
 
     constructor(props) {
@@ -8,22 +11,13 @@ export default class Component1 extends Component {
     }
 
     render() {
-        var { users = [] } = this.props;
+        var { region = {} } = this.props;
 
         return (
             <div className={styles.component1}>
-                <h1>我是子组件</h1>
-                {/* 数据展示示例, 熟悉后请删除 */}
+                <h1>Subcomponent</h1>
                 <ul>
-                    {
-                        users.map((user) => {
-                            return (
-                                <li key={user.id}>
-                                    id: {user.id}, name: {user.name}
-                                </li>
-                            );
-                        })
-                    }
+                    { region && Object.entries(region).map(([key, value]) => <li key={key}>{key}: {value}</li>) }
                 </ul>
             </div>
         );

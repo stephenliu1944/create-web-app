@@ -16,7 +16,7 @@ export default class Footer extends Component {
     render() {
         return (
             <div className={styles.footer}>
-                底部
+                <h1>Footer</h1>
             </div>
         );
     }
