@@ -1,4 +1,4 @@
-# React Application Scaffolding
+# React Web Application Scaffolding
 
 ### 项目介绍
 该脚手架用于开发基于 React 的 Web 项目.
@@ -12,7 +12,6 @@ bin                                         // 可执行命令目录.
 |-deploy-dev.bat                            // 将代码发布到开发服务器, 需在package.json中配置deploy.dev相关信息.
 |-deploy-test.bat                           // 将代码发布到测试服务器, 需在package.json中配置deploy.test相关信息.
 |-package.bat                               // 将src目录中的源码通过生产环境配置打包到dist目录并生成zip文件供发版使用.
-|-lint.bat                                  // 执行eslint生产环境代码校验.
 |-startup.bat                               // 启动开发环境web服务(window)
 |-startup.sh                                // 启动开发环境web服务(linux)
 |-mock.bat                                  // 启动开发环境mock服务(window)
