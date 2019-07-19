@@ -7,7 +7,7 @@ import Root from './routes/Root';
 
 // set http default options
 http.settings({
-    proxyPath: __DEV__,
+    proxyPath: __DEV__ && '/proxy',
     isDev: __DEV__
 });
 

@@ -113,7 +113,7 @@
       "mock": 3000
     },
     "proxies": {
-      "/json": "http://ip-api.com"
+      "(/proxy)": "http://ip-api.com"
     },
     "globals": {
       "__VAR__": "global variable"
