@@ -121,7 +121,7 @@
   },
   "project": {
     "title": "My App",
-    "baseURL": "",
+    "path": "",
     "packageName": "www.myapp.com"
   },
   "deploy": {
