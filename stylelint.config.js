@@ -30,7 +30,7 @@ module.exports = {
         'string-quotes': 'single',
         'property-case': 'lower',
         'max-empty-lines': 1,
-        'no-eol-whitespace': true,
+        // 'no-eol-whitespace': true,                       // issue: #3842
         'function-name-case': 'lower',
         'indentation': 4
     }
