@@ -1,27 +1,26 @@
-// server.js
-var jsonServer = require('json-server');
-var db = require('./data/db.json');
-var routes = require('./routes.json');
+var app = require('express')();
+var routes = require('./routes');
 var pkg = require('../package.json');
 var { mock } = pkg.devEnvironments.servers;
 
-const server = jsonServer.create();
-const router = jsonServer.router(db);
-const middlewares = jsonServer.defaults();
+app.use(routes({
+    headers: {
+        'Mock-Data': 'true',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+    },
+    'urlPattern': '/',
+    'dataPath': '/data',
+    'skipNotFound': false
+}));
 
-// Set default middlewares (logger, static, cors and no-cache)
-server.use(middlewares);
-
-// In this example, returned resources will be wrapped in a body property
-router.render = (req, res) => {
-    res.jsonp(res.locals.data);
-};
-
-// Add this before server.use(router)
-server.use(jsonServer.rewriter(routes));
-  
-// Use default router
-server.use(router);
-server.listen(mock, () => {
-    console.log('Mock Server is running');
+app.use(function(err, req, res) {
+    console.log(req.url, 404);
+    res.status(404);
+    res.send(err.message);
 });
+
+var server = app.listen(mock, function() {
+    console.info('Mock Server listening on port ' + PORT);
+});
+
