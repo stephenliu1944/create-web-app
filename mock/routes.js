@@ -66,7 +66,7 @@ function mockFactory(conf) {
         throw new Error('please specify the url pattern(String).');
     }
 
-    // 拦截urlPattern URL
+    // 拦截 urlPattern URL
     router.use(urlPattern, function(req, res, next) {
         if (conf.headers && typeof conf.headers === 'object') {
             res.set(conf.headers);
