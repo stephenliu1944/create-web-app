@@ -15,11 +15,11 @@ var config = {
     'filePath': '/file'
 };
 
-function compareURL() {
+function compareURL(url, method, item) {
 
 }
 
-function getMatchData(url, method, dataPath) {
+function searchMatchingData(url, method, dataPath) {
     var files = fs.readdirSync(dataPath);
     
     if (files && files.length > 0) {
@@ -42,15 +42,15 @@ function getMatchData(url, method, dataPath) {
                 if (mockItem) {
                     /*                     
                     "url": "/demo/add",
-                    "mockjs": true,
                     "method": "post",
                     "response": {
                         "delay": 3000,
-                        "header": {
+                        "status": 200, 
+                        "headers": {
                             
                         },
-                        "body": {
-                            "statusCode": 200,
+                        "data": {
+                            "statusCode": 1000,
                             "message": "请求成功",
                             "success": true,
                             "data": {
@@ -99,21 +99,24 @@ function getMatchData(url, method, dataPath) {
                 } */
 
             } else if (fileStat.isDirectory()) {
-                return getMatchData(url, method, filePath);
+                return searchMatchingData(url, method, filePath);
             }
         });
     }    
 }
 
 app.use(function(req, res, next) {
-    // req.path
     // 1. 解析url
     // 2. 与data目录中的文件进行匹配
-    // 匹配3种情况, :xxx, xxx*, 正则匹配
-    
-    getMatchData(req.path, req.method, path.join(__dirname, config.dataPath));
+    // 匹配3种情况 :xxx, xxx*, 正则匹配
+    var mockDataPath = path.join(__dirname, config.dataPath);
+    var data = searchMatchingData(req.path, req.method, mockDataPath);
 
-    next();
+    if (data) {
+        // 根据data配置返回response
+    } else {
+        next();
+    }
 });
 
 app.use(function(err, req, res) {
