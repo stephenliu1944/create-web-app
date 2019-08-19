@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var app = require('express')();
-// var routes = require('./routes');
+// var routes = require('./utils');
 var pkg = require('../package.json');
 var { mock } = pkg.devEnvironments.servers;
 
@@ -11,34 +11,24 @@ var config = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
     },
-    'dataPath': '/data',
-    'filePath': '/file'
+    dataPath: '/data',
+    filePath: '/files'
 };
 
 function convertPathToRegEx(path) {
-    var path = apiPath.replace(/:[\w-\.]+/g, '[\\w-\.]\+')                  // 把 : 开头的字符串替换为 \w- 正则     
-                      .replace(/\//g, '\\/')                                 // 将 / 替换为 \/ 正则
-                      .replace(/\./g, '\\.')                                 // 将 . 替换为 \. 正则
-                      .replace(/\*{2,}/, '\\.\+')                           // 将 * 替换为 \w- 正则     
-                      .replace(/\*/, '[\\w-]\+');                           // 将 * 替换为 \w- 正则     
-        
-    return eval('/^' + path + '$/');                           // 将字符串转化为正则
-}
-
-function comparePathSyntax(reqURL, apiPath) {
-    if (apiPath.indexOf(':') === -1) {                // 配置不是restful url
-        return false;
-    }
-
-    var path = apiPath.replace(/:\w+/g, '\\w\+')        // 把:开头的字符串替换为\w正则
-        .replace(/\//g, '\\/')                      // 将/替换为\/正则
-        .replace(/\./g, '\\.');                         // 将/替换为\/正则
-    var regex = eval('/^' + path + '$/');           // 将字符串转化为正则
-    return regex.test(reqURL);
+    var path = apiPath.replace(/:[\w-\.]+/g, '[\\w-\.]\+')                  // : 开头的字符串替换为 \w- 正则     
+        .replace(/\//g, '\\/')                                // / 替换为 \/ 正则
+        .replace(/\./g, '\\.')                                // . 替换为 \. 正则
+        .replace(/\*{2,}/g, '\.\+')                           // 多个 * 替换为 . 正则     
+        .replace(/\*/g, '[\\w-]\+');                          // 单个 * 替换为 \w- 正则     
+    
+    console.log('path:', path);
+    
+    return eval('/^' + path + '$/');                                        // 将字符串转化为正则
 }
 
 // 匹配3种情况 :xxx, xxx*, 正则匹配
-function compareURL(reqURL, reqMethod, item = {}) {
+function compareMockData(reqURL, reqMethod, item = {}) {
     var { url, method } = item;
 
     if (method && method.toLowerCase() !== reqMethod.toLowerCase()) {
@@ -46,41 +36,31 @@ function compareURL(reqURL, reqMethod, item = {}) {
     }
 
     reqURL = reqURL.replace(/^\//, '')
-                   .replace(/\/$/, '');
+        .replace(/\/$/, '');
     
     url = url.replace(/^\//, '')
-             .replace(/\/$/, '');
+        .replace(/\/$/, '');
 
-    if (reqURL.toLowerCase() === url.toLowerCase()) {
+    var reg = convertPathToRegEx(url);
+    console.log('reg: ', reg);
+
+    if (reqURL.toLowerCase() === url.toLowerCase() 
+        || reg.test(reqURL)) {
         return true;
     }
 
-    if () {
-
-    }
-/*                     
-    "url": "/demo/add",
-    "method": "post",
-    "response": {
-        "delay": 3000,
-        "status": 200, 
-        "headers": {
-            
-        },
-        "data": {
-            "statusCode": 1
-*/
+    return false;
 }
 
-function handleFile(filePath, url, method) {
+function getMatchingData(filePath, url, method) {
     let mockData = require(filePath) || [];
 
-    if (typeof mockData === 'object') {
+    if (typeof mockData === 'object' && !Array.isArray(mockData)) {
         mockData = [mockData];
     }
 
-    return mockData.find((item) => {
-        return compareURL(url, method, item);
+    return mockData.find((data) => {
+        return compareMockData(url, method, data);
     });
 }
 
@@ -96,7 +76,7 @@ function searchMatchingData(url, method, dataPath) {
             let fileStat = fs.statSync(filePath);
             
             if (fileStat.isFile()) {
-                let matchingData = handleFile(filePath, url, method);
+                let matchingData = getMatchingData(filePath, url, method);
                 // 如果找到了则返回, 未找到继续递归查找.
                 if (matchingData) {
                     return matchingData;
@@ -106,79 +86,45 @@ function searchMatchingData(url, method, dataPath) {
                 return searchMatchingData(url, method, filePath);
             }
         }
-            // 如果有jsonp参数，则该请求为jsonp方法，应该调用res.jsonp，不过并没有排除方法不为GET时，又传了 jsonp参数的情况
-            /* var delay, mockData;
-                var jsonp = res.app.get('jsonp callback name');
-                var sendMethod = req.query[jsonp] ? 'jsonp' : 'send';
-                var apiList = JSON.parse(data);
-
-                for (var i = 0; i < apiList.length; i++) {
-                    var api = apiList[i];
-                    var apiPath = api.url;
-
-                    if (apiPath.indexOf('/') !== 0) {
-                        apiPath = '/' + apiPath;
-                    }
-
-                    if ((req.path === apiPath || checkRESTfulPath(req.path, apiPath))
-                            && req.method.toLowerCase() === api.method.toLowerCase()) {
-
-                        delay = api.delay ? api.delay : 0;
-                        if (api.mockjs) {
-                            mockData = mockjs.mock(api.result);
-                        } else {
-                            mockData = api.result;
-                        }
-                        break;
-                    }
-                }
-
-                if (mockData) {
-                    setTimeout(function() {
-                        return res[sendMethod](mockData);
-                    }, delay);
-                } else {
-                    // TODO: 没有找到匹配数据时切换到api接口, 通过 skipNotFound 参数判断是否开启此功能
-                    next(new Error('Could not find mock data in ' + mockFilePath, 404));
-                } */
-        });
     }    
 }
 
 app.use(function(req, res, next) {
     var mockDataPath = path.join(__dirname, config.dataPath);
     // 从 mock 数据源中找到匹配的数据
-    var data = searchMatchingData(req.path, req.method, mockDataPath);
+    var mockData = searchMatchingData(req.path, req.method, mockDataPath);
 
-    if (data) {
-        /*                     
-            "url": "/demo/add",
-            "method": "post",
-            "response": {
-                "delay": 3000,
-                "status": 200, 
-                "headers": {
-                    
-                },
-                "data": {
-                    "statusCode": 1000,
-                    "message": "请求成功",
-                    "success": true,
-                    "data": {
-                        "id": "@integer(0, 10000)"
+    if (mockData) {
+        var { delay = 0, status = 200, headers = {}, data } = mockData.response || {};
+
+        setTimeout(function() {
+            if (headers) {
+                res.set(Object.assign({}, config.headers, headers));
+            }
+            res.status(status);
+
+            if (typeof data === 'string') {
+                // 发送文件
+                res.sendFile(data, {
+                    root: path.join(__dirname, config.filePath)
+                    // headers: Object.assign({}, config.headers, headers)
+                }, function(err) {
+                    if (err) {
+                        next(err);
+                    } else {
+                        console.log('Sent:', data);
                     }
-                }
-            } 
-        */
-        var { url, mockjs, method, response: { delay, header, body } } = mockItem;
-            
-        // 根据data配置返回response
+                });
+            } else {
+                res.send(data);
+            }
+        }, delay);
     } else {
         next();
     }
 });
 
-app.use(function(err, req, res) {
+app.use(function(err, req, res, next) {
     console.log(req.url, 404);
     res.status(404);
     res.send(err.message);
