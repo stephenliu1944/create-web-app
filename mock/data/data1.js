@@ -8,7 +8,7 @@ module.exports = [{
     'response': {
         'delay': 3000,
         'status': 200,
-        'header': {
+        'headers': {
             
         },
         'body': {

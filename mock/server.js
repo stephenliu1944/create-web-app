@@ -1,34 +1,27 @@
 var fs = require('fs');
 var path = require('path');
 var app = require('express')();
-// var routes = require('./utils');
+var settings = require('./settings');
 var pkg = require('../package.json');
 var { mock } = pkg.devEnvironments.servers;
 
-var config = {
-    headers: {
-        'Mock-Data': 'true',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-    },
-    dataPath: '/data',
-    filePath: '/files'
-};
-
-function convertPathToRegEx(path) {
-    var path = apiPath.replace(/:[\w-\.]+/g, '[\\w-\.]\+')                  // : 开头的字符串替换为 \w- 正则     
+// 将路径语法转为正则表达式
+function convertPathSyntaxToReg(pathSyntax) {
+    var reg = pathSyntax.replace(/:[\w-\.]+/g, '[\\w-\.]\+')  // : 开头的字符串替换为 \w- 正则     
         .replace(/\//g, '\\/')                                // / 替换为 \/ 正则
         .replace(/\./g, '\\.')                                // . 替换为 \. 正则
         .replace(/\*{2,}/g, '\.\+')                           // 多个 * 替换为 . 正则     
         .replace(/\*/g, '[\\w-]\+');                          // 单个 * 替换为 \w- 正则     
     
-    console.log('path:', path);
+    console.log('reg:', reg);
     
-    return eval('/^' + path + '$/');                                        // 将字符串转化为正则
+    return eval('/^' + reg + '$/');                           // 将字符串转化为正则
 }
 
-// 匹配3种情况 :xxx, xxx*, 正则匹配
-function compareMockData(reqURL, reqMethod, item = {}) {
+// url: '/hello/:name', matches /hello/michael and /hello/ryan
+// url: '/files/*.*',   matches /files/hello.jpg and /files/hello.html
+// url: '/**/*.jpg',    matches /files/hello.jpg and /files/path/to/file.jpg
+function isMatchingData(reqURL, reqMethod, item = {}) {
     var { url, method } = item;
 
     if (method && method.toLowerCase() !== reqMethod.toLowerCase()) {
@@ -41,11 +34,11 @@ function compareMockData(reqURL, reqMethod, item = {}) {
     url = url.replace(/^\//, '')
         .replace(/\/$/, '');
 
-    var reg = convertPathToRegEx(url);
+    var reg = convertPathSyntaxToReg(url);
     console.log('reg: ', reg);
 
     if (reqURL.toLowerCase() === url.toLowerCase() 
-        || reg.test(reqURL)) {
+            || reg.test(reqURL)) {
         return true;
     }
 
@@ -60,7 +53,7 @@ function getMatchingData(filePath, url, method) {
     }
 
     return mockData.find((data) => {
-        return compareMockData(url, method, data);
+        return isMatchingData(url, method, data);
     });
 }
 
@@ -70,19 +63,21 @@ function searchMatchingData(url, method, dataPath) {
     if (files && files.length > 0) {
         // 文件名排个序
         files.sort();
+        // 遍历所有 mock 数据
         for (let i = 0; i < files.length; i++) {
             let filename = files[i];
             let filePath = path.join(dataPath, filename);
             let fileStat = fs.statSync(filePath);
             
+            // 是文件则对比请求与文件中的 mock 数据是否匹配
             if (fileStat.isFile()) {
                 let matchingData = getMatchingData(filePath, url, method);
                 // 如果找到了则返回, 未找到继续递归查找.
                 if (matchingData) {
                     return matchingData;
                 }
+            // 是目录则继续递归
             } else if (fileStat.isDirectory()) {
-                // 继续递归
                 return searchMatchingData(url, method, filePath);
             }
         }
@@ -90,33 +85,29 @@ function searchMatchingData(url, method, dataPath) {
 }
 
 app.use(function(req, res, next) {
-    var mockDataPath = path.join(__dirname, config.dataPath);
+    var mockDataPath = path.join(__dirname, settings.dataPath);
     // 从 mock 数据源中找到匹配的数据
     var mockData = searchMatchingData(req.path, req.method, mockDataPath);
 
     if (mockData) {
-        var { delay = 0, status = 200, headers = {}, data } = mockData.response || {};
+        var { delay = 0, status = 200, headers = {}, body } = mockData.response || {};
 
         setTimeout(function() {
             if (headers) {
-                res.set(Object.assign({}, config.headers, headers));
+                res.set(Object.assign({}, settings.headers, headers));
             }
             res.status(status);
 
-            if (typeof data === 'string') {
+            // body 类型为 string 并且以 .xxx 结尾( 1 <= x <= 5), 代表是文件路径.
+            if (/\.\w{1,5}$/.test(body)) {
                 // 发送文件
-                res.sendFile(data, {
-                    root: path.join(__dirname, config.filePath)
-                    // headers: Object.assign({}, config.headers, headers)
+                res.sendFile(body, {
+                    root: path.join(__dirname, settings.filePath)
                 }, function(err) {
-                    if (err) {
-                        next(err);
-                    } else {
-                        console.log('Sent:', data);
-                    }
+                    err && next(err);
                 });
             } else {
-                res.send(data);
+                res.send(body);
             }
         }, delay);
     } else {

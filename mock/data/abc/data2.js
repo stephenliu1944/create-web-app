@@ -1,13 +1,12 @@
-
 module.exports = [{
-    'url': '/file/download',
-    'method': 'post',
-    'response': {
-        'delay': 3000,
-        'status': 200,
-        'headers': {
-            
+    url: '/file/download',
+    // 'method': 'post',
+    response: {
+        delay: 1000,
+        status: 201,
+        headers: {
+            'Content-Disposition': 'attachment;filename=aaaaa.txt;'
         },
-        'data': 'files/sample.txt'
+        body: '/sample.txt'
     }
 }];

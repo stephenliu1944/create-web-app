@@ -1,20 +1,69 @@
-## Start mock server
+# Mock Server
 
-Please clone or download this project to your local, and use `npm` or `yarn` to install the dependences and start server:
-
+## Usage
+### 1. Proxy request to mock server
+package.json
+```json
+"devEnvironments": {
+    "servers": {
+		"local": 8080,
+      	"mock": 3000
+    },
+    "proxies": {
+    	"(/proxy)": "http://localhost:3000"
+    },
+	...
+},
 ```
-npm install
-npm start
+
+### 2. Set mock data
+/mock/data/sample.js
+```js
+module.exports = [{
+	url: '/user/:id',
+  	method: 'get',
+  	response: {
+      	body: {
+			id: 123,
+			name: 'Stephen',
+			age: 30
+		}
+	}
+}];
 ```
 
-Or
-
+### 3. Start mock server
 ```
-yarn install
-yarn start
+npm run mock
+```
+Or run 
+```
+/bin/mock.bat	// Windows
+/bin/mock.sh	// Linux
 ```
 
-Then you can access `http://localhost:3001/agents/` to see if the server is started correctly.
+
+## Data format
+```js
+{ 
+	url: '/xxx/xxx',		// use for compare request url, require.
+  	method: 'post',			// use for compare request method.
+  	response: {				// use for set response data, require.
+    	delay: 3000,		// use for delay response time, default to 0.
+    	status: 200,		// use for delay response time, default to 200.
+      	headers: {			// use for set response header. default to below.
+			'Mock-Data': 'true',
+			'Content-Type': 'application/json; charset=UTF-8',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+      	},
+      	body: {				// use for set response body, type to String means this is a file path and root path is "/mock/files/", you can change it in /mock/settings.js file.
+			...
+		}
+	}
+}
+```
+
 
 ## APIs
 
@@ -50,8 +99,8 @@ PUT http://localhost:3001/agents/{id}
 }
 ```
 
-The `body` parameter is a json of the modified agent, here is an example:
-
+## Data Format
+The mock data format is a object of the modified agent, here is an example:
 ```
 "body": {
       "name": "bjstdmngbdr10.thoughtworks.com",
@@ -67,7 +116,3 @@ The `body` parameter is a json of the modified agent, here is an example:
       "id": 3
     }
 ```
-
-Then the agent which match which the id will be updated and be replaced with the modified agent. 
-
-The response of this request would be the json of the modified agent.
