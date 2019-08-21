@@ -5,13 +5,18 @@ var settings = require('./settings');
 var pkg = require('../package.json');
 var { mock } = pkg.devEnvironments.servers;
 
-// 将路径语法转为正则表达式
+/** 
+ * 将路径语法转为正则表达式, 支持以下语法
+ * :id,
+ * *,
+ * **,
+ */
 function convertPathSyntaxToReg(pathSyntax) {
-    var reg = pathSyntax.replace(/:[\w-\.]+/g, '[\\w-\.]\+')  // : 开头的字符串替换为 \w- 正则     
-        .replace(/\//g, '\\/')                                // / 替换为 \/ 正则
-        .replace(/\./g, '\\.')                                // . 替换为 \. 正则
-        .replace(/\*{2,}/g, '\.\+')                           // 多个 * 替换为 . 正则     
-        .replace(/\*/g, '[\\w-]\+');                          // 单个 * 替换为 \w- 正则     
+    var reg = pathSyntax.replace(/:[\w-\.]+/g, '[\\w-\.]\+')  // : 开头的字符串替换为 \w-\. 正则     
+        .replace(/\*{2,}/g, '\.\+')           // 多个 * 替换为 . 正则     
+        .replace(/\*/g, '[\\w-\.]\+')         // 单个 * 替换为 \w-\. 正则     
+        .replace(/\//g, '\\/')                // / 替换为 \/ 正则
+        .replace(/\./g, '\\.');               // . 替换为 \. 正则
     
     console.log('reg:', reg);
     

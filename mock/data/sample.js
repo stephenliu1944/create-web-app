@@ -1,37 +1,25 @@
-
-// var Mock = require('mockjs');
-// var faker = require('faker');
+var faker = require('faker');
+var Mock = require('mockjs');
 
 module.exports = [{
-    'url': '/demo/add',
-    'method': 'post',
-    'response': {
-        'delay': 3000,
-        'status': 200,
-        'headers': {
-            
-        },
-        'body': {
-            'statusCode': 200,
-            'message': '请求成功',
-            'success': true,
-            'data': {
-                'id': '@integer(0, 10000)'
-            }
+    url: '/user/*',
+    response: {
+        body: {
+            id: faker.random.uuid(),
+            name: faker.name.findName(),
+            email: faker.internet.email()
         }
     }
 }, {
-    'url': '/demo/edit/:id',
-    'mockjs': true,
-    'delay': 500,
-    'method': 'post',
-    'result': {
-        'statusCode': 200,
-        'message': '请求成功',
-        'success': true,
-        'data': {
-            'id': '@integer(0, 10000)'
-        }
+    url: '/user/**/name',
+    response: {
+        body: Mock.mock({
+            'data|20': [{
+                id: '@integer(0, 10000)',
+                name: '@name',
+                email: '@email'
+            }]
+        }).data
     }
 }, {
     'url': '/demo/detail/:id.do',

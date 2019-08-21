@@ -10,14 +10,14 @@ package.json
       	"mock": 3000
     },
     "proxies": {
-    	"(/proxy)": "http://localhost:3000"
+    	"(/proxy)": "http://localhost:3000"		// proxy to mock server
     },
 	...
 },
 ```
 
 ### 2. Set mock data
-/mock/data/sample.js
+Default mock data path is "/mock/data/", you could change it in "/mock/settings.js".
 ```js
 module.exports = [{
 	url: '/user/:id',
@@ -42,77 +42,140 @@ Or run
 /bin/mock.sh	// Linux
 ```
 
-
 ## Data format
+You could add any js data file or folder to '/mock/data/' directory.
 ```js
 { 
-	url: '/xxx/xxx',		// use for compare request url, require.
-  	method: 'post',			// use for compare request method.
-  	response: {				// use for set response data, require.
-    	delay: 3000,		// use for delay response time, default to 0.
-    	status: 200,		// use for delay response time, default to 200.
-      	headers: {			// use for set response header. default to below.
+	// baseURL: 'https://some-domain.com'	// TODO: 开发中
+	// 'url' is use for compare request url.
+	// 'url' 用于对比请求的URL.
+	url: '/xxx/xxx',		// require
+	// 'method' is use for compare request method.
+	// 'method' 用于 对比请求的方法, 不填则不会对比该项.
+	method: 'get',			// optional
+	// 'response' is use for set response data
+	// 'response' 用于配置响应返回的数据信息.
+	response: {				// require
+		// 'delay' is use for delay response time.
+		// 'delay' 用于设置响应的延迟时间, 默认为0毫秒.
+		delay: 0,			// default
+		// 'status' is use for delay response time.
+		// 'status' 用于设置响应的状态码, 默认为200.
+		status: 200,		// default
+		// 'headers' use for set response header. default to below.
+		// 'headers' 用于设置响应的头信息, 下方是默认配置.
+      	headers: {			// default
 			'Mock-Data': 'true',
 			'Content-Type': 'application/json; charset=UTF-8',
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-      	},
-      	body: {				// use for set response body, type to String means this is a file path and root path is "/mock/files/", you can change it in /mock/settings.js file.
+		},
+		// 'body' is use for set response body, string, object and array are supported, if type to String and end with '.xxx' means this is a file path and default root path is "/mock/files/", you can change it in "/mock/settings.js".
+		// 'body' 用于配置响应的实体信息, 支持 string, object, array类型, 如果类型为 String 并且以 '.xxx' 后缀结尾, 则表示该配置项为一个文件路径, 且默认根目录为 "/mock/files/",该功能用于返回文件, 可以在 "mock/settings.js" 中修改默认配置.
+      	body: {				// require
 			...
 		}
 	}
 }
 ```
 
+## Example
 
-## APIs
-
-You can refer the document of [json-server](https://github.com/typicode/json-server) to see the full APIs. 
-
-Also here are some APIs you might want to use:
-
-### Get agents list
-
-```
-GET http://localhost:3001/agents
-```
-
-The response of this request would be the json of all agents list.
-
-### Get one agent
-
-```
-GET http://localhost:3001/agents/{id}
-```
-
-The response of this request would be the json of the agent which match the id.
-
-### Change one agent
-
-```
-PUT http://localhost:3001/agents/{id}
-{
-    "headers": {
-        "Content-Type": "application/json"
-    },
-    "body": {MODIFIED AGENT}
-}
-```
-
-## Data Format
-The mock data format is a object of the modified agent, here is an example:
-```
-"body": {
-      "name": "bjstdmngbdr10.thoughtworks.com",
-      "os": "ubuntu",
-      "status": "building",
-      "type": "physical",
-      "ip": "192.168.1.117",
-      "location": "/var/lib/cruise-agent",
-      "resources": [
-        "Firefox",
-        "Safari"
-      ],
-      "id": 3
+### Send Data
+GET http://localhost:3000/user/list
+```js
+module.exports = [{
+	url: '/user/list',
+	method: 'get',
+    response: {
+        delay: 2000,
+		body: [{
+			id: 123, 
+			name: 'Stephen',
+			age: 30
+		}, {
+			id: 124, 
+			name: 'Ricky',
+			age: 20				
+		}]
     }
+}];
+```
+
+### Send File
+POST http://localhost:3000/file/download
+```js
+module.exports = [{
+	url: '/file/download',
+	method: 'post',
+    response: {
+        delay: 1000,
+        headers: {
+            'Content-Disposition': 'attachment;filename=sample.txt;'
+        },
+        body: 'sample.txt'		// file need to save in '/mock/files' directory. 需要将下载的文件保存在 '/mock/files' 目录中.
+    }
+}];
+```
+
+### Work with Mock.js
+```js
+npm i -D mockjs
+```
+GET http://localhost:3000/user/list
+```js
+var Mock = require('mockjs');
+
+module.exports = [{
+	url: '/user/list',
+	method: 'get',
+    response: {
+		body: Mock.mock({
+			'data|20': [{
+				id: '@integer(0, 10000)',
+				name: '@name',
+				email: '@email'
+			}]
+		}).data
+    }
+}];
+```
+[Mock.js API](https://github.com/nuysoft/Mock/wiki)
+
+### Work with Faker.js
+```js
+npm i -D faker
+```
+GET http://localhost:3000/user/123  
+```js
+var faker = require('faker');
+
+module.exports = [{
+	url: '/user/:id',
+	method: 'get',
+    response: {
+		body: {
+			id: faker.random.uuid(),
+			name: faker.name.findName(),
+			email: faker.internet.email()
+		}
+    }
+}];
+```
+[Faker.js API](https://github.com/Marak/Faker.js#readme)
+
+### Work with multiple Servers
+package.json
+```json
+"devEnvironments": {
+    "servers": {
+		"local": 8080,
+      	"mock": 3000
+    },
+    "proxies": {
+    	"(/proxy)/user/list": "http://localhost:3000",		// this url request will proxy to mock server. the order is important.
+    	"(/proxy)": "http://some-domain.com"				// other will proxy to api server.
+    },
+	...
+},
 ```
