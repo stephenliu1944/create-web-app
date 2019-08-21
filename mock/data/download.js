@@ -1,5 +1,5 @@
 module.exports = [{
-    url: '/file/download',
+    url: '/files/:name',
     method: 'post',
     response: {
         delay: 2000,

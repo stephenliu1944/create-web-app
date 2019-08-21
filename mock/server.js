@@ -5,42 +5,37 @@ var settings = require('./settings');
 var pkg = require('../package.json');
 var { mock } = pkg.devEnvironments.servers;
 
-/** 
- * 将路径语法转为正则表达式, 支持以下语法
- * :id,
- * *,
- * **,
- */
+// 将路径语法转为正则表达式, 支持以下语法:
+// :id, 匹配任意数字, 英文, 下划线, 中横线, 句号, 如: '/user/:name', matches /user/michael and /user/ryan
+// *,   匹配任意数字, 英文, 下划线, 中横线, 如: '/files/*.*', matches /files/hello.jpg and /files/hello.html
+// **,  匹配任意数字, 英文, 下划线, 中横线, 句号, 斜杠, 如: '/**/*.jpg', matches /files/hello.jpg and /files/path/to/file.jpg
 function convertPathSyntaxToReg(pathSyntax) {
-    var reg = pathSyntax.replace(/:[\w-\.]+/g, '[\\w-\.]\+')  // : 开头的字符串替换为 \w-\. 正则     
-        .replace(/\*{2,}/g, '\.\+')           // 多个 * 替换为 . 正则     
-        .replace(/\*/g, '[\\w-\.]\+')         // 单个 * 替换为 \w-\. 正则     
-        .replace(/\//g, '\\/')                // / 替换为 \/ 正则
-        .replace(/\./g, '\\.');               // . 替换为 \. 正则
+    var reg = pathSyntax.replace(/\//g, '\\/')  // / 替换为 \/ 
+        .replace(/\./g, '\\.')                  // . 替换为 \. 
+        .replace(/\*{2,}/g, '[\\w-\.\/]\+')     // 1个以上的 * 替换为 "\w-\.\/", 可跨层级.           
+        .replace(/\*/g, '[\\w-]\+')             // 1个 * 替换为 "\w-", 不可跨层级.      
+        .replace(/:[\w-\.]+/g, '[\\w-\.]\+');   // : 开头的字符串替换为 "\w-\.", 不可跨层级.      
     
-    console.log('reg:', reg);
-    
-    return eval('/^' + reg + '$/');                           // 将字符串转化为正则
+    return eval('/^' + reg + '$/');             // 字符串转化为正则表达式
 }
 
-// url: '/hello/:name', matches /hello/michael and /hello/ryan
-// url: '/files/*.*',   matches /files/hello.jpg and /files/hello.html
-// url: '/**/*.jpg',    matches /files/hello.jpg and /files/path/to/file.jpg
 function isMatchingData(reqURL, reqMethod, item = {}) {
-    var { url, method } = item;
+    var { baseURL, url, method } = item;
+
+    // TODO: 对比 baseURL
 
     if (method && method.toLowerCase() !== reqMethod.toLowerCase()) {
         return false;
     }
 
+    // 移除开头和末尾的 "/"
     reqURL = reqURL.replace(/^\//, '')
         .replace(/\/$/, '');
-    
+    // 移除开头和末尾的 "/"
     url = url.replace(/^\//, '')
         .replace(/\/$/, '');
 
     var reg = convertPathSyntaxToReg(url);
-    console.log('reg: ', reg);
 
     if (reqURL.toLowerCase() === url.toLowerCase() 
             || reg.test(reqURL)) {

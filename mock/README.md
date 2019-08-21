@@ -79,6 +79,16 @@ You could add any js data file or folder to '/mock/data/' directory.
 }
 ```
 
+### URL Syntax
+```js
+{
+	url: '/user/:name', // matches /user/stephen and /user/ricky
+	url: '/files/*.*',	// matches /files/hello.jpg and /files/world.png
+	url: '/**/*.jpg', 	// matches /files/hello.jpg and /files/path/to/world.jpg
+	...
+}
+```
+
 ## Example
 
 ### Send Data
