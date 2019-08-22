@@ -7,7 +7,7 @@ package.json
 "devEnvironments": {
     "servers": {
         "local": 8080,
-          "mock": 3000
+        "mock": 3000
     },
     "proxies": {
         "(/proxy)": "http://localhost:3000"     // proxy to mock server
@@ -89,7 +89,7 @@ You could add any js data file or folder to '/mock/data/' directory.
 ```
 
 ## Settings
-You could change default setting in "/mock/settings.js"
+You could change default setting in "/mock/settings.js"  
 你可以在 "/mock/settings.js" 中修改默认配置.
 ```js
 {
