@@ -46,7 +46,6 @@ Or run
 You could add any js data file or folder to '/mock/data/' directory.
 ```js
 { 
-	// baseURL: 'https://some-domain.com'	// TODO: 开发中
 	// 'url' is use for compare request url.
 	// 'url' 用于对比请求的URL.
 	url: '/xxx/xxx',		// require
@@ -89,6 +88,33 @@ You could add any js data file or folder to '/mock/data/' directory.
 }
 ```
 
+## Settings
+You could change default setting in "/mock/settings.js"
+你可以在 "/mock/settings.js" 中修改默认配置.
+```js
+{
+	// global response headers, with merge to your specific response headers.
+	// 全局的响应headers设置, 会合并到你指定的某个响应头配置上.
+    headers: {				// default
+        'Mock-Data': 'true',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+	},
+	// mock data directory
+	// mock 数据的文件保存目录
+	dataPath: '/data',		// default
+	// store files directory
+	// 保存响应返回的文件目录
+	filePath: '/files',		// default
+	// search order with mock data files.
+	// 遍历搜索匹配的 mock 文件的顺序, 默认按字母排序.
+    sort(filenames) {		
+        return filenames.sort();	// default
+    }
+}
+```
+
 ## Example
 
 ### Send Data
@@ -113,14 +139,15 @@ module.exports = [{
 ```
 
 ### Send File
-POST http://localhost:3000/file/download
+POST http://localhost:3000/download/sample
 ```js
 module.exports = [{
-	url: '/file/download',
-	method: 'post',
+	url: '/download/:filename',
+	method: 'get',
     response: {
         delay: 1000,
         headers: {
+            'Content-Type': 'text/plain',
             'Content-Disposition': 'attachment;filename=sample.txt;'
         },
         body: 'sample.txt'		// file need to save in '/mock/files' directory. 需要将下载的文件保存在 '/mock/files' 目录中.
@@ -140,13 +167,13 @@ module.exports = [{
 	url: '/user/list',
 	method: 'get',
     response: {
-		body: Mock.mock({
-			'data|20': [{
-				id: '@integer(0, 10000)',
-				name: '@name',
-				email: '@email'
-			}]
-		}).data
+        body: Mock.mock({
+            'data|20': [{
+                id: '@integer(0, 10000)',
+                name: '@name',
+                email: '@email'
+            }]
+        }).data
     }
 }];
 ```
@@ -165,9 +192,9 @@ module.exports = [{
 	method: 'get',
     response: {
 		body: {
-			id: faker.random.uuid(),
-			name: faker.name.findName(),
-			email: faker.internet.email()
+            id: faker.random.uuid(),
+            name: faker.name.findName(),
+            email: faker.internet.email()
 		}
     }
 }];
