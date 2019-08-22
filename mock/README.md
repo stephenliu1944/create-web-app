@@ -106,7 +106,7 @@ You could change default setting in "/mock/settings.js"
     dataPath: '/data',      // default
     // store resources directory
     // 保存响应返回的文件目录
-    filePath: '/resources',     // default
+    resourcesPath: '/resources',     // default
     // search order with mock data files.
     // 遍历搜索匹配的 mock 文件的顺序, 默认按字母排序.
     sort(filenames) {
