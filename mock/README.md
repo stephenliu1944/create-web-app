@@ -69,8 +69,8 @@ You could add any js data file or folder to '/mock/data/' directory.
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
         },
-        // 'body' is use for set response body, string, object and array are supported, if type to String and end with '.xxx' means this is a file path and default root path is "/mock/files/", you can change it in "/mock/settings.js".
-        // 'body' 用于配置响应的实体信息, 支持 string, object, array类型, 如果类型为 String 并且以 '.xxx' 后缀结尾, 则表示该配置项为一个文件路径, 且默认根目录为 "/mock/files/",该功能用于返回文件, 可以在 "mock/settings.js" 中修改默认配置.
+        // 'body' is use for set response body, string, object and array are supported, if type to String and end with '.xxx' means this is a file path and default root path is "/mock/resources/", you can change it in "/mock/settings.js".
+        // 'body' 用于配置响应的实体信息, 支持 string, object, array类型, 如果类型为 String 并且以 '.xxx' 后缀结尾, 则表示该配置项为一个文件路径, 且默认根目录为 "/mock/resources/",该功能用于返回文件, 可以在 "mock/settings.js" 中修改默认配置.
         body: {             // require
             ...
         }
@@ -104,9 +104,9 @@ You could change default setting in "/mock/settings.js"
     // mock data directory
     // mock 数据的文件保存目录
     dataPath: '/data',      // default
-    // store files directory
+    // store resources directory
     // 保存响应返回的文件目录
-    filePath: '/files',     // default
+    filePath: '/resources',     // default
     // search order with mock data files.
     // 遍历搜索匹配的 mock 文件的顺序, 默认按字母排序.
     sort(filenames) {
@@ -150,7 +150,7 @@ module.exports = [{
             'Content-Type': 'text/plain',
             'Content-Disposition': 'attachment;filename=sample.txt;'
         },
-        body: 'sample.txt'      // file need to save in '/mock/files' directory. 需要将下载的文件保存在 '/mock/files' 目录中.
+        body: 'sample.txt'      // file need to save in '/mock/resources' directory. 需要将下载的文件保存在 '/mock/resources' 目录中.
     }
 }];
 ```

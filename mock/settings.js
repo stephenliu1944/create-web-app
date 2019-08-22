@@ -7,7 +7,7 @@ module.exports = {
         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
     },
     dataPath: '/data',
-    filePath: '/files',
+    filePath: '/resources',
     sort(filenames) {
         return filenames.sort();
     }
