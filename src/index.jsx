@@ -1,6 +1,6 @@
 import 'images/favicon.ico';
 import 'styles/main.scss';
-import http from 'axios-enhanced';
+import http from '@middlend/http';
 import React from 'react';
 import { render } from 'react-dom';
 import Root from './routes/Root';
