@@ -1,5 +1,5 @@
 'use strict';
-import gulp, { src, dest, series, parallel } from 'gulp';
+import { task, src, dest, series, parallel } from 'gulp';
 import del from 'del';
 import zip from 'gulp-zip';
 import sftp from 'gulp-sftp-up4';
@@ -14,10 +14,10 @@ const packageNames = typeof packageName === 'string' ? [packageName] : packageNa
 const { dev, test } = deploy;
 
 // 清除 dist 目录
-gulp.task('clean', () => del([DIST_PATH]));
+task('clean', () => del([DIST_PATH]));
 
 // 文件打包
-gulp.task('dist', series('clean', () => {    
+task('dist', series('clean', () => {    
     var stream = src(`${BUILD_PATH}/**`);
     packageNames.forEach((name) => {
         stream = stream.pipe(dest(`${DIST_PATH}/${name}/`));
@@ -27,7 +27,7 @@ gulp.task('dist', series('clean', () => {
 }));
 
 // 将静态资源压缩为 zip 格式
-gulp.task('zip', series('dist', () => {
+task('zip', series('dist', () => {
     var streams = [];
     packageNames.forEach((name) => {
         var stream = src([`${DIST_PATH}/${name}/**`], { base: `${DIST_PATH}/` })
@@ -35,25 +35,25 @@ gulp.task('zip', series('dist', () => {
         streams.push(stream);
     });
 
-    return mergeStream(...streams).pipe(gulp.dest(DIST_PATH));
+    return mergeStream(...streams).pipe(dest(DIST_PATH));
 }));
 
 // 将静态资源发布到 dev 服务器
-gulp.task('deploy-dev', () => {
+task('deploy-dev', () => {
     return src(dev.zip ? [`${DIST_PATH}/*.zip`] : [`${DIST_PATH}/**`, `!${DIST_PATH}/*.zip`])
         .pipe(sftp(dev));
 });
 
 // 将静态资源发布到 test 服务器
-gulp.task('deploy-test', () => {
+task('deploy-test', () => {
     return src(test.zip ? [`${DIST_PATH}/*.zip`] : [`${DIST_PATH}/**`, `!${DIST_PATH}/*.zip`])
         .pipe(sftp(test));
 });
 
 // 同时部署到开发和测试服务器
-gulp.task('deploy-all', parallel('deploy-dev', 'deploy-test'));
+task('deploy-all', parallel('deploy-dev', 'deploy-test'));
 
-gulp.task('git-push', (done) => {
+task('git-push', (done) => {
     execSync('git add -A :/');
     execSync('git commit -m "quick commit"');
     execSync('git push');
