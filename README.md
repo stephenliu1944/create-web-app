@@ -30,7 +30,7 @@ src                                         // 项目源码目录
 |-commonComponents                          // 公共功能组件目录(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
     |-component1
         |-Component1.jsx                    // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-component1.scss                   // 组件引用的scss文件, 文件首字母小写, 驼峰标识.
+        |-component1.css                    // 组件引用的css文件, 文件首字母小写, 驼峰标识.
     ...
 |-config                                    // 生产环境配置文件目录
     |-settings.js                           // 项目生产环境配置文件
@@ -40,16 +40,16 @@ src                                         // 项目源码目录
 |-containers                                // 容器组件目录(一个容器组件就是一个页面, 它将各种功能组件组合在一起, 其主要负责组装功能组件, 接口调用以及整个页面的状态管理).
     |-home                                  // 首页容器组件
         |-Home.jsx                          // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-home.scss                         // 组件引用的scss文件, 文件首字母小写, 驼峰标识.
+        |-home.css                          // 组件引用的css文件, 文件首字母小写, 驼峰标识.
         |-components                        // 容器组件私有的功能组件(大部分功能组件是无状态的, 主要的状态管理和接口请求交由容器组件)
             |-component1
                 |-Component1.jsx
-                |-component1.scss
+                |-component1.css
             ...
     ...
 |-styles                                    // 通用样式目录
-    |-main.scss                             // 全局css文件
-    |-fonts.scss                            // 字体样式和字体图标css文件
+    |-main.css                              // 全局css文件
+    |-fonts.css                             // 字体样式和字体图标css文件
 |-images                                    // 公共图片存放目录
 |-services                                  // 后台接口服务目录, 所有服务端数据请求都封装在这里, 并统一调用HttpRequest对象请求后台接口, 方便数据封装, 接口重用.
     |-demo.js                               // agent接口请求文件, 对应请求URL的模块名, 如: /user/add, 则文件应该命名为user.js
@@ -119,7 +119,7 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
 
 ### 代码检测
-1. webpack 编译代码时, 会自动检测 js, jsx, css scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
+1. webpack 编译代码时, 会自动检测 js, jsx, css, less, scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
 2. git commit 时, 会再次执行代码检测, 并自动修复(仅限于支持自动修复的代码)后, 后再提交.
 
 #### 局部代码忽略 stylelint 校验

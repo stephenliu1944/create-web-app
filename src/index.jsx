@@ -1,5 +1,5 @@
 import 'images/favicon.ico';
-import 'styles/main.scss';
+import 'styles/main.css';
 import http from '@middlend/http';
 import React from 'react';
 import { render } from 'react-dom';

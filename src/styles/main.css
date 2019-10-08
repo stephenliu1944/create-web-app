@@ -1,4 +1,4 @@
-@import url('./fonts.scss');
+@import url('./fonts.css');
 :global {
     * {
         margin: 0;

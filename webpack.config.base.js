@@ -20,7 +20,7 @@ export default {
         chunkFilename: `${ASSETS_PATH}/js/[name].[chunkhash].js`    // chunk js file
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.css', '.scss'],
+        extensions: ['.js', '.jsx', '.css', '.less', '.scss'],
         alias: {
             styles: path.resolve(__dirname, 'src/styles/'),
             utils: path.resolve(__dirname, 'src/utils/'),
@@ -60,7 +60,8 @@ export default {
             /**
              * 主项目的css
              */
-            test: /\.(css|scss)$/,
+            // test: /\.(css|less|scss)$/,
+            test: /\.(css)$/,
             include: path.resolve(__dirname, 'src'),
             use: [
                 MiniCssExtractPlugin.loader,
@@ -68,19 +69,20 @@ export default {
                     loader: 'css-loader',
                     options: {
                         modules: true,
-                        importLoaders: 2,
+                        importLoaders: 1,
                         localIdentName: '[local]__[hash:base64:5]',
                         minimize: {
                             safe: true
                         }
                     }
                 },
-                'postcss-loader',
-                'sass-loader'
+                'postcss-loader'
+                // 'less-loader'
+                // 'sass-loader'
             ]
         }, {
             /**
-             * 第三方组件的css, scss.
+             * 第三方组件的css.
              */
             test: /\.css$/,
             include: [path.resolve(__dirname, 'node_modules')],

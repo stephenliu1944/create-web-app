@@ -1,4 +1,4 @@
-import styles from './home.scss';
+import styles from './home.css';
 import demoPNG from 'images/cat.png';
 import React, { Component } from 'react';
 import Component1 from './components/component1/Component1';

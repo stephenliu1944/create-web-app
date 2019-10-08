@@ -37,7 +37,7 @@
         "npm run lint:js",
         "git add"
       ],
-      "src/**/*.{css,scss}": [
+      "src/**/*.{css,less,scss}": [
         "npm run lint:css",
         "git add"
       ],
@@ -94,10 +94,9 @@
     "lint-staged": "^8.1.0",
     "merge-stream": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.2",
-    "node-sass": "^4.10.0",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.0",
-    "sass-loader": "^7.1.0",
+    "postcss-simple-vars": "^5.0.2",
     "style-loader": "^0.23.0",
     "stylelint": "^10.1.0",
     "stylelint-webpack-plugin": "^0.10.5",
@@ -124,7 +123,9 @@
   "project": {
     "title": "My App",
     "path": "",
-    "packageName": ["www.myapp.com"]
+    "packageName": [
+      "www.myapp.com"
+    ]
   },
   "deploy": {
     "dev": {
