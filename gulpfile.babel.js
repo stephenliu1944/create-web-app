@@ -4,14 +4,14 @@ import del from 'del';
 import zip from 'gulp-zip';
 import sftp from 'gulp-sftp-up4';
 import mergeStream from 'merge-stream';
-import { project, deploy } from './package.json';
+import { parcel, deployment } from './package.json';
 import { execSync } from 'child_process';
 
 const BUILD_PATH = 'build';                    // 编译文件
 const DIST_PATH = 'dist';                      // 目的地文件
-const { packageName } = project;               // 打包生成的文件名
-const packageNames = typeof packageName === 'string' ? [packageName] : packageName || [];
-const { dev, test } = deploy;
+const { name } = parcel;                       // 打包生成的文件名
+const packageNames = typeof name === 'string' ? [name] : name || [];
+const { dev, test } = deployment;
 
 // 清除 dist 目录
 task('clean', () => del([DIST_PATH]));

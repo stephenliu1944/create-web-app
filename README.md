@@ -139,20 +139,20 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 运行 /bin/test.bat (linux 运行 test.sh)  
 
 ### 项目打包
-1. 在 package.json > project 中配置项目相关信息, 详见下方说明.
+1. 在 package.json > parcel 中配置项目打包的相关信息, 详见下方说明.
 2. 运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成打包后的项目文件夹和压缩后的zip文件, 供发版使用.
 ```
-"project": {
-    "title": "My App",              // index.html 默认 title 信息.
-    "path": "myapp",                // 项目的打包根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/myapp), 用于在同一域名下部署多个单页应用时通过路径来区分不同的子系统, 默认为空.
-    "packageName": "www.myapp.com"  // dist目录打包生成出的项目包名.
+"parcel": {
+    "name": "www.myapp.com",         // dist目录打包生成出的项目包名. 可以为数组.
+    "path": "myapp",                 // 项目的打包根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/myapp), 用于在同一域名下部署多个单页应用时通过路径来区分不同的子系统, 默认为空.
+    "title": "My App"                // index.html 默认 title 信息.
 },
 ```
 
 ### 自动发布流程
 1. 在package.json > deploy 中配置发布服务器信息.
 ```
-"deploy": {             // 发布信息配置
+"deployment": {         // 发布信息配置
     "dev": {            // 发布到开发服务器
         "host":         // 主机IP
         "port":         // 端口

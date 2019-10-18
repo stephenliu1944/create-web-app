@@ -4,9 +4,9 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
-import { project } from './package.json';
+import { parcel } from './package.json';
 
-const ROOT_PATH = (project.path && `${project.path}/`) || '';
+const ROOT_PATH = (parcel.path && `${parcel.path}/`) || '';
 const ASSETS_PATH = ROOT_PATH + 'assets';
 
 export default {
@@ -132,7 +132,7 @@ export default {
             chunkFilename: `${ASSETS_PATH}/css/[name].[contenthash].css`   // chunk css file
         }),
         new HtmlWebpackPlugin({                             // 主页面入口index.html
-            title: project.title,
+            title: parcel.title,
             faviconPath: ASSETS_PATH,
             filename: ROOT_PATH + 'index.html',
             template: './src/template.html'

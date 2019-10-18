@@ -120,14 +120,12 @@
       "__DEV__": true
     }
   },
-  "project": {
-    "title": "My App",
+  "parcel": {
+    "name": "www.myapp.com",
     "path": "",
-    "packageName": [
-      "www.myapp.com"
-    ]
+    "title": "My App"
   },
-  "deploy": {
+  "deployment": {
     "dev": {
       "host": "",
       "port": 22,
