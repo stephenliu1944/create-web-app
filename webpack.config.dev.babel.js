@@ -1,8 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import { settings } from '@middlend/proxy-config';
-import define from '@middlend/define';
+import { settings } from '@easytool/proxy-config';
+import define from '@easytool/define';
 import BundleAnalyzerPlugin from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
 import pkg from './package.json';
