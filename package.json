@@ -20,7 +20,7 @@
     "lint:js": "eslint -c .eslintrc.prod.json --fix",
     "lint:css": "stylelint --cache --fix",
     "test": "jest",
-    "package": "npm run build:prod && gulp zip",
+    "package": "npm run build:prod && gulp package",
     "deploy:dev": "npm run package && gulp deploy-dev",
     "deploy:test": "npm run package && gulp deploy-test",
     "deploy:all": "npm run package && gulp deploy-all",
@@ -123,7 +123,8 @@
   "parcel": {
     "name": "www.myapp.com",
     "path": "",
-    "title": "My App"
+    "title": "My App",
+    "zip": true
   },
   "deployment": {
     "dev": {
