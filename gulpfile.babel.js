@@ -26,12 +26,17 @@ task('dist', () => {
     return stream;
 });
 
-// 将静态资源压缩为 zip 格式
-task('zip', () => {
-    var streams = [];
-    packageNames.forEach((name) => {
+// 压缩静态资源
+task('zip', (cb) => {
+    if (!zip) {
+        return cb();
+    }
+
+    var streams = [];    
+    var withIndex = packageNames.length > 1;
+    packageNames.forEach((name, index) => {
         var stream = src([`${DIST_PATH}/${name}/**`], { base: `${DIST_PATH}/` })
-            .pipe(compress(`${typeof zip === 'string' ? zip : name}.zip`));
+            .pipe(compress(`${typeof zip === 'string' ? zip + (withIndex ? index : '') : name}.zip`));
         streams.push(stream);
     });
 
