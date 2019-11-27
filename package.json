@@ -1,7 +1,7 @@
 {
-  "name": "scaffolding-project-react",
+  "name": "scaffold-web-react",
   "version": "0.1.0",
-  "description": "This scaffolding is use to develop React app.",
+  "description": "This scaffolding use for development web application by React.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -110,7 +110,7 @@
   },
   "devEnvironments": {
     "servers": {
-      "local": 8080,
+      "local": 8085,
       "mock": 3000
     },
     "proxies": {

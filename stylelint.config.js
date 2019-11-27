@@ -8,7 +8,9 @@ module.exports = {
         'function-calc-no-unspaced-operator': true,
         'string-no-newline': true,
         'unit-no-unknown': true,
-        'property-no-unknown': true,
+        'property-no-unknown': [true, {
+            ignoreProperties: ['composes']
+        }],
         'declaration-block-no-duplicate-properties': true,
         'selector-id-pattern': '^[a-z][a-zA-Z0-9]+$',          // camel case selectors, use the disable commands to turn off the rule.
         'selector-class-pattern': '^[a-z][a-zA-Z0-9]+$',       // camel case selectors, use the disable commands to turn off the rule.

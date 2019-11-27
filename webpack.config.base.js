@@ -22,14 +22,17 @@ export default {
     resolve: {
         extensions: ['.js', '.jsx', '.css', '.less', '.scss'],
         alias: {
-            styles: path.resolve(__dirname, 'src/styles/'),
-            utils: path.resolve(__dirname, 'src/utils/'),
-            images: path.resolve(__dirname, 'src/images/'),
-            constants: path.resolve(__dirname, 'src/constants/'),
-            services: path.resolve(__dirname, 'src/services/'),
-            commonComponents: path.resolve(__dirname, 'src/commonComponents/'),
-            containers: path.resolve(__dirname, 'src/containers/'),
-            config: path.resolve(__dirname, 'src/config/')
+            Components: path.resolve(__dirname, 'src/components/'),
+            Config: path.resolve(__dirname, 'src/config/'),
+            Constants: path.resolve(__dirname, 'src/constants/'),
+            Containers: path.resolve(__dirname, 'src/containers/'),
+            Fonts: path.resolve(__dirname, 'src/fonts/'),
+            Images: path.resolve(__dirname, 'src/images/'),
+            Layouts: path.resolve(__dirname, 'src/layouts/'),
+            Routes: path.resolve(__dirname, 'src/routes/'),
+            Services: path.resolve(__dirname, 'src/services/'),
+            Styles: path.resolve(__dirname, 'src/styles/'),
+            Utils: path.resolve(__dirname, 'src/utils/')
         }
     },
     optimization: {
@@ -139,6 +142,7 @@ export default {
         }),
         new StyleLintPlugin({
             context: 'src',
+            files: '**/*.(c|sc|sa|le)ss',
             fix: true,
             cache: true
         }),

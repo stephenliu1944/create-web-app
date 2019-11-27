@@ -1,9 +1,9 @@
-import 'images/favicon.ico';
-import 'styles/main.css';
+import 'Images/favicon.ico';
+import 'Styles/main.css';
 import http from '@easytool/http';
 import React from 'react';
 import { render } from 'react-dom';
-import Root from './routes/Root';
+import Root from 'Routes/Root';
 
 // set http default options
 http.settings({
