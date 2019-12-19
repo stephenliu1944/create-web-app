@@ -110,7 +110,7 @@
   },
   "devEnvironments": {
     "servers": {
-      "local": 8085,
+      "local": 8080,
       "mock": 3000
     },
     "proxies": {

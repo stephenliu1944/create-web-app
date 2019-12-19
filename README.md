@@ -40,19 +40,23 @@ src                                         // 项目源码目录
     |-enum.js                               // 存放一些枚举常量
 |-containers                                // 容器组件目录(一个容器组件就是一个页面, 它将各种功能组件组合在一起, 其主要负责组装功能组件, 接口调用以及整个页面的状态管理).
     |-home                                  // 首页容器组件
-        |-Home.jsx                          // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-home.css                          // 组件引用的css文件, 文件首字母小写, 驼峰标识.
+        |-Home.jsx                          // 容器组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
+        |-home.css                          // 容器组件样式文件, 文件首字母小写, 驼峰标识.
         |-images                            // 容器组件私有图片
         |-services                          // 容器组件私有接口请求, 所有组件私有的数据请求都封装在这里.
         |-components                        // 容器组件私有功能组件(大部分功能组件是无状态的, 主要的状态管理和接口请求交由容器组件)
             |-component1
-                |-Component1.jsx
-                |-component1.css
+                |-images                    // 功能组件私有图片
+                |-Component1.jsx            // 功能组件jsx文件
+                |-component1.css            // 功能组件样式文件
             ...
     ...
 |-fonts                                     // 公共字体文件
 |-images                                    // 公共图片存放目录
 |-layouts                                   // 公共布局组件目录
+    |-mainLayout                            // 主要布局组件
+        |-MainLayout.jsx
+        |-mainLayout.css
 |-routes                                    // 路由组件目录
 |-services                                  // 公共接口请求目录, 所有公共服务端数据请求都封装在这里, 并统一调用HttpRequest对象请求后台接口, 方便数据封装, 接口重用.
     |-demo.js                               // agent接口请求文件, 对应请求URL的模块名, 如: /user/add, 则文件应该命名为user.js
