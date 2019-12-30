@@ -1,4 +1,4 @@
-import styles from './error.scss';
+import styles from './error.css';
 import React, { Component } from 'react';
 
 export default class Error extends Component {

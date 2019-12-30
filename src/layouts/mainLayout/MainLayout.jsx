@@ -1,15 +1,15 @@
-import styles from './layout.scss';
+import styles from './mainLayout.css';
 import React, { Component } from 'react';
-import Header from './header/Header';
-import Footer from './footer/Footer';
+import Header from 'Components/header/Header';
+import Footer from 'Components/footer/Footer';
 /**
  * @desc 页面整体框架组件
  */
-export default class Layout extends Component {
+export default class MainLayout extends Component {
  
     render() {
         return (
-            <div className={styles.layout}>
+            <div className={styles.mainLayout}>
                 <Header />
                 <div className={styles.content}>
                     {this.props.children}

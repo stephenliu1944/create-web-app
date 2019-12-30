@@ -4,9 +4,9 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
-import { project } from './package.json';
+import { parcel } from './package.json';
 
-const ROOT_PATH = (project.path && `${project.path}/`) || '';
+const ROOT_PATH = (parcel.path && `${parcel.path}/`) || '';
 const ASSETS_PATH = ROOT_PATH + 'assets';
 
 export default {
@@ -20,16 +20,19 @@ export default {
         chunkFilename: `${ASSETS_PATH}/js/[name].[chunkhash].js`    // chunk js file
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.css', '.scss'],
+        extensions: ['.js', '.jsx', '.css', '.less', '.scss'],
         alias: {
-            styles: path.resolve(__dirname, 'src/styles/'),
-            utils: path.resolve(__dirname, 'src/utils/'),
-            images: path.resolve(__dirname, 'src/images/'),
-            constants: path.resolve(__dirname, 'src/constants/'),
-            services: path.resolve(__dirname, 'src/services/'),
-            commonComponents: path.resolve(__dirname, 'src/commonComponents/'),
-            containers: path.resolve(__dirname, 'src/containers/'),
-            config: path.resolve(__dirname, 'src/config/')
+            Components: path.resolve(__dirname, 'src/components/'),
+            Config: path.resolve(__dirname, 'src/config/'),
+            Constants: path.resolve(__dirname, 'src/constants/'),
+            Containers: path.resolve(__dirname, 'src/containers/'),
+            Fonts: path.resolve(__dirname, 'src/fonts/'),
+            Images: path.resolve(__dirname, 'src/images/'),
+            Layouts: path.resolve(__dirname, 'src/layouts/'),
+            Routes: path.resolve(__dirname, 'src/routes/'),
+            Services: path.resolve(__dirname, 'src/services/'),
+            Styles: path.resolve(__dirname, 'src/styles/'),
+            Utils: path.resolve(__dirname, 'src/utils/')
         }
     },
     optimization: {
@@ -60,7 +63,8 @@ export default {
             /**
              * 主项目的css
              */
-            test: /\.(css|scss)$/,
+            // test: /\.(css|less|scss)$/,
+            test: /\.(css)$/,
             include: path.resolve(__dirname, 'src'),
             use: [
                 MiniCssExtractPlugin.loader,
@@ -68,19 +72,20 @@ export default {
                     loader: 'css-loader',
                     options: {
                         modules: true,
-                        importLoaders: 2,
+                        importLoaders: 1,
                         localIdentName: '[local]__[hash:base64:5]',
                         minimize: {
                             safe: true
                         }
                     }
                 },
-                'postcss-loader',
-                'sass-loader'
+                'postcss-loader'
+                // 'less-loader'
+                // 'sass-loader'
             ]
         }, {
             /**
-             * 第三方组件的css, scss.
+             * 第三方组件的css.
              */
             test: /\.css$/,
             include: [path.resolve(__dirname, 'node_modules')],
@@ -130,13 +135,14 @@ export default {
             chunkFilename: `${ASSETS_PATH}/css/[name].[contenthash].css`   // chunk css file
         }),
         new HtmlWebpackPlugin({                             // 主页面入口index.html
-            title: project.title,
+            title: parcel.title,
             faviconPath: ASSETS_PATH,
             filename: ROOT_PATH + 'index.html',
             template: './src/template.html'
         }),
         new StyleLintPlugin({
             context: 'src',
+            files: '**/*.(c|sc|sa|le)ss',
             fix: true,
             cache: true
         }),

@@ -1,7 +1,7 @@
 {
-  "name": "scaffolding-project-react",
+  "name": "scaffold-web-react",
   "version": "0.1.0",
-  "description": "This scaffolding is use to develop React app.",
+  "description": "This scaffolding use for development web application by React.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,12 +15,12 @@
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.dev.babel.js --colors --display-error-details",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.babel.js --colors --display-error-details",
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.babel.js --colors",
-    "mock": "node mock/server.js",
+    "mock": "mock-server ./mock/data --static ./mock/static --config ./mock/mock.config.js --watch",
     "start:mock": "concurrently \"cross-env npm start\" \"npm run mock\"",
     "lint:js": "eslint -c .eslintrc.prod.json --fix",
     "lint:css": "stylelint --cache --fix",
     "test": "jest",
-    "package": "npm run build:prod && gulp zip",
+    "package": "npm run build:prod && gulp package",
     "deploy:dev": "npm run package && gulp deploy-dev",
     "deploy:test": "npm run package && gulp deploy-test",
     "deploy:all": "npm run package && gulp deploy-all",
@@ -37,7 +37,7 @@
         "npm run lint:js",
         "git add"
       ],
-      "src/**/*.{css,scss}": [
+      "src/**/*.{css,less,scss}": [
         "npm run lint:css",
         "git add"
       ],
@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "axios-enhanced": "^0.1.3",
+    "@easytool/http": "^0.1.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-router": "^3.2.1"
@@ -63,7 +63,9 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
-    "@beancommons/define": "^0.2.1",
+    "@easytool/define": "^0.1.0",
+    "@easytool/mock-server": "^0.1.0",
+    "@easytool/proxy-config": "^0.1.0",
     "autoprefixer": "^9.1.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
@@ -80,22 +82,21 @@
     "eslint": "^5.6.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-react": "^7.12.3",
+    "express": "^4.17.1",
     "file-loader": "^2.0.0",
     "gulp": "^4.0.0",
     "gulp-sftp-up4": "^0.1.8",
     "gulp-zip": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
-    "http-proxy-config": "^0.1.5",
     "husky": "^1.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
-    "json-server": "^0.14.0",
     "lint-staged": "^8.1.0",
+    "merge-stream": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.2",
-    "node-sass": "^4.10.0",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.0",
-    "sass-loader": "^7.1.0",
+    "postcss-simple-vars": "^5.0.2",
     "style-loader": "^0.23.0",
     "stylelint": "^10.1.0",
     "stylelint-webpack-plugin": "^0.10.5",
@@ -116,15 +117,16 @@
       "(/proxy)": "http://ip-api.com"
     },
     "globals": {
-      "__VAR__": "global variable"
+      "__DEV__": true
     }
   },
-  "project": {
-    "title": "My App",
+  "parcel": {
+    "name": "www.myapp.com",
     "path": "",
-    "packageName": "www.myapp.com"
+    "title": "My App",
+    "zip": true
   },
-  "deploy": {
+  "deployment": {
     "dev": {
       "host": "",
       "port": 22,

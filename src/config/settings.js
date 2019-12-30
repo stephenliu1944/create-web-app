@@ -1,3 +1,3 @@
 export default {
-    server: 'http://localhost:3001'
+    // production config 
 };

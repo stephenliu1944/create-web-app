@@ -1,7 +1,4 @@
-/**
- * created by caoyan in 2017/10/16
- */
-import styles from './header.scss';
+import styles from './header.css';
 import React, { Component } from 'react';
 /**
  * @desc 页面顶部组件

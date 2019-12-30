@@ -1,7 +1,4 @@
-/**
- * created by caoyan in 2017/10/16
- */
-import styles from './footer.scss';
+import styles from './footer.css';
 import React, { Component } from 'react';
 
 /**

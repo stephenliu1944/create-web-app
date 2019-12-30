@@ -1,4 +1,4 @@
-import styles from './component1.scss';
+import styles from './component1.css';
 import React, { Component } from 'react';
 
 /** 

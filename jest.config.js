@@ -25,14 +25,17 @@ module.exports = {
     moduleFileExtensions: ['js', 'json', 'jsx'],
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        '^config(.*)$': '<rootDir>/src/config$1',
-        '^styles(.*)$': '<rootDir>/src/styles$1',
-        '^utils(.*)$': '<rootDir>/src/utils$1',
-        '^images(.*)$': '<rootDir>/src/images$1',
-        '^constants(.*)$': '<rootDir>/src/constants$1',
-        '^services(.*)$': '<rootDir>/src/services$1',
-        '^commonComponents(.*)$': '<rootDir>/src/commonComponents$1',
-        '^containers(.*)$': '<rootDir>/src/containers$1',
+        '^Components(.*)$': '<rootDir>/src/components$1',
+        '^Config(.*)$': '<rootDir>/src/config$1',
+        '^Constants(.*)$': '<rootDir>/src/constants$1',
+        '^Containers(.*)$': '<rootDir>/src/containers$1',
+        '^Fonts(.*)$': '<rootDir>/src/fonts$1',
+        '^Images(.*)$': '<rootDir>/src/images$1',
+        '^Layouts(.*)$': '<rootDir>/src/layouts$1',
+        '^Routes(.*)$': '<rootDir>/src/routes$1',
+        '^Services(.*)$': '<rootDir>/src/services$1',
+        '^Styles(.*)$': '<rootDir>/src/styles$1',
+        '^Utils(.*)$': '<rootDir>/src/utils$1',
         '\\.(css|less|scss)$': 'identity-obj-proxy'
     },
     // A map from regular expressions to paths to transformers

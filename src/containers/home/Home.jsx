@@ -1,8 +1,8 @@
-import styles from './home.scss';
-import demoPNG from 'images/cat.png';
+import styles from './home.css';
 import React, { Component } from 'react';
+import catPNG from './images/cat.png';
+import { getIPInfo } from './services/demo';
 import Component1 from './components/component1/Component1';
-import { getIPInfo } from 'services/demo';
 
 export default class Home extends Component {
 
@@ -33,7 +33,7 @@ export default class Home extends Component {
             <div className={styles.home}>
                 <h1>Home</h1>
                 {/* 图片引入示例, 熟悉后请删除 */}
-                <img src={demoPNG} />
+                <img src={catPNG} />
                 {/* 子组件使用以及参数传递示例, 熟悉后请删除 */}
                 <Component1 region={region} />
             </div>

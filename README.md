@@ -1,9 +1,9 @@
-# React Web Application Scaffolding
+# Scaffold Web React
 
-### 项目介绍
-该脚手架用于开发基于 React 的 Web 项目.
+## 项目介绍
+该脚手架用于开发基于 React 的 Web 应用.
 
-### 目录结构
+## 目录结构
 ```
 bin                                         // 可执行命令目录.
 |-build-dev.bat                             // 将src目录中的源码通过 webpack.config.dev.babel.js 编译到build目录.
@@ -24,13 +24,14 @@ build                                       // 代码编译后生成的临时目
 dist                                        // 代码打包后生成的临时目录
 mock                                        // mock服务目录
 |-data                                      // mock数据存放目录
-|-routes.json                               // mock请求路径映射文件
-|-server.js                                 // mock服务配置
+|-static                                    // mock静态资源存放目录
+|-mock.config.js                            // mock服务全局配置
+|-README.md                                 // mock服务文档
 src                                         // 项目源码目录
-|-commonComponents                          // 公共功能组件目录(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
+|-components                                // 公共功能组件目录(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
     |-component1
         |-Component1.jsx                    // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-component1.scss                   // 组件引用的scss文件, 文件首字母小写, 驼峰标识.
+        |-component1.css                    // 组件引用的css文件, 文件首字母小写, 驼峰标识.
     ...
 |-config                                    // 生产环境配置文件目录
     |-settings.js                           // 项目生产环境配置文件
@@ -39,26 +40,35 @@ src                                         // 项目源码目录
     |-enum.js                               // 存放一些枚举常量
 |-containers                                // 容器组件目录(一个容器组件就是一个页面, 它将各种功能组件组合在一起, 其主要负责组装功能组件, 接口调用以及整个页面的状态管理).
     |-home                                  // 首页容器组件
-        |-Home.jsx                          // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-home.scss                         // 组件引用的scss文件, 文件首字母小写, 驼峰标识.
-        |-components                        // 容器组件私有的功能组件(大部分功能组件是无状态的, 主要的状态管理和接口请求交由容器组件)
+        |-Home.jsx                          // 容器组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
+        |-home.css                          // 容器组件样式文件, 文件首字母小写, 驼峰标识.
+        |-images                            // 容器组件私有图片
+        |-services                          // 容器组件私有接口请求, 所有组件私有的数据请求都封装在这里.
+        |-components                        // 容器组件私有功能组件(大部分功能组件是无状态的, 主要的状态管理和接口请求交由容器组件)
             |-component1
-                |-Component1.jsx
-                |-component1.scss
+                |-images                    // 功能组件私有图片
+                |-Component1.jsx            // 功能组件jsx文件
+                |-component1.css            // 功能组件样式文件
             ...
     ...
-|-styles                                    // 通用样式目录
-    |-main.scss                             // 全局css文件
-    |-fonts.scss                            // 字体样式和字体图标css文件
+|-fonts                                     // 公共字体文件
 |-images                                    // 公共图片存放目录
-|-services                                  // 后台接口服务目录, 所有服务端数据请求都封装在这里, 并统一调用HttpRequest对象请求后台接口, 方便数据封装, 接口重用.
+|-layouts                                   // 公共布局组件目录
+    |-mainLayout                            // 主要布局组件
+        |-MainLayout.jsx
+        |-mainLayout.css
+|-routes                                    // 路由组件目录
+|-services                                  // 公共接口请求目录, 所有公共服务端数据请求都封装在这里, 并统一调用HttpRequest对象请求后台接口, 方便数据封装, 接口重用.
     |-demo.js                               // agent接口请求文件, 对应请求URL的模块名, 如: /user/add, 则文件应该命名为user.js
+|-styles                                    // 公共样式目录
+    |-main.css                              // 全局css文件
+    |-fonts.css                             // 字体样式和字体图标css文件
 |-utils                                     // 工具库
     |-common.js                             // 一些常用工具方法.
 |-index.jsx                                 // 入口js文件.
 |-template.html                             // 页面模板文件.
 test                                        // 测试代码目录, 目录结构同src
-|-commons
+|-components
 |-containers
     ...
 .eslintignore                               // eslint 忽略校验配置文件.
@@ -73,14 +83,14 @@ gulpfile.babel.js                           // 项目打包, 发布脚本.
 jest.config.js                              // jest 配置文件.
 package.json                                // npm 配置文件.
 postcss.config.js                           // postcss 插件配置文件.
+README.md                                   // 脚手架说明文档.
 stylelint.config.js                         // stylelint 校验规则配置文件
 webpack.config.base.js                      // webpack 开发, 生产环境公用部分.
 webpack.config.dev.babel.js                 // webpack 开发环境配置文件.
 webpack.config.prod.babel.js                // webpack 生产环境配置文件.
-README.md                                   // 脚手架说明文档.
 ```
 
-### 项目依赖
+## 项目依赖
 ```
 webpack:        v4
 babel:          v7
@@ -94,11 +104,12 @@ eslint:         v5
 stylelint       v10
 ```
 
-### 安装
+## 安装
 下载项目后在项目根目录执行
 ```  
 npm install
 ```
+
 ### FAQ
 1. 如果使用 cnpm install 安装模块, 在启动服务时报错(比如提示模块未找到), 尝试删除 node_modules 目录, 并使用 npm i 重新安装.
 2. 如遇全局模块问题, 可能需要重新安装全局模块, 安装前请先卸载已有版本, 然后执行如下命令:
@@ -106,7 +117,7 @@ npm install
 npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@7.0.1 gulp@4.0.0
 ```
 
-### 启动服务
+## 启动服务
 1. web服务  
 运行 /bin/startup.bat (linux 运行 startup.sh)  
 浏览器访问 localhost:8080 即可,  
@@ -118,11 +129,11 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 3. web服务 + mock服务  
 运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
 
-### 代码检测
-1. webpack 编译代码时, 会自动检测 js, jsx, css scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
+## 代码检测
+1. webpack 编译代码时, 会自动检测 js, jsx, css, less, scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
 2. git commit 时, 会再次执行代码检测, 并自动修复(仅限于支持自动修复的代码)后, 后再提交.
 
-#### 局部代码忽略 stylelint 校验
+### 局部代码忽略 stylelint 校验
 主要用于覆盖第三方UI库样式的情况
 ```
 /* stylelint-disable */
@@ -134,25 +145,26 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 /* stylelint-enable */
 ```
 
-### 单元测试
+## 单元测试
 对 /test 目录下的所有文件进行单元测试.
 运行 /bin/test.bat (linux 运行 test.sh)  
 
-### 项目打包
-1. 在 package.json > project 中配置项目相关信息, 详见下方说明.
+## 项目打包
+1. 在 package.json > parcel 中配置项目打包的相关信息, 详见下方说明.
 2. 运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成打包后的项目文件夹和压缩后的zip文件, 供发版使用.
 ```
-"project": {
-    "title": "My App",              // index.html 默认 title 信息.
-    "path": "myapp",                // 项目的打包根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/myapp), 用于在同一域名下部署多个单页应用时通过路径来区分不同的子系统, 默认为空.
-    "packageName": "www.myapp.com"  // dist目录打包生成出的项目包名.
+"parcel": {
+    "name": string|array,           // dist目录打包生成的项目包名. 可以为数组生成多个包.
+    "path": string,                 // 项目的打包根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/myapp), 用于在同一域名下部署多个单页应用时通过路径来区分不同的子系统, 默认为空.
+    "title": string                 // index.html 默认 title 信息.
+    "zip": boolean|string           // 是否生成zip文件, 为 string 时表示生成的zip文件名.
 },
 ```
 
-### 自动发布流程
-1. 在package.json > deploy 中配置发布服务器信息.
+## 自动发布流程
+1. 在 package.json > deploy 中配置发布服务器信息.
 ```
-"deploy": {             // 发布信息配置
+"deployment": {         // 发布信息配置
     "dev": {            // 发布到开发服务器
         "host":         // 主机IP
         "port":         // 端口
@@ -171,7 +183,7 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 3. 运行 /bin/deploy-test.bat, 发布到 test 服务器.
 4. 运行 /bin/deploy-all.bat, 同时发布到 dev 和 test 服务器.
 
-### linux环境配置(RHEL, CentOS or Fedora)
+## linux环境配置(RHEL, CentOS or Fedora)
 1. 安装node, 执行:
 ```
 curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
