@@ -6,32 +6,31 @@
 ## 目录结构
 ```
 bin                                         // 可执行命令目录.
-|-build-dev.bat                             // 将src目录中的源码通过 webpack.config.dev.babel.js 编译到build目录.
-|-build-prod.bat                            // 将src目录中的源码通过 webpack.config.prod.babel.js 编译到build目录.
-|-deploy-all.bat                            // 将代码发布到开发和测试服务器, 需在package.json中配置deploy相关信息.
-|-deploy-dev.bat                            // 将代码发布到开发服务器, 需在package.json中配置deploy.dev相关信息.
-|-deploy-test.bat                           // 将代码发布到测试服务器, 需在package.json中配置deploy.test相关信息.
-|-package.bat                               // 将src目录中的源码通过生产环境配置打包到dist目录并生成zip文件供发版使用.
-|-startup.bat                               // 启动开发环境web服务(window)
-|-startup.sh                                // 启动开发环境web服务(linux)
-|-mock.bat                                  // 启动开发环境mock服务(window)
-|-mock.sh                                   // 启动开发环境mock服务(linux)
-|-startup-mock.bat                          // 同时启动开发环境web和mock服务(window)
-|-startup-mock.sh                           // 同时启动开发环境web和mock服务(linux)
-|-test.bat                                  // 执行jest单元测试(window)
-|-test.sh                                   // 执行jest单元测试(linux)
+|-build-dev.bat                             // 将 src 目录中的源码通过 webpack.config.dev.babel.js 编译到 build 目录.
+|-build-prod.bat                            // 将 src 目录中的源码通过 webpack.config.prod.babel.js 编译到 build 目录.
+|-deploy.bat                                // 将代码部署到服务器, 需在 package.json 中配置 deployments 相关信息.
+|-package.bat                               // 将 src 目录中的源码通过生产环境配置打包到 dist 目录生成 zip 文件供发布使用(window).
+|-package.sh                                // 将 src 目录中的源码通过生产环境配置打包到 dist 目录生成 zip 文件供发布使用(linux).
+|-startup.bat                               // 启动开发环境 web 服务(window)
+|-startup.sh                                // 启动开发环境 web 服务(linux)
+|-mock.bat                                  // 启动开发环境 mock 服务(window)
+|-mock.sh                                   // 启动开发环境 mock 服务(linux)
+|-startup-mock.bat                          // 同时启动开发环境 web 和 mock 服务(window)
+|-startup-mock.sh                           // 同时启动开发环境 web 和 mock 服务(linux)
+|-test.bat                                  // 执行 jest 单元测试(window)
+|-test.sh                                   // 执行 jest 单元测试(linux)
 build                                       // 代码编译后生成的临时目录
 dist                                        // 代码打包后生成的临时目录
-mock                                        // mock服务目录
-|-data                                      // mock数据存放目录
-|-static                                    // mock静态资源存放目录
-|-mock.config.js                            // mock服务全局配置
-|-README.md                                 // mock服务文档
+mock                                        // mock 服务目录
+|-data                                      // mock 数据存放目录
+|-static                                    // mock 静态资源存放目录
+|-mock.config.js                            // mock 服务全局配置
+|-README.md                                 // mock 服务文档
 src                                         // 项目源码目录
-|-components                                // 公共功能组件目录(大部分功能组件是无状态的, 主要的状态管理交由容器组件)
+|-components                                // 公共组件目录
     |-component1
-        |-Component1.jsx                    // 组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-component1.css                    // 组件引用的css文件, 文件首字母小写, 驼峰标识.
+        |-Component1.jsx                    // 组件 jsx 文件, 文件首字母大写, 驼峰标识, 代码采用 ES6 风格编码.
+        |-component1.css                    // 组件引用的 css 文件, 文件首字母小写, 驼峰标识.
     ...
 |-config                                    // 生产环境配置文件目录
     |-settings.js                           // 项目生产环境配置文件
@@ -44,10 +43,10 @@ src                                         // 项目源码目录
         |-home.css                          // 容器组件样式文件, 文件首字母小写, 驼峰标识.
         |-images                            // 容器组件私有图片
         |-services                          // 容器组件私有接口请求, 所有组件私有的数据请求都封装在这里.
-        |-components                        // 容器组件私有功能组件(大部分功能组件是无状态的, 主要的状态管理和接口请求交由容器组件)
+        |-components                        // 容器组件私有功能组件
             |-component1
                 |-images                    // 功能组件私有图片
-                |-Component1.jsx            // 功能组件jsx文件
+                |-Component1.jsx            // 功能组件 jsx 文件
                 |-component1.css            // 功能组件样式文件
             ...
     ...
@@ -58,8 +57,8 @@ src                                         // 项目源码目录
         |-MainLayout.jsx
         |-mainLayout.css
 |-routes                                    // 路由组件目录
-|-services                                  // 公共接口请求目录, 所有公共服务端数据请求都封装在这里, 并统一调用HttpRequest对象请求后台接口, 方便数据封装, 接口重用.
-    |-demo.js                               // agent接口请求文件, 对应请求URL的模块名, 如: /user/add, 则文件应该命名为user.js
+|-services                                  // 公共接口请求目录, 所有公共的HTTP请求都封装在这里.
+    |-demo.js                               // HTTP服务文件, 文件名对应请求的URL模块, 如: /user/add, 则文件应该命名为user.js
 |-styles                                    // 公共样式目录
     |-main.css                              // 全局css文件
     |-fonts.css                             // 字体样式和字体图标css文件
@@ -85,7 +84,7 @@ package.json                                // npm 配置文件.
 postcss.config.js                           // postcss 插件配置文件.
 README.md                                   // 脚手架说明文档.
 stylelint.config.js                         // stylelint 校验规则配置文件
-webpack.config.base.js                      // webpack 开发, 生产环境公用部分.
+webpack.config.base.js                      // webpack 公共配置.
 webpack.config.dev.babel.js                 // webpack 开发环境配置文件.
 webpack.config.prod.babel.js                // webpack 生产环境配置文件.
 ```
@@ -102,32 +101,59 @@ jest            v24
 enzyme          v3
 eslint:         v5
 stylelint       v10
+node            v8+
 ```
 
 ## 安装
 下载项目后在项目根目录执行
-```  
+```
 npm install
 ```
 
-### FAQ
-1. 如果使用 cnpm install 安装模块, 在启动服务时报错(比如提示模块未找到), 尝试删除 node_modules 目录, 并使用 npm i 重新安装.
-2. 如遇全局模块问题, 可能需要重新安装全局模块, 安装前请先卸载已有版本, 然后执行如下命令:
+## 开发环境
+在 package.json > devEnvironments 中配置相关信息.
+
+1. 启动 web 服务, 运行 /bin/startup.bat (linux 运行 startup.sh). 默认通过 http://localhost:8080 访问.
+2. 启动 mock 服务, 运行 /bin/mock.bat (linux 运行 mock.sh). 默认通过 http://localhost:3000 访问.
+3. 同时启动 web 服务和 mock 服务, 运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
+
+### 构建
+```json
+"build": {
+    "title": "My App Dev",      // html 模板文件的 title 信息
+    "path": "",                 // 应用访问的根路径, 如配置为"root", 需通过 http://localhost:8080/root 访问.
+    "https": false              // 是否使用 https 协议访问
+}
 ```
-npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@7.0.1 gulp@4.0.0
+注意该配置仅适用于开发环境, 生产环境需在 package.json > parcels 中配置.
+
+### 服务
+```json
+"servers": {
+    "local": 8080,      // web服务端口
+    "mock": 3000        // mock服务端口
+},
 ```
 
-## 启动服务
-1. web服务  
-运行 /bin/startup.bat (linux 运行 startup.sh)  
-浏览器访问 localhost:8080 即可,  
-可在 package.json > devEnvironments > servers > local 配置web服务端口, 默认8080.
-2. mock服务
-运行 /bin/mock.bat (linux 运行 mock.sh)  
-浏览器访问 localhost:3000 即可,  
-可在 package.json > devEnvironments > servers > mock 配置mock服务端口, 默认3000.
-3. web服务 + mock服务  
-运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
+### 代理
+代理会根据URL拦截请求, 从而解决跨域问题.  
+proxiesd 的 key 为拦截的URL前缀, value 为最终访问的服务地址.  
+key 中括号内的字符串会被代理从URL中移除再请求目标服务器,  
+如: http://localhost:8080/proxy/user/1 > proxy > http://www.example.org/user/1
+```json
+"proxies": {
+    "/api": "http://localhost:3000",
+    "(/proxy)": "http://www.example.org"
+}
+```
+
+### 全局变量
+可在 globals 中配置开发环境使用的全局变量, 在生产环境会全部变为false.
+```json
+"globals": {
+    "__DEV__": true
+},
+```
 
 ## 代码检测
 1. webpack 编译代码时, 会自动检测 js, jsx, css, less, scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
@@ -135,7 +161,7 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 
 ### 局部代码忽略 stylelint 校验
 主要用于覆盖第三方UI库样式的情况
-```
+```css
 /* stylelint-disable */
 :global {
     .ant-select-selection {
@@ -146,42 +172,40 @@ npm install -g webpack@4.19.0 webpack-dev-server@3.1.8 eslint@5.6.0 @babel/core@
 ```
 
 ## 单元测试
-对 /test 目录下的所有文件进行单元测试.
+对 /test 目录下的所有文件进行单元测试.  
 运行 /bin/test.bat (linux 运行 test.sh)  
 
-## 项目打包
-1. 在 package.json > parcel 中配置项目打包的相关信息, 详见下方说明.
-2. 运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成打包后的项目文件夹和压缩后的zip文件, 供发版使用.
-```
-"parcel": {
-    "name": string|array,           // dist目录打包生成的项目包名. 可以为数组生成多个包.
-    "path": string,                 // 项目的打包根路径, 如果配置该属性, 本地调试时需加上此根路径才能访问(如: localhost:8080/myapp), 用于在同一域名下部署多个单页应用时通过路径来区分不同的子系统, 默认为空.
-    "title": string                 // index.html 默认 title 信息.
-    "zip": boolean|string           // 是否生成zip文件, 为 string 时表示生成的zip文件名.
-},
+## 生产环境
+在 package.json > parcels 中配置相关信息.  
+运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成打包后的zip文件, 供发布使用.
+
+### 项目打包
+支持同时打包多份静态资源.
+```json
+"parcels": [{                 // object|array
+    "name": string,           // 项目名称
+    "title": string           // index.html 默认 title 信息.
+    "path": string,           // 访问静态资源的根路径, 类似 webpack.publishPath, 用于在相同域名或IP下部署多个单页应用, 可通过根路径来区分不同的静态资源, 默认为空.
+    "zip": string,            // 生成的zip文件名, 默认为项目名称.
+    "enabled": boolean        // 是否启用该配置, 默认为 true.
+}]
 ```
 
-## 自动发布流程
-1. 在 package.json > deploy 中配置发布服务器信息.
+### 自动发布
+在 package.json > deployments 中配置发布到服务器的相关信息.  
+运行 /bin/deploy.bat (linux 运行 deploy.sh), 发布到配置的服务器上.
+
+```json
+"deployments": [{             // object|array
+    "host": string,           // 主机IP
+    "port": number,           // 端口
+    "user": string,           // 服务器登陆账号(注意: 切忌将账号暴露在公网!!!)
+    "pass": string,           // 服务器登陆密码(注意: 切忌将密码暴露在公网!!!)
+    "timeout": number,        // 服务器连接超时时间
+    "remotePath": string,     // 发布到服务器上的位置
+    "enabled": boolean        // 是否启用该配置, 默认为 true.
+}]
 ```
-"deployment": {         // 发布信息配置
-    "dev": {            // 发布到开发服务器
-        "host":         // 主机IP
-        "port":         // 端口
-        "user":         // 服务器登陆账号(注意: 勿将账号暴露在公网!)
-        "pass":         // 服务器登陆密码(注意: 勿将密码暴露在公网!)
-        "zip":          // 是否以 zip 包的形式发布, 如果为 true 则发布的是个 zip 包, false 发布的是文件夹
-        "timeout":      // 服务器连接超时时间
-        "remotePath":   // 发布到服务器上的位置
-    }
-    "test": {
-        同上...
-    }
-}
-```
-2. 运行 /bin/deploy-dev.bat, 发布到 dev 服务器.
-3. 运行 /bin/deploy-test.bat, 发布到 test 服务器.
-4. 运行 /bin/deploy-all.bat, 同时发布到 dev 和 test 服务器.
 
 ## linux环境配置(RHEL, CentOS or Fedora)
 1. 安装node, 执行:

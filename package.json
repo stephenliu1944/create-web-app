@@ -21,9 +21,7 @@
     "lint:css": "stylelint --cache --fix",
     "test": "jest",
     "package": "npm run build:prod && gulp package",
-    "deploy:dev": "npm run package && gulp deploy-dev",
-    "deploy:test": "npm run package && gulp deploy-test",
-    "deploy:all": "npm run package && gulp deploy-all",
+    "deploy": "npm run package && gulp deploy",
     "git:push": "gulp git-push"
   },
   "husky": {
@@ -109,6 +107,11 @@
     "webpack-merge": "^4.1.4"
   },
   "devEnvironments": {
+    "build": {
+      "title": "My App Dev",
+      "path": "",
+      "https": false
+    },
     "servers": {
       "local": 8080,
       "mock": 3000
@@ -120,30 +123,20 @@
       "__DEV__": true
     }
   },
-  "parcel": {
+  "parcels": [{
     "name": "www.myapp.com",
-    "path": "",
     "title": "My App",
-    "zip": true
-  },
-  "deployment": {
-    "dev": {
-      "host": "",
-      "port": 22,
-      "user": "",
-      "pass": "",
-      "zip": false,
-      "timeout": 60000,
-      "remotePath": "/usr/local/static"
-    },
-    "test": {
-      "host": "",
-      "port": 22,
-      "user": "",
-      "pass": "",
-      "zip": true,
-      "timeout": 60000,
-      "remotePath": "/usr/local/static"
-    }
-  }
+    "path": "",
+    "zip": "myapp",
+    "enabled": true
+  }],
+  "deployments": [{
+    "host": "",
+    "port": 22,
+    "user": "",
+    "pass": "",
+    "timeout": 60000,
+    "remotePath": "/usr/local/static",
+    "enabled": true
+  }]
 }

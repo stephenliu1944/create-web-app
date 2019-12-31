@@ -1,64 +1,57 @@
-'use strict';
 import { task, src, dest, series, parallel } from 'gulp';
 import del from 'del';
 import compress from 'gulp-zip';
 import sftp from 'gulp-sftp-up4';
 import mergeStream from 'merge-stream';
-import { parcel, deployment } from './package.json';
+import { parcels, deployments } from './package.json';
 import { execSync } from 'child_process';
 
 const BUILD_PATH = 'build';                    // 编译文件
 const DIST_PATH = 'dist';                      // 目的地文件
-const { name, zip } = parcel;                  // 打包配置
-const packageNames = typeof name === 'string' ? [name] : name || [];
-const { dev, test } = deployment;
+const parcelList = Array.isArray(parcels) ? parcels : [parcels];
+const deploymentList = Array.isArray(deployments) ? deployments : [deployments];
 
+function isEnabled(config = {}) {
+    return config.enabled || config.enabled === undefined;
+}
+
+function trimSlash(name = '') {
+    return name.replace(/^\/*/, '').replace(/\/*$/, '');
+}
 // 清除 dist 目录
 task('clean', () => del([DIST_PATH]));
 
-// 文件拷贝到 dist 目录
-task('dist', () => {    
-    var stream = src(`${BUILD_PATH}/**`);
-    packageNames.forEach((name) => {
-        stream = stream.pipe(dest(`${DIST_PATH}/${name}/`));
-    });
+// 项目打包
+task('package', series('clean', () => {
+    // 遍历打包配置
+    var streams = parcelList.filter(isEnabled).map((parcel) => {
+        const { name = '', zip } = parcel;    // name 是必填项
+        const PROJECT_NAME = trimSlash(name);
+        const ZIP_NAME = zip || PROJECT_NAME;
 
-    return stream;
-});
-
-// 压缩静态资源
-task('zip', (cb) => {
-    if (!zip) {
-        return cb();
-    }
-
-    var streams = [];    
-    var withIndex = packageNames.length > 1;
-    packageNames.forEach((name, index) => {
-        var stream = src([`${DIST_PATH}/${name}/**`], { base: `${DIST_PATH}/` })
-            .pipe(compress(`${typeof zip === 'string' ? zip + (withIndex ? index : '') : name}.zip`));
-        streams.push(stream);
+        return src([`${BUILD_PATH}/${PROJECT_NAME}/**`], { base: `${BUILD_PATH}/` })
+                .pipe(compress(`${ZIP_NAME}.zip`));
     });
 
     return mergeStream(...streams).pipe(dest(DIST_PATH));
-});
-// 打包项目
-task('package', series('clean', 'dist', 'zip'));
+}));
 
-// 将静态资源发布到 dev 服务器
-task('deploy-dev', () => {
-    return src(dev.zip ? [`${DIST_PATH}/*.zip`] : [`${DIST_PATH}/**`, `!${DIST_PATH}/*.zip`])
-        .pipe(sftp(dev));
-});
+// 将静态资源部署到服务器
+task('deploy', () => {
+    // 遍历发布配置
+    var streams = deploymentList.filter(isEnabled).map((deployment) => {
+        var files = parcelList.filter(isEnabled).map((parcel) => {
+            const { name = '', zip } = parcel;    // name 是必填项
+            const ZIP_NAME = zip || trimSlash(name);
 
-// 将静态资源发布到 test 服务器
-task('deploy-test', () => {
-    return src(test.zip ? [`${DIST_PATH}/*.zip`] : [`${DIST_PATH}/**`, `!${DIST_PATH}/*.zip`])
-        .pipe(sftp(test));
-});
+            return `${DIST_PATH}/${ZIP_NAME}.zip`;
+        });
 
-// 同时部署到开发和测试服务器
-task('deploy-all', parallel('deploy-dev', 'deploy-test'));
+        return src(files).pipe(sftp(deployment));
+    });
+
+    return mergeStream(...streams);
+});
 
 task('git-push', (done) => {
     execSync('git add -A :/');
