@@ -118,7 +118,7 @@ npm install
 3. 同时启动 web 服务和 mock 服务, 运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
 
 ### 构建
-```json
+```js
 "build": {
     "title": "My App Dev",      // html 模板文件的 title 信息
     "path": "",                 // 应用访问的根路径, 如配置为"root", 需通过 http://localhost:8080/root 访问.
@@ -128,7 +128,7 @@ npm install
 注意该配置仅适用于开发环境, 生产环境需在 package.json > parcels 中配置.
 
 ### 服务
-```json
+```js
 "servers": {
     "local": 8080,      // web服务端口
     "mock": 3000        // mock服务端口
@@ -140,7 +140,7 @@ npm install
 proxiesd 的 key 为拦截的URL前缀, value 为最终访问的服务地址.  
 key 中括号内的字符串会被代理从URL中移除再请求目标服务器,  
 如: http://localhost:8080/proxy/user/1 > proxy > http://www.example.org/user/1
-```json
+```js
 "proxies": {
     "/api": "http://localhost:3000",
     "(/proxy)": "http://www.example.org"
@@ -149,10 +149,10 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 
 ### 全局变量
 可在 globals 中配置开发环境使用的全局变量, 在生产环境会全部变为false.
-```json
+```js
 "globals": {
     "__DEV__": true
-},
+}
 ```
 
 ## 代码检测
@@ -181,7 +181,7 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 
 ### 项目打包
 支持同时打包多份静态资源.
-```json
+```js
 "parcels": [{                 // object|array
     "name": string,           // 项目名称
     "title": string           // index.html 默认 title 信息.
@@ -195,7 +195,7 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 在 package.json > deployments 中配置发布到服务器的相关信息.  
 运行 /bin/deploy.bat (linux 运行 deploy.sh), 发布到配置的服务器上.
 
-```json
+```js
 "deployments": [{             // object|array
     "host": string,           // 主机IP
     "port": number,           // 端口
