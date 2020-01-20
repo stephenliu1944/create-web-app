@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
-import define from '@easytool/define';
+import define from '@easytool/define-config';
 import baseConfig from './webpack.config.base';
 import { devEnvironments, parcels } from './package.json';
 
