@@ -7,14 +7,14 @@ import baseConfig from './webpack.config.base';
 import { devEnvironments, parcels } from './package.json';
 
 const { globals } = devEnvironments;
-const parcelList = Array.isArray(parcels) ? parcels : [parcels];
+const ParcelList = Array.isArray(parcels) ? parcels : [parcels];
 
 function isEnabled(parcel = {}) {
     return parcel.enabled || parcel.enabled === undefined;
 }
 
-export default parcelList.filter(isEnabled).map((parcel, index) => {
-    return webpackMerge(baseConfig(parcel, index === 0), {
+export default ParcelList.filter(isEnabled).map(config => {
+    return webpackMerge(baseConfig(config), {
         mode: 'production',
         optimization: {
             // 代码压缩混淆

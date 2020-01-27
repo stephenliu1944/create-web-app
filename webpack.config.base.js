@@ -1,11 +1,13 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CleanWebpackPlugin from 'clean-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 
-export default function(config, clean = true) {
+const BUILD_PATH = 'build';
+
+export default function(config) {
     const { name = '', title, path: root } = config;
     const PROJECT_NAME = name ? name.replace(/^\/*/, '/').replace(/\/*$/, '') : '';          // dev 环境没有 name
     const ROOT_PATH = root ? root.replace(/^\/*/, '').replace(/\/*$/, '/') : '';
@@ -17,7 +19,7 @@ export default function(config, clean = true) {
         },
         output: {
             publicPath: '/',
-            path: path.resolve(__dirname, 'build' + PROJECT_NAME),
+            path: path.resolve(__dirname, BUILD_PATH + PROJECT_NAME),
             filename: `${ASSETS_PATH}/js/[name].[chunkhash].js`,
             chunkFilename: `${ASSETS_PATH}/js/[name].[chunkhash].js`    // chunk js file
         },
@@ -132,7 +134,9 @@ export default function(config, clean = true) {
         },
         plugins: [
             // 清除编译目录
-            clean && new CleanWebpackPlugin(['build']),
+            new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: [`${BUILD_PATH}/**/*`]
+            }),
             new MiniCssExtractPlugin({
                 filename: `${ASSETS_PATH}/css/[name].[contenthash].css`,
                 chunkFilename: `${ASSETS_PATH}/css/[name].[contenthash].css`   // chunk css file
@@ -153,6 +157,6 @@ export default function(config, clean = true) {
             }),
             // 文件大小写检测
             new CaseSensitivePathsPlugin()                      
-        ].filter(plugin => plugin)
+        ]
     };
 }
