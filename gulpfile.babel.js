@@ -1,4 +1,4 @@
-import { task, src, dest, series, parallel } from 'gulp';
+import { task, src, dest, series } from 'gulp';
 import del from 'del';
 import compress from 'gulp-zip';
 import sftp from 'gulp-sftp-up4';
@@ -18,11 +18,15 @@ function isEnabled(config = {}) {
 function trimSlash(name = '') {
     return name.replace(/^\/*/, '').replace(/\/*$/, '');
 }
+
+// 清除 build 目录
+task('clean-build', () => del([BUILD_PATH]));
+
 // 清除 dist 目录
-task('clean', () => del([DIST_PATH]));
+task('clean-dist', () => del([DIST_PATH]));
 
 // 项目打包
-task('package', series('clean', () => {
+task('package', series('clean-dist', () => {
     // 遍历打包配置
     var streams = parcelList.filter(isEnabled).map((parcel) => {
         const { name = '', zip } = parcel;    // name 是必填项

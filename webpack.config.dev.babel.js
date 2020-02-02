@@ -4,6 +4,7 @@ import webpackMerge from 'webpack-merge';
 import { settings } from '@easytool/proxy-config';
 import define from '@easytool/define-config';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import { devEnvironments } from './package.json';
 
@@ -45,6 +46,8 @@ export default webpackMerge(baseConfig(build), {
     plugins: [
         // check package size
         // new WebpackBundleAnalyzer.BundleAnalyzerPlugin(),
+        // 清除编译目录
+        new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
             ...define(globals),

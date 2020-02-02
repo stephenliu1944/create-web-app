@@ -1,6 +1,5 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
@@ -133,10 +132,6 @@ export default function(config) {
             }]
         },
         plugins: [
-            // 清除编译目录
-            new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: [`${BUILD_PATH}/**/*`]
-            }),
             new MiniCssExtractPlugin({
                 filename: `${ASSETS_PATH}/css/[name].[contenthash].css`,
                 chunkFilename: `${ASSETS_PATH}/css/[name].[contenthash].css`   // chunk css file
