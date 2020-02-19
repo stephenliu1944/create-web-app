@@ -91,7 +91,7 @@ export default function(config) {
                  * 第三方组件的css.
                  */
                 test: /\.css$/,
-                include: [path.resolve(__dirname, 'node_modules')],
+                include: path.resolve(__dirname, 'node_modules'),
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             }, {
                 /**
