@@ -17,8 +17,8 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.babel.js --colors",
     "mock": "mock-server ./mock/data --static ./mock/static --config ./mock/mock.config.js --watch",
     "start:mock": "concurrently \"cross-env npm start\" \"npm run mock\"",
-    "lint:js": "eslint -c .eslintrc.prod.json --fix",
-    "lint:css": "stylelint --cache --fix",
+    "lint:js": "eslint -c .eslintrc.prod.json src/ --ext .js,.jsx --fix",
+    "lint:css": "stylelint \"src/**/*.{css,less,scss}\" --cache --fix",
     "test": "jest",
     "package": "npm run build:prod && gulp package",
     "deploy": "npm run package && gulp deploy",
@@ -30,17 +30,14 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "src/**/*.{js,jsx}": [
-        "npm run lint:js",
-        "git add"
-      ],
-      "src/**/*.{css,less,scss}": [
-        "npm run lint:css",
-        "git add"
-      ],
-      "ignore": []
-    }
+    "src/**/*.{js,jsx}": [
+      "eslint -c .eslintrc.prod.json --fix",
+      "git add"
+    ],
+    "src/**/*.{css,less,scss}": [
+      "stylelint --cache --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
@@ -89,7 +86,7 @@
     "husky": "^1.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
-    "lint-staged": "^8.1.0",
+    "lint-staged": "^9.3.0",
     "merge-stream": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.2",
     "postcss-loader": "^3.0.0",
@@ -123,20 +120,24 @@
       "__DEV__": true
     }
   },
-  "parcels": [{
-    "name": "www.myapp.com",
-    "title": "My App",
-    "path": "",
-    "zip": "myapp",
-    "enabled": true
-  }],
-  "deployments": [{
-    "host": "",
-    "port": 22,
-    "user": "",
-    "pass": "",
-    "timeout": 60000,
-    "remotePath": "/usr/local/static",
-    "enabled": true
-  }]
+  "parcels": [
+    {
+      "name": "www.myapp.com",
+      "title": "My App",
+      "path": "",
+      "zip": "myapp",
+      "enabled": true
+    }
+  ],
+  "deployments": [
+    {
+      "host": "",
+      "port": 22,
+      "user": "",
+      "pass": "",
+      "timeout": 60000,
+      "remotePath": "/usr/local/static",
+      "enabled": true
+    }
+  ]
 }

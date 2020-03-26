@@ -159,8 +159,7 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 1. webpack 编译代码时, 会自动检测 js, jsx, css, less, scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
 2. git commit 时, 会再次执行代码检测, 并自动修复(仅限于支持自动修复的代码)后, 后再提交.
 
-### 局部代码忽略 stylelint 校验
-主要用于覆盖第三方UI库样式的情况
+### 忽略局部代码校验
 ```css
 /* stylelint-disable */
 :global {
@@ -169,6 +168,13 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
     }
 }
 /* stylelint-enable */
+```
+
+### 忽略第三方库校验
+```js
+"rules": {
+    "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$|^ant-"
+}
 ```
 
 ## 单元测试
