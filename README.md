@@ -1,7 +1,7 @@
-# Scaffold Web React
+# my-project
 
-## 项目介绍
-该脚手架用于开发基于 React 的 Web 应用.
+# 脚手架介绍
+脚手架用于开发基于 React 的 Web 应用.
 
 ## 目录结构
 ```
