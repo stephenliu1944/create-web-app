@@ -14,13 +14,16 @@ function isEnabled(parcel = {}) {
 }
 
 export default ParcelList.filter(isEnabled).map(config => {
+    var { sourceMap } = config;
+
     return webpackMerge(baseConfig(config), {
         mode: 'production',
+        devtool: typeof sourceMap === 'string' ? sourceMap : sourceMap && 'source-map',
         optimization: {
             // 代码压缩混淆
             minimizer: [new UglifyJsPlugin({
                 extractComments: true,
-                sourceMap: true
+                sourceMap: true             // 是否支持sourceMap, 不是开起sourceMap
             })]
         },
         module: {

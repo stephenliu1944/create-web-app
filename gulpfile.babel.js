@@ -29,9 +29,9 @@ task('clean-dist', () => del([DIST_PATH]));
 task('package', series('clean-dist', () => {
     // 遍历打包配置
     var streams = parcelList.filter(isEnabled).map((parcel) => {
-        const { name = '', zip } = parcel;    // name 是必填项
+        const { name = '', zipName } = parcel;    // name 是必填项
         const PROJECT_NAME = trimSlash(name);
-        const ZIP_NAME = zip || PROJECT_NAME;
+        const ZIP_NAME = zipName || PROJECT_NAME;
 
         return src([`${BUILD_PATH}/${PROJECT_NAME}/**`], { base: `${BUILD_PATH}/` })
                 .pipe(compress(`${ZIP_NAME}.zip`));
@@ -45,8 +45,8 @@ task('deploy', () => {
     // 遍历发布配置
     var streams = deploymentList.filter(isEnabled).map((deployment) => {
         var files = parcelList.filter(isEnabled).map((parcel) => {
-            const { name = '', zip } = parcel;    // name 是必填项
-            const ZIP_NAME = zip || trimSlash(name);
+            const { name = '', zipName } = parcel;    // name 是必填项
+            const ZIP_NAME = zipName || trimSlash(name);
 
             return `${DIST_PATH}/${ZIP_NAME}.zip`;
         });

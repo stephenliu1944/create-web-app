@@ -106,7 +106,7 @@
   "devEnvironments": {
     "build": {
       "title": "My App Dev",
-      "path": "",
+      "basePath": "",
       "https": false
     },
     "servers": {
@@ -124,8 +124,9 @@
     {
       "name": "www.myapp.com",
       "title": "My App",
-      "path": "",
-      "zip": "myapp",
+      "basePath": "",
+      "zipName": "myapp",
+      "sourceMap": false,
       "enabled": true
     }
   ],

@@ -121,7 +121,7 @@ npm install
 ```js
 "build": {
     "title": "My App Dev",      // html 模板文件的 title 信息
-    "path": "",                 // 应用访问的根路径, 如配置为"root", 需通过 http://localhost:8080/root 访问.
+    "basePath": "",             // 应用访问的根路径, 如配置为"root", 需通过 http://localhost:8080/root 访问.
     "https": false              // 是否使用 https 协议访问
 }
 ```
@@ -173,7 +173,7 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 ### 忽略第三方库校验
 ```js
 "rules": {
-    "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$|^ant-"
+    "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$|^ant-"       // 忽略 antd ui 校验
 }
 ```
 
@@ -188,12 +188,13 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 ### 项目打包
 支持同时打包多份静态资源.
 ```js
-"parcels": [{                 // object|array
-    "name": string,           // 项目名称
-    "title": string           // index.html 默认 title 信息.
-    "path": string,           // 访问静态资源的根路径, 类似 webpack.publishPath, 用于在相同域名或IP下部署多个单页应用, 可通过根路径来区分不同的静态资源, 默认为空.
-    "zip": string,            // 生成的zip文件名, 默认为项目名称.
-    "enabled": boolean        // 是否启用该配置, 默认为 true.
+"parcels": [{                       // object|array
+    "name": string,                 // 项目名称
+    "title": string                 // index.html 默认 title 信息.
+    "basePath": string,             // 访问静态资源的根路径, 用于在相同域名或IP下部署多个单页应用, 可通过根路径来区分不同的静态资源, 默认为空.
+    "zipName": string,              // 生成的zip文件名, 默认为项目名称.
+    "sourceMap": boolean|string,    // 生成 source map, string 支持 devtool 选项, 推荐使用: source-map, hidden-source-map, nosources-source-map.
+    "enabled": boolean              // 是否启用该配置, 默认为 true.
 }]
 ```
 
