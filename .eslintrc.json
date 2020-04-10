@@ -1,17 +1,8 @@
 {
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    },
-    "plugins": ["react"],
     "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 6,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
+        "sourceType": "module"
     },
     "env": {
         "es6": true,
@@ -71,18 +62,6 @@
         "object-curly-spacing": ["error", "always"],
         "space-before-blocks": ["error", "always"],
         "space-before-function-paren": ["error", "never"],
-        "space-unary-ops": ["error", {"words": true, "nonwords": false}],
-        "jsx-quotes": "error",
-        "react/no-array-index-key": "warn",
-        "react/no-deprecated": "error",
-        "react/no-find-dom-node": "error",
-        "react/no-is-mounted": "error",
-        "react/no-multi-comp": "error",
-        "react/no-string-refs": "error",
-        "react/no-unused-prop-types": "error",
-        "react/prefer-es6-class": "off",
-        "react/prop-types": "off",
-        "react/jsx-uses-vars": "warn",
-        "react/jsx-uses-react": "error"
+        "space-unary-ops": ["error", {"words": true, "nonwords": false}]     
     }
 }

@@ -31,7 +31,7 @@ export default webpackMerge(baseConfig(build), {
             /**
              * eslint代码规范校验
              */
-            test: /\.(js|jsx)$/,
+            test: /\.(js)$/,
             enforce: 'pre',
             include: path.resolve(__dirname, 'src'),
             use: [{

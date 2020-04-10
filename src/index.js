@@ -1,9 +1,9 @@
 import 'Images/favicon.ico';
 import 'Styles/main.css';
 import http from '@easytool/http';
-import React from 'react';
-import { render } from 'react-dom';
-import Root from 'Routes/Root';
+import Home from 'Containers/home/Home';
+import MainLayout from './layouts/mainLayout/MainLayout';
+import { render } from 'Utils/dom';
 
 // set http default options
 http.settings({
@@ -12,6 +12,6 @@ http.settings({
 });
 
 render(
-    <Root />,
+    MainLayout(Home),
     document.getElementById('app')
 );

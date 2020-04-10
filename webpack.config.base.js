@@ -16,7 +16,7 @@ export default function(config) {
     
     return {
         entry: {
-            main: ['./src/index.jsx']
+            main: ['./src/index.js']
         },
         output: {
             publicPath: '/',
@@ -25,7 +25,7 @@ export default function(config) {
             chunkFilename: `${ASSETS_PATH}/js/[name].[chunkhash].js`    // chunk js file
         },
         resolve: {
-            extensions: ['.js', '.jsx', '.css', '.less', '.scss'],
+            extensions: ['.js', '.css', '.less', '.scss'],
             alias: {
                 Components: path.resolve(__dirname, 'src/components/'),
                 Config: path.resolve(__dirname, 'src/config/'),
@@ -56,7 +56,7 @@ export default function(config) {
         },
         module: {
             rules: [{
-                test: /\.(js|jsx)?$/,
+                test: /\.(js)?$/,
                 exclude: /node_modules/,
                 use: [{
                     loader: 'babel-loader',

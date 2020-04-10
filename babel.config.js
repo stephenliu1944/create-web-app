@@ -15,8 +15,7 @@ module.exports = function(api) {
                 'ie >= 9'
             ],
             modules: 'commonjs'     // transform esm to cjs, false to keep esm.
-        }],
-        '@babel/preset-react'
+        }]
     ];
     var plugins = [
         '@babel/plugin-transform-runtime', 
