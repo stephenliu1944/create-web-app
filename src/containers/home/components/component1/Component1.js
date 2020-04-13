@@ -1,4 +1,4 @@
-import styles from './component1.scss';
+import styles from './component1.css';
 
 export default function Component1() {
     return `
