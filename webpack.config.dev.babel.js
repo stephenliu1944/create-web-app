@@ -1,8 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import { settings } from '@easytool/proxy-config';
-import define from '@easytool/define-config';
+import proxyConfig from '@easytool/proxy-config';
+import defineConfig from '@easytool/define-config';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import baseConfig from './webpack.config.base';
@@ -14,6 +14,10 @@ export default webpackMerge(baseConfig(build), {
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true'
+        },
         host: '0.0.0.0',
         port: servers.local,
         https: build.https,
@@ -23,7 +27,7 @@ export default webpackMerge(baseConfig(build), {
         historyApiFallback: true,   // browserHistory路由
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
-            ...settings(proxies)
+            ...proxyConfig(proxies)
         }
     },
     module: {
@@ -50,7 +54,7 @@ export default webpackMerge(baseConfig(build), {
         new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...define(globals),
+            ...defineConfig(globals),
             'process.env.NODE_ENV': JSON.stringify('development')
         })
     ]

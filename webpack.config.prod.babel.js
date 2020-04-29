@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
-import define from '@easytool/define-config';
+import defineConfig from '@easytool/define-config';
 import baseConfig from './webpack.config.base';
 import { devEnvironments, parcels } from './package.json';
 
@@ -46,7 +46,7 @@ export default ParcelList.filter(isEnabled).map(config => {
         plugins: [
             // 配置全局变量
             new webpack.DefinePlugin({
-                ...define(globals, false),
+                ...defineConfig(globals, false),
                 'process.env.NODE_ENV': JSON.stringify('production')
             })
         ]

@@ -68,8 +68,7 @@ export default function(config) {
                 /**
                  * 主项目的css
                  */
-                // test: /\.(css|less|scss)$/,
-                test: /\.(css)$/,
+                test: /\.(css|less|scss)$/,
                 include: path.resolve(__dirname, 'src'),
                 use: [
                     MiniCssExtractPlugin.loader,
