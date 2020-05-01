@@ -17,7 +17,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.babel.js --colors",
     "mock": "mock-server ./mock/data --static ./mock/static --config ./mock/mock.config.js --watch",
     "start:mock": "concurrently \"cross-env npm start\" \"npm run mock\"",
-    "lint:js": "eslint -c .eslintrc.prod.json src/ --ext .js --fix",
+    "lint:js": "eslint -c .eslintrc.prod.json src/ --ext .js,.jsx --fix",
     "lint:css": "stylelint \"src/**/*.{css,less,scss}\" --cache --fix",
     "test": "jest",
     "package": "npm run build:prod && gulp package",
@@ -30,7 +30,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js}": [
+    "src/**/*.{js,jsx}": [
       "eslint -c .eslintrc.prod.json --fix",
       "git add"
     ],
@@ -41,7 +41,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@easytool/http": "^0.1.0"
+    "@easytool/http": "^0.1.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-router": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",
@@ -53,6 +56,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@easytool/define-config": "^0.1.0",
     "@easytool/mock-server": "^0.1.0",
@@ -68,8 +72,12 @@
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "del": "^4.1.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.6.0",
     "eslint-loader": "^2.1.0",
+    "eslint-plugin-react": "^7.12.3",
+    "express": "^4.17.1",
     "file-loader": "^2.0.0",
     "gulp": "^4.0.0",
     "gulp-sftp-up4": "^0.1.8",

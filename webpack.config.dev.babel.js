@@ -3,8 +3,8 @@ import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
 import proxyConfig from '@easytool/proxy-config';
 import defineConfig from '@easytool/define-config';
-import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
 import { devEnvironments } from './package.json';
 
@@ -35,7 +35,7 @@ export default webpackMerge(baseConfig(build), {
             /**
              * eslint代码规范校验
              */
-            test: /\.(js)$/,
+            test: /\.(js|jsx)$/,
             enforce: 'pre',
             include: path.resolve(__dirname, 'src'),
             use: [{

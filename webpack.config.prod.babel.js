@@ -31,7 +31,7 @@ export default ParcelList.filter(isEnabled).map(config => {
                 /**
                  * eslint代码规范校验
                  */
-                test: /\.(js)$/,
+                test: /\.(js|jsx)$/,
                 enforce: 'pre',
                 include: path.resolve(__dirname, 'src'),
                 use: [{

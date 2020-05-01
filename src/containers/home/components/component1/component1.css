@@ -1,5 +1,4 @@
 .component1{
-    border: 1px solid blue;
-    width: 500px;
-    margin: 10px auto;
+    text-align: center;
+    border: 1px solid;
 }

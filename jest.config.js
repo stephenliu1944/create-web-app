@@ -6,6 +6,9 @@ module.exports = {
         NODE_ENV: 'test',
         __DEV__: true
     },
+    setupFilesAfterEnv: [
+        '<rootDir>/enzyme.config.js'
+    ],
     // Indicates whether each individual test should be reported during the run
     verbose: true,
     // Automatically clear mock calls and instances between every test
@@ -14,12 +17,12 @@ module.exports = {
     coverageDirectory: 'coverage',
     // The glob patterns Jest uses to detect test files
     testMatch: [
-        '<rootDir>/test/**/*.(js)'
+        '<rootDir>/test/**/*.(js|jsx)'
     ],
     // An array of directory names to be searched recursively up from the requiring module's location
     moduleDirectories: ['node_modules', 'src'],
     // An array of file extensions your modules use
-    moduleFileExtensions: ['js', 'json'],
+    moduleFileExtensions: ['js', 'json', 'jsx'],
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
         '^Components(.*)$': '<rootDir>/src/components$1',
@@ -37,7 +40,7 @@ module.exports = {
     },
     // A map from regular expressions to paths to transformers
     transform: {
-        '^.+\\.(js)$': 'babel-jest',
+        '^.+\\.(js|jsx)$': 'babel-jest',
         '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/fileTransformer.js'
     }
 };
