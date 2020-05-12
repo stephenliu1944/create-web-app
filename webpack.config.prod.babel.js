@@ -1,7 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import defineConfig from '@easytool/define-config';
 import baseConfig from './webpack.config.base';
 import { devEnvironments, parcels } from './package.json';
@@ -15,16 +16,19 @@ function isEnabled(parcel = {}) {
 
 export default ParcelList.filter(isEnabled).map(config => {
     var { sourceMap } = config;
+    var useSourceMap = !!sourceMap;
+    var sourceMapType = typeof sourceMap === 'string' ? sourceMap : 'source-map';
 
     return webpackMerge(baseConfig(config), {
         mode: 'production',
-        devtool: typeof sourceMap === 'string' ? sourceMap : sourceMap && 'source-map',
+        devtool: useSourceMap && sourceMapType,
         optimization: {
-            // 代码压缩混淆
-            minimizer: [new UglifyJsPlugin({
-                extractComments: true,
-                sourceMap: true             // 是否支持sourceMap, 不是开起sourceMap
-            })]
+            minimizer: [
+                new TerserPlugin({
+                    sourceMap: useSourceMap     // 是否支持sourceMap, 不是生成sourceMap
+                }),
+                new OptimizeCSSAssetsPlugin()
+            ]
         },
         module: {
             rules: [{
@@ -46,8 +50,7 @@ export default ParcelList.filter(isEnabled).map(config => {
         plugins: [
             // 配置全局变量
             new webpack.DefinePlugin({
-                ...defineConfig(globals, false),
-                'process.env.NODE_ENV': JSON.stringify('production')
+                ...defineConfig(globals, false)
             })
         ]
     });

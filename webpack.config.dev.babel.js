@@ -54,8 +54,7 @@ export default webpackMerge(baseConfig(build), {
         new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(globals),
-            'process.env.NODE_ENV': JSON.stringify('development')
+            ...defineConfig(globals)
         })
     ]
 });
