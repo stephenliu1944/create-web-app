@@ -142,7 +142,7 @@ export default function(config) {
                 title: title,
                 faviconPath: ASSETS_PATH,
                 filename: BASE_PATH + 'index.html',
-                template: './src/template.html'
+                template: './src/template.ejs'
             }),
             // style规范校验
             new StyleLintPlugin({
