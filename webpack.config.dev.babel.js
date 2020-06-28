@@ -8,9 +8,9 @@ import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
 import { devEnvironments } from './package.json';
 
-const { servers, proxies, globals, build } = devEnvironments;
+const { servers, proxies, globals } = devEnvironments;
 
-export default webpackMerge(baseConfig(build), {
+export default webpackMerge(baseConfig(), {
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
@@ -20,7 +20,7 @@ export default webpackMerge(baseConfig(build), {
         },
         host: '0.0.0.0',
         port: servers.local,
-        https: build.https,
+        https: false,
         inline: true,
         compress: true,             // 开起 gzip 压缩
         disableHostCheck: true,
@@ -54,7 +54,8 @@ export default webpackMerge(baseConfig(build), {
         new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(globals)
+            ...defineConfig(globals),
+            'process.env.NODE_ENV': JSON.stringify('development')
         })
     ]
 });

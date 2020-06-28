@@ -117,16 +117,6 @@ npm install
 2. 启动 mock 服务, 运行 /bin/mock.bat (linux 运行 mock.sh). 默认通过 http://localhost:3000 访问.
 3. 同时启动 web 服务和 mock 服务, 运行 /bin/startup-mock.bat (linux 运行 startup-mock.sh)  
 
-### 构建
-```js
-"build": {
-    "title": "My App Dev",      // html 模板文件的 title 信息
-    "basePath": "",             // 应用访问的根路径, 如配置为"root", 需通过 http://localhost:8080/root 访问.
-    "https": false              // 是否使用 https 协议访问
-}
-```
-注意该配置仅适用于开发环境, 生产环境需在 package.json > parcels 中配置.
-
 ### 服务
 ```js
 "servers": {
@@ -182,20 +172,17 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 运行 /bin/test.bat (linux 运行 test.sh)  
 
 ## 生产环境
-在 package.json > parcels 中配置相关信息.  
-运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成打包后的zip文件, 供发布使用.
+在 package.json > parcel 中配置相关信息.  
+运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成生产环境文件, 供发布使用.
 
 ### 项目打包
 支持同时打包多份静态资源.
 ```js
-"parcels": [{                       // object|array
-    "name": string,                 // 项目名称
-    "title": string                 // index.html 默认 title 信息.
-    "basePath": string,             // 访问静态资源的根路径, 用于在相同域名或IP下部署多个单页应用, 可通过根路径来区分不同的静态资源, 默认为空.
-    "zipName": string,              // 生成的zip文件名, 默认为项目名称.
-    "sourceMap": boolean|string,    // 生成 source map, string 支持 devtool 选项, 推荐使用: source-map, hidden-source-map, nosources-source-map.
-    "enabled": boolean              // 是否启用该配置, 默认为 true.
-}]
+"parcel": {
+    "name": string,               // 包名称, 默认使用 package.json > name.
+    "publicPath": string,         // webpack 的 publicPath 配置.
+    "zip": boolean                // 打包时是否生成压缩文件.
+}
 ```
 
 ### 自动发布
