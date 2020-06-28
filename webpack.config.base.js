@@ -4,22 +4,18 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 
-const BUILD = 'build';
-const ASSETS = 'assets';
+const BUILD_PATH = 'build';
+const ASSETS_PATH = 'assets';
 
-export default function(config) {
-    const { name = '', title, basePath } = config;
-    const PROJECT_NAME = name ? name.replace(/^\/*/, '/').replace(/\/*$/, '') : '';          // dev 环境没有 name
-    const BASE_PATH = basePath ? basePath.replace(/^\/*/, '').replace(/\/*$/, '/') : '';
-    const BUILD_PATH = BUILD + PROJECT_NAME;             
-    const ASSETS_PATH = BASE_PATH + ASSETS;             
+export default function(config = {}) {
+    const { publicPath = '/' } = config;      
     
     return {
         entry: {
             main: ['./src/index.js']
         },
         output: {
-            publicPath: '/',
+            publicPath,
             path: path.resolve(__dirname, BUILD_PATH),
             filename: `${ASSETS_PATH}/js/[name].[chunkhash].js`,
             chunkFilename: `${ASSETS_PATH}/js/[name].[chunkhash].js`    // chunk js file
@@ -139,10 +135,9 @@ export default function(config) {
             }),
             // index.html 模板插件
             new HtmlWebpackPlugin({                             
-                title: title,
-                faviconPath: ASSETS_PATH,
-                filename: BASE_PATH + 'index.html',
-                template: './src/template.ejs'
+                filename: 'index.html',
+                template: './src/template.ejs',
+                faviconPath: `${ASSETS_PATH}/images/favicon.ico`
             }),
             // style规范校验
             new StyleLintPlugin({

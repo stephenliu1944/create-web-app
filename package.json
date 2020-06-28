@@ -1,5 +1,5 @@
 {
-  "name": "scaffold-web-es6",
+  "name": "my-project",
   "version": "0.1.0",
   "description": "This scaffolding use for development web application by ES6.",
   "license": "MIT",
@@ -97,11 +97,6 @@
     "webpack-merge": "^4.1.4"
   },
   "devEnvironments": {
-    "build": {
-      "title": "Development",
-      "basePath": "",
-      "https": false
-    },
     "servers": {
       "local": 8080,
       "mock": 3000
@@ -113,16 +108,11 @@
       "__DEV__": true
     }
   },
-  "parcels": [
-    {
-      "name": "www.myapp.com",
-      "title": "My App",
-      "basePath": "",
-      "zipName": "myapp",
-      "sourceMap": false,
-      "enabled": true
-    }
-  ],
+  "parcel": {
+    "name": "my-project",
+    "publicPath": "/",
+    "zip": true
+  },
   "deployments": [
     {
       "host": "",
