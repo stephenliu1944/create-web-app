@@ -6,6 +6,7 @@ import StyleLintPlugin from 'stylelint-webpack-plugin';
 
 const BUILD_PATH = 'build';
 const ASSETS_PATH = 'assets';
+const FILE_HASH = '.[contenthash:8]';
 
 export default function(config = {}) {
     const { publicPath = '/' } = config;      
@@ -17,8 +18,8 @@ export default function(config = {}) {
         output: {
             publicPath,
             path: path.resolve(__dirname, BUILD_PATH),
-            filename: `${ASSETS_PATH}/js/[name].[chunkhash].js`,
-            chunkFilename: `${ASSETS_PATH}/js/[name].[chunkhash].js`    // chunk js file
+            filename: `${ASSETS_PATH}/js/[name]${FILE_HASH}.js`,
+            chunkFilename: `${ASSETS_PATH}/js/[name].chunk${FILE_HASH}.js`
         },
         resolve: {
             extensions: ['.js', '.css', '.less', '.scss'],
@@ -100,7 +101,7 @@ export default function(config = {}) {
                     loader: 'url-loader',
                     options: {
                         limit: 10,
-                        name: `${ASSETS_PATH}/fonts/[name]_[hash].[ext]`
+                        name: `${ASSETS_PATH}/fonts/[name]${FILE_HASH}.[ext]`
                     }
                 }]
             }, {
@@ -113,7 +114,7 @@ export default function(config = {}) {
                     loader: 'url-loader',
                     options: {
                         limit: 10,
-                        name: `${ASSETS_PATH}/images/[name]_[hash].[ext]`
+                        name: `${ASSETS_PATH}/images/[name]${FILE_HASH}.[ext]`
                     }
                 }]
             }, {
@@ -130,8 +131,8 @@ export default function(config = {}) {
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: `${ASSETS_PATH}/css/[name].[contenthash].css`,
-                chunkFilename: `${ASSETS_PATH}/css/[name].[contenthash].css`   // chunk css file
+                filename: `${ASSETS_PATH}/css/[name]${FILE_HASH}.css`,
+                chunkFilename: `${ASSETS_PATH}/css/[name].chunk${FILE_HASH}.css`   // chunk css file
             }),
             // index.html 模板插件
             new HtmlWebpackPlugin({                             
