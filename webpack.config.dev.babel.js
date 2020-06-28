@@ -1,29 +1,33 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import { settings } from '@easytool/proxy-config';
-import define from '@easytool/define-config';
-import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
+import proxyConfig from '@easytool/proxy-config';
+import defineConfig from '@easytool/define-config';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
 import { devEnvironments } from './package.json';
 
-const { servers, proxies, globals, build } = devEnvironments;
+const { servers, proxies, globals } = devEnvironments;
 
-export default webpackMerge(baseConfig(build), {
+export default webpackMerge(baseConfig(), {
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true'
+        },
         host: '0.0.0.0',
         port: servers.local,
-        https: build.https,
+        https: false,
         inline: true,
         compress: true,             // 开起 gzip 压缩
         disableHostCheck: true,
         historyApiFallback: true,   // browserHistory路由
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
-            ...settings(proxies)
+            ...proxyConfig(proxies)
         }
     },
     module: {
@@ -31,7 +35,7 @@ export default webpackMerge(baseConfig(build), {
             /**
              * eslint代码规范校验
              */
-            test: /\.(js)$/,
+            test: /\.(js|jsx)$/,
             enforce: 'pre',
             include: path.resolve(__dirname, 'src'),
             use: [{
@@ -50,7 +54,7 @@ export default webpackMerge(baseConfig(build), {
         new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...define(globals),
+            ...defineConfig(globals),
             'process.env.NODE_ENV': JSON.stringify('development')
         })
     ]

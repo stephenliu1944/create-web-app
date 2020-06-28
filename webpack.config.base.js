@@ -4,28 +4,25 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 
-const BUILD = 'build';
-const ASSETS = 'assets';
+const BUILD_PATH = 'build';
+const ASSETS_PATH = 'assets';
+const FILE_HASH = '.[contenthash:8]';
 
-export default function(config) {
-    const { name = '', title, basePath } = config;
-    const PROJECT_NAME = name ? name.replace(/^\/*/, '/').replace(/\/*$/, '') : '';          // dev 环境没有 name
-    const BASE_PATH = basePath ? basePath.replace(/^\/*/, '').replace(/\/*$/, '/') : '';
-    const BUILD_PATH = BUILD + PROJECT_NAME;             
-    const ASSETS_PATH = BASE_PATH + ASSETS;             
+export default function(config = {}) {
+    const { publicPath = '/' } = config;      
     
     return {
         entry: {
-            main: ['./src/index.js']
+            main: ['./src/index.jsx']
         },
         output: {
-            publicPath: '/',
+            publicPath,
             path: path.resolve(__dirname, BUILD_PATH),
-            filename: `${ASSETS_PATH}/js/[name].[chunkhash].js`,
-            chunkFilename: `${ASSETS_PATH}/js/[name].[chunkhash].js`    // chunk js file
+            filename: `${ASSETS_PATH}/js/[name]${FILE_HASH}.js`,
+            chunkFilename: `${ASSETS_PATH}/js/[name].chunk${FILE_HASH}.js`
         },
         resolve: {
-            extensions: ['.js', '.css', '.less', '.scss'],
+            extensions: ['.js', '.jsx', '.css', '.less', '.scss'],
             alias: {
                 Components: path.resolve(__dirname, 'src/components/'),
                 Config: path.resolve(__dirname, 'src/config/'),
@@ -55,8 +52,9 @@ export default function(config) {
             noEmitOnErrors: true
         },
         module: {
+            // TODO: oneOf[]
             rules: [{
-                test: /\.(js)?$/,
+                test: /\.(js|jsx)?$/,
                 exclude: /node_modules/,
                 use: [{
                     loader: 'babel-loader',
@@ -68,8 +66,7 @@ export default function(config) {
                 /**
                  * 主项目的css
                  */
-                // test: /\.(css|less|scss)$/,
-                test: /\.(css)$/,
+                test: /\.(css|less|scss)$/,
                 include: path.resolve(__dirname, 'src'),
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -105,7 +102,7 @@ export default function(config) {
                     loader: 'url-loader',
                     options: {
                         limit: 10,
-                        name: `${ASSETS_PATH}/fonts/[name]_[hash].[ext]`
+                        name: `${ASSETS_PATH}/fonts/[name]${FILE_HASH}.[ext]`
                     }
                 }]
             }, {
@@ -118,7 +115,7 @@ export default function(config) {
                     loader: 'url-loader',
                     options: {
                         limit: 10,
-                        name: `${ASSETS_PATH}/images/[name]_[hash].[ext]`
+                        name: `${ASSETS_PATH}/images/[name]${FILE_HASH}.[ext]`
                     }
                 }]
             }, {
@@ -135,15 +132,14 @@ export default function(config) {
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: `${ASSETS_PATH}/css/[name].[contenthash].css`,
-                chunkFilename: `${ASSETS_PATH}/css/[name].[contenthash].css`   // chunk css file
+                filename: `${ASSETS_PATH}/css/[name]${FILE_HASH}.css`,
+                chunkFilename: `${ASSETS_PATH}/css/[name].chunk${FILE_HASH}.css`   // chunk css file
             }),
             // index.html 模板插件
             new HtmlWebpackPlugin({                             
-                title: title,
-                faviconPath: ASSETS_PATH,
-                filename: BASE_PATH + 'index.html',
-                template: './src/template.html'
+                filename: 'index.html',
+                template: './src/template.ejs',
+                faviconPath: `${ASSETS_PATH}/images/favicon.ico`
             }),
             // style规范校验
             new StyleLintPlugin({

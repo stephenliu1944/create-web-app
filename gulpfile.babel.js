@@ -3,20 +3,16 @@ import del from 'del';
 import compress from 'gulp-zip';
 import sftp from 'gulp-sftp-up4';
 import mergeStream from 'merge-stream';
-import { parcels, deployments } from './package.json';
+import { name, parcel, deployments } from './package.json';
 import { execSync } from 'child_process';
 
+const packageName = parcel.name || name;       // 打包名
 const BUILD_PATH = 'build';                    // 编译文件
 const DIST_PATH = 'dist';                      // 目的地文件
-const parcelList = Array.isArray(parcels) ? parcels : [parcels];
 const deploymentList = Array.isArray(deployments) ? deployments : [deployments];
 
 function isEnabled(config = {}) {
     return config.enabled || config.enabled === undefined;
-}
-
-function trimSlash(name = '') {
-    return name.replace(/^\/*/, '').replace(/\/*$/, '');
 }
 
 // 清除 build 目录
@@ -27,31 +23,27 @@ task('clean-dist', () => del([DIST_PATH]));
 
 // 项目打包
 task('package', series('clean-dist', () => {
-    // 遍历打包配置
-    var streams = parcelList.filter(isEnabled).map((parcel) => {
-        const { name = '', zipName } = parcel;    // name 是必填项
-        const PROJECT_NAME = trimSlash(name);
-        const ZIP_NAME = zipName || PROJECT_NAME;
+    const { zip } = parcel;
+    let stream = src([`${BUILD_PATH}/**`], { base: `${BUILD_PATH}/` });
 
-        return src([`${BUILD_PATH}/${PROJECT_NAME}/**`], { base: `${BUILD_PATH}/` })
-                .pipe(compress(`${ZIP_NAME}.zip`));
-    });
+    if (zip) {
+        return stream.pipe(compress(`${packageName}.zip`)).pipe(dest(DIST_PATH));
+    }
 
-    return mergeStream(...streams).pipe(dest(DIST_PATH));
+    return stream.pipe(dest(`${DIST_PATH}/${packageName}`));
 }));
 
 // 将静态资源部署到服务器
 task('deploy', () => {
     // 遍历发布配置
     var streams = deploymentList.filter(isEnabled).map((deployment) => {
-        var files = parcelList.filter(isEnabled).map((parcel) => {
-            const { name = '', zipName } = parcel;    // name 是必填项
-            const ZIP_NAME = zipName || trimSlash(name);
+        const { zip } = parcel;
+        let file = `${DIST_PATH}/${packageName}`;
 
-            return `${DIST_PATH}/${ZIP_NAME}.zip`;
-        });
-
-        return src(files).pipe(sftp(deployment));
+        if (zip) {
+            file += '.zip';
+        }
+        return src(file).pipe(sftp(deployment));
     });
 
     return mergeStream(...streams);

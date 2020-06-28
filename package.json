@@ -1,5 +1,5 @@
 {
-  "name": "scaffold-web-react",
+  "name": "my-project",
   "version": "0.1.0",
   "description": "This scaffolding use for development web application by React.",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.babel.js --colors",
     "mock": "mock-server ./mock/data --static ./mock/static --config ./mock/mock.config.js --watch",
     "start:mock": "concurrently \"cross-env npm start\" \"npm run mock\"",
-    "lint:js": "eslint -c .eslintrc.prod.json src/ --ext .js --fix",
+    "lint:js": "eslint -c .eslintrc.prod.json src/ --ext .js,.jsx --fix",
     "lint:css": "stylelint \"src/**/*.{css,less,scss}\" --cache --fix",
     "test": "jest",
     "package": "npm run build:prod && gulp package",
@@ -30,7 +30,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js}": [
+    "src/**/*.{js,jsx}": [
       "eslint -c .eslintrc.prod.json --fix",
       "git add"
     ],
@@ -41,7 +41,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "@easytool/http": "^0.1.0"
+    "@easytool/http": "^0.1.4",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-router": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",
@@ -53,6 +56,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@easytool/define-config": "^0.1.0",
     "@easytool/mock-server": "^0.1.0",
@@ -68,26 +72,31 @@
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "del": "^4.1.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.6.0",
     "eslint-loader": "^2.1.0",
+    "eslint-plugin-react": "^7.12.3",
+    "express": "^4.17.1",
     "file-loader": "^2.0.0",
     "gulp": "^4.0.0",
     "gulp-sftp-up4": "^0.1.8",
     "gulp-zip": "^4.2.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^4.3.0",
     "husky": "^1.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
     "lint-staged": "^9.3.0",
     "merge-stream": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.0",
     "postcss-simple-vars": "^5.0.2",
     "style-loader": "^0.23.0",
     "stylelint": "^10.1.0",
     "stylelint-webpack-plugin": "^0.10.5",
-    "uglifyjs-webpack-plugin": "^2.0.1",
+    "terser-webpack-plugin": "^2.3.6",
     "url-loader": "^1.1.1",
     "webpack": "^4.19.0",
     "webpack-bundle-analyzer": "^3.3.2",
@@ -96,11 +105,6 @@
     "webpack-merge": "^4.1.4"
   },
   "devEnvironments": {
-    "build": {
-      "title": "My App Dev",
-      "basePath": "",
-      "https": false
-    },
     "servers": {
       "local": 8080,
       "mock": 3000
@@ -112,16 +116,11 @@
       "__DEV__": true
     }
   },
-  "parcels": [
-    {
-      "name": "www.myapp.com",
-      "title": "My App",
-      "basePath": "",
-      "zipName": "myapp",
-      "sourceMap": false,
-      "enabled": true
-    }
-  ],
+  "parcel": {
+    "name": "my-project",
+    "publicPath": "/",
+    "zip": true
+  },
   "deployments": [
     {
       "host": "",
