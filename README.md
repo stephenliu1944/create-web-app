@@ -1,7 +1,7 @@
 # my-project
 
 # 脚手架介绍
-脚手架用于开发基于 ES6 的 Web 应用.
+用于开发基于 ES6 的 Web 应用.
 
 ## 目录结构
 ```
@@ -103,6 +103,21 @@ node            v8+
 下载项目后在项目根目录执行
 ```
 npm install
+```
+
+## CSS处理
+默认使用 PostCSS 转换 css 文件, 可以在 postcss.config.js 中扩展插件.
+
+### 支持less
+释放 webpack.config.base.js 配置中的 less-loader 注释, 并安装依赖:
+```
+npm i -D less less-loader
+```
+
+### 支持sass
+释放 webpack.config.base.js 配置中的 sass-loader 注释, 并安装依赖:
+```
+npm i -D node-sass sass-loader
 ```
 
 ## 开发环境
