@@ -1,7 +1,7 @@
 # my-project
 
 # 脚手架介绍
-脚手架用于开发基于 React 的 Web 应用.
+用于开发基于 React 的 Web 应用.
 
 ## 目录结构
 ```
@@ -110,6 +110,21 @@ node            v8+
 npm install
 ```
 
+## CSS处理
+默认使用 PostCSS 转换 css 文件, 可以在 postcss.config.js 中扩展插件.
+
+### 支持less
+释放 webpack.config.base.js 配置中的 less-loader 注释, 并安装依赖:
+```
+npm i -D less less-loader
+```
+
+### 支持sass
+释放 webpack.config.base.js 配置中的 sass-loader 注释, 并安装依赖:
+```
+npm i -D node-sass sass-loader
+```
+
 ## 开发环境
 在 package.json > devEnvironments 中配置相关信息.
 
@@ -145,11 +160,13 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 }
 ```
 
-## 代码检测
+## 代码校验
 1. webpack 编译代码时, 会自动检测 js, jsx, css, less, scss 类型文件的代码规范, 并自动修复(仅限于支持自动修复的代码).
 2. git commit 时, 会再次执行代码检测, 并自动修复(仅限于支持自动修复的代码)后, 后再提交.
 
-### 忽略局部代码校验
+### CSS校验
+
+#### 忽略局部代码
 ```css
 /* stylelint-disable */
 :global {
@@ -160,7 +177,7 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 /* stylelint-enable */
 ```
 
-### 忽略第三方库校验
+#### 忽略第三方库
 ```js
 "rules": {
     "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$|^ant-"       // 忽略 antd ui 校验
