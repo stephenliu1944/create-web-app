@@ -5,12 +5,12 @@ import proxyConfig from '@easytool/proxy-config';
 import defineConfig from '@easytool/define-config';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import { devEnvironments, parcel } from './package.json';
 import baseConfig from './webpack.config.base';
-import { devEnvironments } from './package.json';
 
 const { servers, proxies, globals } = devEnvironments;
 
-export default webpackMerge(baseConfig(), {
+export default webpackMerge(baseConfig(parcel), {
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
@@ -24,7 +24,9 @@ export default webpackMerge(baseConfig(), {
         inline: true,
         compress: true,             // 开起 gzip 压缩
         disableHostCheck: true,
-        historyApiFallback: true,   // browserHistory路由
+        historyApiFallback: {       // browserHistory路由
+            index: parcel.publicPath + 'index.html'
+        },   
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
             ...proxyConfig(proxies)
