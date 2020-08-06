@@ -1,4 +1,4 @@
-# my-project
+# my-app
 
 # 脚手架介绍
 用于开发基于 ES6 的 Web 应用.
@@ -129,7 +129,7 @@ npm i -D node-sass sass-loader
 
 ### 服务
 ```js
-"servers": {
+"server": {
     "local": 8080,      // web服务端口
     "mock": 3000        // mock服务端口
 },
@@ -137,20 +137,20 @@ npm i -D node-sass sass-loader
 
 ### 代理
 代理会根据URL拦截请求, 从而解决跨域问题.  
-proxiesd 的 key 为拦截的URL前缀, value 为最终访问的服务地址.  
-key 中括号内的字符串会被代理从URL中移除再请求目标服务器,  
+proxy 的 key 为拦截的URL前缀, value 为最终访问的服务地址.  
+()内的字符串会被代理从URL中移除再请求目标服务器, 类似 pathRewrite: {'/proxy' : ''} 的功能.
 如: http://localhost:8080/proxy/user/1 > proxy > http://www.example.org/user/1
 ```js
-"proxies": {
+"proxy": {
     "/api": "http://localhost:3000",
     "(/proxy)": "http://www.example.org"
 }
 ```
 
 ### 全局变量
-可在 globals 中配置开发环境使用的全局变量, 在生产环境会全部变为false.
+可在 define 中配置开发环境使用的全局变量, 在生产环境会全部变为false.
 ```js
-"globals": {
+"define": {
     "__DEV__": true
 }
 ```
@@ -188,12 +188,12 @@ key 中括号内的字符串会被代理从URL中移除再请求目标服务器,
 运行 /bin/package.bat (linux 运行 package.sh), 会在 /dist 目录生成生产环境文件, 供发布使用.
 
 ### 项目打包
-支持同时打包多份静态资源.
+用于生产环境打包配置.
 ```js
 "parcel": {
     "name": string,               // 包名称, 默认使用 package.name.
     "publicPath": string,         // webpack 的 publicPath 配置.
-    "zip": boolean                // 打包时是否生成压缩文件.
+    "zip": boolean                // 打包时是否生成zip包.
 }
 ```
 

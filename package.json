@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "my-app",
   "version": "0.1.0",
   "description": "This scaffolding use for development web application by ES6.",
   "license": "MIT",
@@ -97,19 +97,19 @@
     "webpack-merge": "^4.1.4"
   },
   "devEnvironments": {
-    "servers": {
+    "server": {
       "local": 8080,
       "mock": 3000
     },
-    "proxies": {
+    "proxy": {
       "(/proxy)": "http://ip-api.com"
     },
-    "globals": {
+    "define": {
       "__DEV__": true
     }
   },
   "parcel": {
-    "name": "my-project",
+    "name": "my-app",
     "publicPath": "/",
     "zip": true
   },

@@ -3,26 +3,29 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
+import { name, parcel } from './package.json';
 
 const BUILD_PATH = 'build';
 const ASSETS_PATH = 'assets';
-const FILE_HASH = '.[contenthash:8]';
+const CONTENT_HASH = '.[contenthash:8]';
 
 export default function(config = {}) {
-    const { publicPath = '/' } = config;      
     
     return {
         entry: {
             main: ['./src/index.js']
         },
         output: {
-            publicPath,
+            publicPath: parcel.publicPath,
             path: path.resolve(__dirname, BUILD_PATH),
-            filename: `${ASSETS_PATH}/js/[name]${FILE_HASH}.js`,
-            chunkFilename: `${ASSETS_PATH}/js/[name].chunk${FILE_HASH}.js`
+            filename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.js`,
+            chunkFilename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.chunk.js`,
+            // 避免多个应用之间 jsonpFunction 名冲突
+            jsonpFunction: `webpackJsonp_${name}`
         },
         resolve: {
             extensions: ['.js', '.css', '.less', '.scss'],
+            // 项目内的别名引用都是大写字母开头
             alias: {
                 Components: path.resolve(__dirname, 'src/components/'),
                 Config: path.resolve(__dirname, 'src/config/'),
@@ -53,8 +56,11 @@ export default function(config = {}) {
         },
         module: {
             rules: [{
+                /**
+                 * 主项目js
+                 */
                 test: /\.(js)?$/,
-                exclude: /node_modules/,
+                include: path.resolve(__dirname, 'src'),
                 use: [{
                     loader: 'babel-loader',
                     options: {
@@ -63,9 +69,9 @@ export default function(config = {}) {
                 }]
             }, {
                 /**
-                 * 主项目的css
+                 * 主项目css
                  */
-                test: /\.(css|less|scss)$/,
+                test: /\.(css|less|scss|sass)$/,
                 include: path.resolve(__dirname, 'src'),
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -86,38 +92,45 @@ export default function(config = {}) {
                 ]
             }, {
                 /**
-                 * 第三方组件的css.
+                 * 第三方css
                  */
-                test: /\.css$/,
+                test: /\.(css|less|scss|sass)$/,
                 include: path.resolve(__dirname, 'node_modules'),
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
+                use: [
+                    MiniCssExtractPlugin.loader, 
+                    'css-loader'
+                    // 'less-loader'
+                    // 'sass-loader'
+                ]
             }, {
                 /**
-                 * 字体加载器
+                 * 全局字体
                  */
                 test: /\.(woff|eot|ttf|svg)$/,
-                include: path.resolve(__dirname, 'src/fonts'),
                 use: [{
                     loader: 'url-loader',
                     options: {
                         limit: 10,
-                        name: `${ASSETS_PATH}/fonts/[name]${FILE_HASH}.[ext]`
+                        name: `${ASSETS_PATH}/fonts/[name].${CONTENT_HASH}.[ext]`
                     }
                 }]
             }, {
                 /**
-                 * 图片加载器
+                 * 全局图片
                  */
-                test: /\.(png|jpg|jpeg|gif|svg)$/,
+                test: /\.(bmp|png|jpg|jpeg|gif|svg)$/,
                 exclude: path.resolve(__dirname, 'src/fonts'),
                 use: [{
                     loader: 'url-loader',
                     options: {
                         limit: 10,
-                        name: `${ASSETS_PATH}/images/[name]${FILE_HASH}.[ext]`
+                        name: `${ASSETS_PATH}/images/[name].${CONTENT_HASH}.[ext]`
                     }
                 }]
             }, {
+                /**
+                 * favicon
+                 */
                 test: /\.ico$/,
                 include: path.resolve(__dirname, 'src/images'),
                 use: [{
@@ -131,8 +144,8 @@ export default function(config = {}) {
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: `${ASSETS_PATH}/css/[name]${FILE_HASH}.css`,
-                chunkFilename: `${ASSETS_PATH}/css/[name].chunk${FILE_HASH}.css`   // chunk css file
+                filename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.css`,
+                chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`   // chunk css file
             }),
             // index.html 模板插件
             new HtmlWebpackPlugin({                             
@@ -148,7 +161,7 @@ export default function(config = {}) {
                 cache: true
             }),
             // 文件大小写检测
-            new CaseSensitivePathsPlugin()                      
+            new CaseSensitivePathsPlugin()
         ]
     };
 }

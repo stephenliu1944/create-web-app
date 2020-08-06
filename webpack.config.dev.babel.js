@@ -8,28 +8,28 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { devEnvironments, parcel } from './package.json';
 import baseConfig from './webpack.config.base';
 
-const { servers, proxies, globals } = devEnvironments;
+const { server, proxy, define } = devEnvironments;
 
-export default webpackMerge(baseConfig(parcel), {
+export default webpackMerge(baseConfig(), {
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     devServer: {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': 'true'
         },
         host: '0.0.0.0',
-        port: servers.local,
+        port: server.local,
         https: false,
         inline: true,
         compress: true,             // 开起 gzip 压缩
         disableHostCheck: true,
         historyApiFallback: {       // browserHistory路由
-            index: parcel.publicPath + 'index.html'
+            index: parcel.publicPath
         },   
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
-            ...proxyConfig(proxies)
+            ...proxyConfig(proxy)
         }
     },
     module: {
@@ -50,13 +50,13 @@ export default webpackMerge(baseConfig(parcel), {
         }]
     },
     plugins: [
-        // check package size
+        // 依赖包大写分析
         // new WebpackBundleAnalyzer.BundleAnalyzerPlugin(),
         // 清除编译目录
         new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(globals),
+            ...defineConfig(define),
             'process.env.NODE_ENV': JSON.stringify('development')
         })
     ]
