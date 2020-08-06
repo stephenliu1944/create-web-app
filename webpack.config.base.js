@@ -24,7 +24,7 @@ export default function(config = {}) {
             jsonpFunction: `webpackJsonp_${name}`
         },
         resolve: {
-            extensions: ['.js', '.css', '.less', '.scss'],
+            extensions: ['.js', '.css', '.less', '.scss', '.sass'],
             // 项目内的别名引用都是大写字母开头
             alias: {
                 Components: path.resolve(__dirname, 'src/components/'),
