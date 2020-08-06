@@ -5,29 +5,31 @@ import proxyConfig from '@easytool/proxy-config';
 import defineConfig from '@easytool/define-config';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
+import { devEnvironments, parcel } from './package.json';
 import baseConfig from './webpack.config.base';
-import { devEnvironments } from './package.json';
 
-const { servers, proxies, globals } = devEnvironments;
+const { server, proxy, define } = devEnvironments;
 
-export default webpackMerge(baseConfig(), {
+export default webpackMerge(baseConfig(parcel), {
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     devServer: {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': 'true'
         },
         host: '0.0.0.0',
-        port: servers.local,
+        port: server.local,
         https: false,
         inline: true,
         compress: true,             // 开起 gzip 压缩
         disableHostCheck: true,
-        historyApiFallback: true,   // browserHistory路由
+        historyApiFallback: {       // browserHistory路由
+            index: parcel.publicPath
+        },   
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
-            ...proxyConfig(proxies)
+            ...proxyConfig(proxy)
         }
     },
     module: {
@@ -48,13 +50,13 @@ export default webpackMerge(baseConfig(), {
         }]
     },
     plugins: [
-        // check package size
+        // 依赖包大写分析
         // new WebpackBundleAnalyzer.BundleAnalyzerPlugin(),
         // 清除编译目录
         new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(globals),
+            ...defineConfig(define),
             'process.env.NODE_ENV': JSON.stringify('development')
         })
     ]

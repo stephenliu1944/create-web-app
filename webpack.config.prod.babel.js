@@ -5,11 +5,11 @@ import TerserPlugin from 'terser-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import defineConfig from '@easytool/define-config';
 import baseConfig from './webpack.config.base';
-import { devEnvironments, parcel } from './package.json';
+import { devEnvironments } from './package.json';
 
-const { globals } = devEnvironments;
+const { define } = devEnvironments;
 
-export default webpackMerge(baseConfig(parcel), {
+export default webpackMerge(baseConfig(), {
     mode: 'production',
     devtool: 'hidden-source-map',           // source-map在本地, 调试时需要Chrome的DevTools关联.
     optimization: {
@@ -40,7 +40,7 @@ export default webpackMerge(baseConfig(parcel), {
     plugins: [
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(globals, false),
+            ...defineConfig(define, false),             // 'false'表示所有自定义全局变量的值设为 false
             'process.env.NODE_ENV': JSON.stringify('production')
         })
     ]
