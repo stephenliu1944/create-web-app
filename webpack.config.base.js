@@ -8,6 +8,7 @@ import { name, parcel } from './package.json';
 const BUILD_PATH = 'build';
 const ASSETS_PATH = 'assets';
 const CONTENT_HASH = '[contenthash:8]';
+const publicPath = parcel.publicPath.endsWith('/') ? parcel.publicPath : parcel.publicPath + '/';
 
 export default function(config = {}) {
     
@@ -16,7 +17,7 @@ export default function(config = {}) {
             main: ['./src/index.jsx']
         },
         output: {
-            publicPath: parcel.publicPath,
+            publicPath,
             path: path.resolve(__dirname, BUILD_PATH),
             filename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.js`,
             chunkFilename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.chunk.js`,
