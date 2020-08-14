@@ -7,7 +7,7 @@ import { name, parcel } from './package.json';
 
 const BUILD_PATH = 'build';
 const ASSETS_PATH = 'assets';
-const CONTENT_HASH = '.[contenthash:8]';
+const CONTENT_HASH = '[contenthash:8]';
 
 export default function(config = {}) {
     
