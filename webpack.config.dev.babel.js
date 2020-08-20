@@ -6,7 +6,7 @@ import defineConfig from '@easytool/define-config';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import { devEnvironments, parcel } from './package.json';
-import baseConfig from './webpack.config.base';
+import baseConfig, { getPublicPath } from './webpack.config.base';
 
 const { server, proxy, globals } = devEnvironments;
 
@@ -25,7 +25,7 @@ export default webpackMerge(baseConfig(parcel), {
         compress: true,             // 开起 gzip 压缩
         disableHostCheck: true,
         historyApiFallback: {       // browserHistory路由
-            index: parcel.publicPath
+            index: getPublicPath(parcel.publicPath)
         },   
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
