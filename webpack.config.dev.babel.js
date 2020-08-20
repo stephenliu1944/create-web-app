@@ -8,7 +8,7 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { devEnvironments, parcel } from './package.json';
 import baseConfig from './webpack.config.base';
 
-const { server, proxy, define } = devEnvironments;
+const { server, proxy, globals } = devEnvironments;
 
 export default webpackMerge(baseConfig(), {
     mode: 'development',
@@ -56,7 +56,7 @@ export default webpackMerge(baseConfig(), {
         new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(define),
+            ...defineConfig(globals),
             'process.env.NODE_ENV': JSON.stringify('development')
         })
     ]

@@ -104,7 +104,7 @@
     "proxy": {
       "(/proxy)": "http://ip-api.com"
     },
-    "define": {
+    "globals": {
       "__DEV__": true
     }
   },

@@ -7,7 +7,7 @@ import defineConfig from '@easytool/define-config';
 import baseConfig from './webpack.config.base';
 import { devEnvironments } from './package.json';
 
-const { define } = devEnvironments;
+const { globals } = devEnvironments;
 
 export default webpackMerge(baseConfig(), {
     mode: 'production',
@@ -40,7 +40,7 @@ export default webpackMerge(baseConfig(), {
     plugins: [
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(define, false),             // 'false'表示所有自定义全局变量的值设为 false
+            ...defineConfig(globals, false),             // 'false'表示所有自定义全局变量的值设为 false
             'process.env.NODE_ENV': JSON.stringify('production')
         })
     ]
