@@ -40,8 +40,7 @@ export default webpackMerge(baseConfig(), {
     plugins: [
         // 配置全局变量
         new webpack.DefinePlugin({
-            ...defineConfig(globals, false),             // 'false'表示所有自定义全局变量的值设为 false
-            'process.env.NODE_ENV': JSON.stringify('production')
+            ...defineConfig(globals, false)             // 'false'表示所有自定义全局变量的值设为 false
         })
     ]
 });
