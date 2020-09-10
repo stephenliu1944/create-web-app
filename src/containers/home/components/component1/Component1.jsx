@@ -1,5 +1,6 @@
 import styles from './component1.css';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /** 
  * 示例代码, 熟悉后请删除
@@ -23,3 +24,7 @@ export default class Component1 extends Component {
         );
     }
 }
+
+Component1.propTypes = {
+    region: PropTypes.object
+};

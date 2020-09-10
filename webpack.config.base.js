@@ -17,7 +17,7 @@ export default function(config = {}) {
     
     return {
         entry: {
-            main: ['./src/index.jsx']
+            main: ['./src/index.js']
         },
         output: {
             publicPath: getPublicPath(parcel.publicPath),
@@ -25,7 +25,7 @@ export default function(config = {}) {
             filename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.js`,
             chunkFilename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.chunk.js`,
             // 避免多个应用之间 jsonpFunction 名冲突
-            jsonpFunction: `webpackJsonp_${name}`
+            jsonpFunction: name
         },
         resolve: {
             extensions: ['.js', '.jsx', '.css', '.less', '.scss', '.sass'],

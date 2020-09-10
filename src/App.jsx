@@ -7,8 +7,8 @@ import Root from 'Routes/Root';
 
 // set http default options
 http.settings({
-    proxyPath: __DEV__ && '/proxy',
-    isDev: __DEV__
+    proxyPath: __DEV__ && '/proxy',     // 代理根路径
+    isDev: __DEV__                      // 显示请求,响应日志
 });
 
 render(
