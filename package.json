@@ -55,7 +55,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@easytool/define-config": "^0.1.0",
-    "@easytool/mock-server": "^0.1.0",
+    "@easytool/mock-server": "^0.2.2",
     "@easytool/proxy-config": "^0.1.0",
     "autoprefixer": "^9.1.5",
     "babel-core": "^7.0.0-bridge.0",
