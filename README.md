@@ -148,7 +148,7 @@ proxy 的 key 为拦截的URL前缀, value 为最终访问的服务地址.
 ```js
 "proxy": {
     "/api": "http://localhost:3000",
-    "(/proxy)": "http://www.example.org"
+    "(/proxy)": "http://api.xxx.com"
 }
 ```
 
@@ -157,6 +157,21 @@ proxy 的 key 为拦截的URL前缀, value 为最终访问的服务地址.
 ```js
 "define": {
     "__DEV__": true
+}
+```
+
+### Mock
+mock server 会先查找本地模拟数据, 如果没有找到(或配置为ignore), 则会将请求转发到代理服务.
+```js
+"server": {
+    "local": 8080,
+    "mock": {
+        port: 3000,
+        proxy: 'http://api.xxx.com'     // 代理服务
+    }
+},
+"proxy": {
+    "/api": "http://localhost:3000"
 }
 ```
 
