@@ -1,6 +1,10 @@
 {
   "name": "my-app",
   "version": "0.1.0",
+  "parcel": {
+    "publicPath": "/",
+    "format": "zip"
+  },
   "description": "This scaffolding use for development web application by React.",
   "license": "MIT",
   "repository": {
@@ -115,10 +119,6 @@
     "globals": {
       "__DEV__": true
     }
-  },
-  "parcel": {
-    "publicPath": "/",
-    "format": "zip"
   },
   "deployments": [
     {
