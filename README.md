@@ -56,7 +56,6 @@ src                                         // 项目源码目录
     |-mainLayout                            // 主要布局组件
         |-MainLayout.jsx
         |-mainLayout.css
-|-routes                                    // 路由组件目录
 |-services                                  // 公共接口请求目录, 所有公共的HTTP请求都封装在这里.
     |-demo.js                               // HTTP服务文件, 文件名对应请求的URL模块, 如: /user/add, 则文件应该命名为user.js
 |-styles                                    // 公共样式目录
@@ -64,8 +63,11 @@ src                                         // 项目源码目录
     |-fonts.css                             // 字体样式和字体图标css文件
 |-utils                                     // 工具库
     |-common.js                             // 一些常用工具方法.
-|-index.jsx                                 // 入口js文件.
-|-template.html                             // 页面模板文件.
+    |-http.js                               // 封装了用于http请求的库, 便于替换为其他类库.
+|-App.jsx                                   // 应用组件文件.
+|-bootstrap.js                              // 应用的引导文件.
+|-index.js                                  // 入口文件.
+|-template.ejs                              // 页面模板文件.
 test                                        // 测试代码目录, 目录结构同src
 |-components
 |-containers
@@ -210,10 +212,10 @@ mock server 会先查找本地模拟数据, 如果没有找到(或配置为ignor
 ### 项目打包
 用于生产环境打包配置.
 ```js
+"name": string,                   // 包名称
 "parcel": {
-    "name": string,               // 包名称, 默认使用 package.json > name.
     "publicPath": string,         // webpack 的 publicPath 配置.
-    "zip": boolean                // 打包时是否生成zip包.
+    "format": "zip|tar"           // 打包时的压缩格式, 默认为zip.
 }
 ```
 

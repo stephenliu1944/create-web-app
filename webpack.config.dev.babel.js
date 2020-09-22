@@ -3,7 +3,6 @@ import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
 import proxyConfig from '@easytool/proxy-config';
 import defineConfig from '@easytool/define-config';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import { devEnvironments, parcel } from './package.json';
 import baseConfig, { getPublicPath } from './webpack.config.base';
@@ -52,8 +51,6 @@ export default webpackMerge(baseConfig(parcel), {
     plugins: [
         // 依赖包大写分析
         // new WebpackBundleAnalyzer.BundleAnalyzerPlugin(),
-        // 清除编译目录
-        new CleanWebpackPlugin(),
         // 配置全局变量
         new webpack.DefinePlugin({
             ...defineConfig(globals)

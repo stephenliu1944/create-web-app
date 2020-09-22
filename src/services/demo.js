@@ -1,4 +1,4 @@
-import http, { prepare } from '@easytool/http';
+import http, { prepare } from 'Utils/http';
 import { HttpMethod } from 'Constants/common';
 
 /**

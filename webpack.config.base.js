@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { name, parcel } from './package.json';
 
 const BUILD_PATH = 'build';
@@ -146,6 +147,8 @@ export default function(config = {}) {
             }]
         },
         plugins: [
+            // 清除编译目录
+            new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
                 filename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.css`,
                 chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`   // chunk css file

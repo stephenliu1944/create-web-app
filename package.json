@@ -12,15 +12,15 @@
     "url": ""
   },
   "scripts": {
-    "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.dev.babel.js --colors --display-error-details",
-    "build:prod": "gulp clean-build && cross-env NODE_ENV=production webpack --config webpack.config.prod.babel.js --colors --display-error-details",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.babel.js --colors",
+    "build:dev": "webpack --config webpack.config.dev.babel.js --colors --display-error-details",
+    "build:prod": "webpack --config webpack.config.prod.babel.js --colors --display-error-details",
+    "start": "webpack-dev-server --config webpack.config.dev.babel.js --colors",
     "mock": "mock-server ./mock/data --static ./mock/static --config ./mock/mock.config.js --watch",
     "start:mock": "concurrently \"cross-env npm start\" \"npm run mock\"",
     "lint:js": "eslint -c .eslintrc.prod.json src/ --ext .js,.jsx --fix",
     "lint:css": "stylelint \"src/**/*.{css,less,scss}\" --cache --fix",
     "test": "jest",
-    "package": "npm run build:prod && gulp package",
+    "package": "cross-env NODE_ENV=package npm run build:prod",
     "deploy": "npm run package && gulp deploy",
     "git:push": "gulp git-push"
   },
@@ -45,7 +45,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-router": "^3.2.1"
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",
@@ -72,7 +72,6 @@
     "concurrently": "^4.0.1",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
-    "del": "^4.1.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.6.0",
@@ -80,9 +79,9 @@
     "eslint-plugin-react": "^7.12.3",
     "express": "^4.17.1",
     "file-loader": "^2.0.0",
+    "filemanager-webpack-plugin": "^2.0.5",
     "gulp": "^4.0.0",
     "gulp-sftp-up4": "^0.1.8",
-    "gulp-zip": "^4.2.0",
     "html-webpack-plugin": "^4.3.0",
     "husky": "^1.2.0",
     "identity-obj-proxy": "^3.0.0",
@@ -118,9 +117,8 @@
     }
   },
   "parcel": {
-    "name": "my-app",
     "publicPath": "/",
-    "zip": true
+    "format": "zip"
   },
   "deployments": [
     {

@@ -1,8 +1,10 @@
 import styles from './mainLayout.css';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Header from 'Components/header/Header';
 import Footer from 'Components/footer/Footer';
+import Home from 'Containers/home/Home';
+import Error from 'Containers/error/Error';
 /**
  * @desc 页面整体框架组件
  */
@@ -13,14 +15,14 @@ export default class MainLayout extends Component {
             <div className={styles.mainLayout}>
                 <Header />
                 <div className={styles.content}>
-                    {this.props.children}
+                    <Switch>
+                        <Redirect exact from="/" to="/home" />
+                        <Route exact path="/home" component={Home} />
+                        <Route path="*" component={Error} />
+                    </Switch>
                 </div>
                 <Footer />
             </div>
         );
     }
 }
-
-MainLayout.propTypes = {
-    children: PropTypes.any
-};

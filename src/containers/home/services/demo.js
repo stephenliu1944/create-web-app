@@ -1,4 +1,4 @@
-import http from '@easytool/http';
+import http from 'Utils/http';
 
 /**
  * Home 私有接口
