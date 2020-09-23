@@ -16,8 +16,7 @@ export default class MainLayout extends Component {
                 <Header />
                 <div className={styles.container}>
                     <Switch>
-                        <Redirect exact from="/" to="/home" />
-                        <Route exact path="/home" component={Home} />
+                        <Route exact path="/" component={Home} />
                         <Route path="*" component={Error} />
                     </Switch>
                 </div>
