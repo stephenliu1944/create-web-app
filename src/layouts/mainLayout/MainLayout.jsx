@@ -1,10 +1,13 @@
-import styles from './mainLayout.css';
+import styles from './mainLayout.less';
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import lazyload from 'Components/lazyload/Lazyload';
 import Header from 'Components/header/Header';
 import Footer from 'Components/footer/Footer';
-import Home from 'Containers/home/Home';
-import Error from 'Containers/error/Error';
+
+const Home = lazyload(() => import(/* webpackPrefetch: true */ 'Containers/home/Home'));
+const NotFound = lazyload(() => import(/* webpackPrefetch: true */ 'Containers/notFound/NotFound'));
+
 /**
  * @desc 页面整体框架组件
  */
@@ -17,7 +20,7 @@ export default class MainLayout extends Component {
                 <div className={styles.container}>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route path="*" component={Error} />
+                        <Route path="*" component={NotFound} />
                     </Switch>
                 </div>
                 <Footer />

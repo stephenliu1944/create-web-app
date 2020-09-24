@@ -1,7 +1,5 @@
-import http, { prepare, helpers } from '@easytool/http';
-
-export { 
-    prepare, 
-    helpers 
-};
-export default http;
+/**
+ * 封装http库, 便于替换为其他库
+ */
+export * from '@easytool/http';
+export default from '@easytool/http';

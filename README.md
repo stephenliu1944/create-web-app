@@ -1,5 +1,7 @@
 # my-app
 
+***
+
 # 脚手架介绍
 用于开发基于 React 的 Web 应用.
 
@@ -30,7 +32,7 @@ src                                         // 项目源码目录
 |-components                                // 公共组件目录
     |-component1
         |-Component1.jsx                    // 组件 jsx 文件, 文件首字母大写, 驼峰标识, 代码采用 ES6 风格编码.
-        |-component1.css                    // 组件引用的 css 文件, 文件首字母小写, 驼峰标识.
+        |-component1.less                   // 组件引用的 css 文件, 文件首字母小写, 驼峰标识.
     ...
 |-config                                    // 生产环境配置文件目录
     |-settings.js                           // 项目生产环境配置文件
@@ -40,27 +42,28 @@ src                                         // 项目源码目录
 |-containers                                // 容器组件目录(一个容器组件就是一个页面, 它将各种功能组件组合在一起, 其主要负责组装功能组件, 接口调用以及整个页面的状态管理).
     |-home                                  // 首页容器组件
         |-Home.jsx                          // 容器组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-home.css                          // 容器组件样式文件, 文件首字母小写, 驼峰标识.
+        |-home.less                         // 容器组件样式文件, 文件首字母小写, 驼峰标识.
         |-images                            // 容器组件私有图片
         |-services                          // 容器组件私有接口请求, 所有组件私有的数据请求都封装在这里.
         |-components                        // 容器组件私有功能组件
             |-component1
                 |-images                    // 功能组件私有图片
                 |-Component1.jsx            // 功能组件 jsx 文件
-                |-component1.css            // 功能组件样式文件
+                |-component1.less           // 功能组件样式文件
             ...
     ...
+|-data                                      // 存放copy的资源
 |-fonts                                     // 公共字体文件
 |-images                                    // 公共图片存放目录
 |-layouts                                   // 公共布局组件目录
     |-mainLayout                            // 主要布局组件
         |-MainLayout.jsx
-        |-mainLayout.css
+        |-mainLayout.less
 |-services                                  // 公共接口请求目录, 所有公共的HTTP请求都封装在这里.
     |-demo.js                               // HTTP服务文件, 文件名对应请求的URL模块, 如: /user/add, 则文件应该命名为user.js
 |-styles                                    // 公共样式目录
-    |-main.css                              // 全局css文件
-    |-fonts.css                             // 字体样式和字体图标css文件
+    |-main.less                             // 全局css文件
+    |-fonts.less                            // 字体样式和字体图标css文件
 |-utils                                     // 工具库
     |-common.js                             // 一些常用工具方法.
     |-http.js                               // 封装了用于http请求的库, 便于替换为其他类库.
@@ -98,7 +101,7 @@ babel:          v7
 gulp:           v4
 react           v16
 react-dom       v16
-react-router    v3
+react-router    v5
 jest            v24
 enzyme          v3
 eslint:         v5
@@ -114,18 +117,6 @@ npm install
 
 ## CSS处理
 默认使用 PostCSS 转换 css 文件, 可以在 postcss.config.js 中扩展插件.
-
-### 支持less
-释放 webpack.config.base.js 配置中的 less-loader 注释, 并安装依赖:
-```
-npm i -D less less-loader
-```
-
-### 支持sass
-释放 webpack.config.base.js 配置中的 sass-loader 注释, 并安装依赖:
-```
-npm i -D node-sass sass-loader
-```
 
 ## 开发环境
 在 package.json > devEnvironments 中配置相关信息.
@@ -154,14 +145,6 @@ proxy 的 key 为拦截的URL前缀, value 为最终访问的服务地址.
 }
 ```
 
-### 全局变量
-可在 define 中配置开发环境使用的全局变量, 在生产环境会全部变为false.
-```js
-"define": {
-    "__DEV__": true
-}
-```
-
 ### Mock
 mock server 会先查找本地模拟数据, 如果没有找到(或配置为ignore), 则会将请求转发到代理服务.
 ```js
@@ -174,6 +157,14 @@ mock server 会先查找本地模拟数据, 如果没有找到(或配置为ignor
 },
 "proxy": {
     "/api": "http://localhost:3000"
+}
+```
+
+### 全局变量
+可在 globals 中配置开发环境使用的全局变量, 在生产环境会全部变为false.
+```js
+"globals": {
+    "__DEV__": true
 }
 ```
 

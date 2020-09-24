@@ -1,5 +1,5 @@
 import 'Images/favicon.ico';
-import 'Styles/main.css';
+import 'Styles/main.less';
 import http from 'Utils/http';
 import React from 'react';
 import { render } from 'react-dom';

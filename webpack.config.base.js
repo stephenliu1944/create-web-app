@@ -1,11 +1,15 @@
 import path from 'path';
+import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import { name, parcel } from './package.json';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import defineConfig from '@easytool/define-config';
+import { name, devEnvironments, parcel } from './package.json';
 
+const { globals } = devEnvironments;
 const BUILD_PATH = 'build';
 const ASSETS_PATH = 'assets';
 const CONTENT_HASH = '[contenthash:8]';
@@ -14,7 +18,7 @@ export function getPublicPath(publicPath = '') {
     return publicPath.endsWith('/') ? publicPath : publicPath + '/';
 }
 
-export default function(config = {}) {
+export default function(ENV) {
     
     return {
         entry: {
@@ -61,110 +65,162 @@ export default function(config = {}) {
         module: {
             rules: [{
                 /**
-                 * 主项目js
+                 * eslint代码规范校验
                  */
-                test: /\.(js|jsx)?$/,
+                test: /\.(js|jsx)$/,
+                enforce: 'pre',
                 include: path.resolve(__dirname, 'src'),
                 use: [{
-                    loader: 'babel-loader',
+                    loader: 'eslint-loader',
                     options: {
-                        cacheDirectory: true
+                        fix: true,
+                        configFile: `.eslintrc${ENV === 'production' ? '.prod' : ''}.json`
                     }
                 }]
             }, {
                 /**
-                 * 主项目css
+                 * webpack会按顺序查找匹配的loader
                  */
-                test: /\.(css|less|scss|sass)$/,
-                include: path.resolve(__dirname, 'src'),
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
+                oneOf: [{
+                    /**
+                     * 主项目js
+                     */
+                    test: /\.(js|jsx)?$/,
+                    include: path.resolve(__dirname, 'src'),
+                    use: [{
+                        loader: 'babel-loader',
                         options: {
-                            modules: true,
-                            importLoaders: 1,
-                            localIdentName: '[local]__[hash:base64:5]',
-                            minimize: {
-                                safe: true
+                            cacheDirectory: true
+                        }
+                    }]
+                }, {
+                    /**
+                     * 主项目样式
+                     */
+                    test: /\.(css|less)$/,
+                    include: path.resolve(__dirname, 'src'),
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                importLoaders: 2,
+                                localIdentName: '[local]__[hash:base64:5]',
+                                minimize: {
+                                    safe: true
+                                }
+                            }
+                        },
+                        'postcss-loader',
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                lessOptions: {
+                                    javascriptEnabled: true
+                                }
                             }
                         }
-                    },
-                    'postcss-loader'
-                    // 'less-loader'
-                    // 'sass-loader'
-                ]
-            }, {
-                /**
-                 * 第三方css
-                 */
-                test: /\.(css|less|scss|sass)$/,
-                include: path.resolve(__dirname, 'node_modules'),
-                use: [
-                    MiniCssExtractPlugin.loader, 
-                    'css-loader'
-                    // 'less-loader'
-                    // 'sass-loader'
-                ]
-            }, {
-                /**
-                 * 全局字体
-                 */
-                test: /\.(woff|eot|ttf|svg)$/,
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10,
-                        name: `${ASSETS_PATH}/fonts/[name].${CONTENT_HASH}.[ext]`
+                    ]
+                }, {
+                    /**
+                     * 第三方样式
+                     */
+                    test: /\.(css|less)$/,
+                    exclude: path.resolve(__dirname, 'src'),
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        'css-loader',
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                lessOptions: {
+                                    javascriptEnabled: true
+                                }
+                            }
+                        }
+                    ]
+                }, {
+                    /**
+                     * 全局图片
+                     */
+                    test: /\.(bmp|png|jpg|jpeg|gif|svg)$/,
+                    exclude: path.resolve(__dirname, 'src/fonts'),
+                    use: [{
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10,
+                            name: `${ASSETS_PATH}/images/[name].${CONTENT_HASH}.[ext]`
+                        }
+                    }]
+                }, {
+                    /**
+                     * favicon
+                     */
+                    test: /\.ico$/,
+                    include: path.resolve(__dirname, 'src/images'),
+                    use: [{
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10,
+                            name: `${ASSETS_PATH}/images/[name].[ext]`
+                        }
+                    }]
+                }, {
+                    /**
+                     * 全局字体
+                     */
+                    test: /\.(woff|eot|ttf|svg)$/,
+                    use: [{
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10,
+                            name: `${ASSETS_PATH}/fonts/[name].${CONTENT_HASH}.[ext]`
+                        }
+                    }]
+                }, {                    
+                    exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.(html|ejs)$/, /\.json$/],
+                    use: {
+                        loader: 'file-loader',
+                        options: {
+                            name: `${ASSETS_PATH}/file/[name].${CONTENT_HASH}.[ext]`
+                        }
                     }
-                }]
-            }, {
-                /**
-                 * 全局图片
-                 */
-                test: /\.(bmp|png|jpg|jpeg|gif|svg)$/,
-                exclude: path.resolve(__dirname, 'src/fonts'),
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10,
-                        name: `${ASSETS_PATH}/images/[name].${CONTENT_HASH}.[ext]`
-                    }
-                }]
-            }, {
-                /**
-                 * favicon
-                 */
-                test: /\.ico$/,
-                include: path.resolve(__dirname, 'src/images'),
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10,
-                        name: `${ASSETS_PATH}/images/[name].[ext]`
-                    }
+                    // 新 loader 需要加在 file-loader 之前
                 }]
             }]
         },
         plugins: [
             // 清除编译目录
             new CleanWebpackPlugin(),
-            new MiniCssExtractPlugin({
-                filename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.css`,
-                chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`   // chunk css file
-            }),
-            // index.html 模板插件
-            new HtmlWebpackPlugin({                             
-                filename: 'index.html',
-                template: './src/template.ejs',
-                faviconPath: `${ASSETS_PATH}/images/favicon.ico`
-            }),
             // style规范校验
             new StyleLintPlugin({
                 context: 'src',
                 files: '**/*.(c|sc|sa|le)ss',
                 fix: true,
                 cache: true
+            }),
+            new MiniCssExtractPlugin({
+                filename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.css`,
+                chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`   // chunk css file
+            }),
+            // 用于文件拷贝
+            // new CopyWebpackPlugin({
+            //     patterns: [{
+            //         from: './src/data',
+            //         to: `${ASSETS_PATH}/data/`,
+            //         toType: 'dir'
+            //     }]
+            // }),
+            // index.html 模板插件
+            new HtmlWebpackPlugin({                             
+                filename: 'index.html',
+                template: './src/template.ejs',
+                faviconPath: `${ASSETS_PATH}/images/favicon.ico`
+            }),
+            // 配置全局变量
+            new webpack.DefinePlugin({
+                ...defineConfig(globals, ENV === 'development')                       // 'false'表示所有自定义全局变量的值设为 false
             }),
             // 文件大小写检测
             new CaseSensitivePathsPlugin()

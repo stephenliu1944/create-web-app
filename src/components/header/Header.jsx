@@ -1,19 +1,13 @@
-import styles from './header.css';
-import React, { Component } from 'react';
+import styles from './header.less';
+import React from 'react';
 /**
  * @desc 页面顶部组件
  */
-export default class Header extends Component {
+export default function Header() {
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className={styles.header}>
-                <h1>Header</h1>
-            </div>
-        );
-    }
+    return (
+        <div className={styles.header}>
+            <h1>Header</h1>
+        </div>
+    );
 }

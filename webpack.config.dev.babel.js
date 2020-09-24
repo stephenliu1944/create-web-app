@@ -1,15 +1,13 @@
 import path from 'path';
-import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
 import proxyConfig from '@easytool/proxy-config';
-import defineConfig from '@easytool/define-config';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import { devEnvironments, parcel } from './package.json';
 import baseConfig, { getPublicPath } from './webpack.config.base';
 
-const { server, proxy, globals } = devEnvironments;
+const { server, proxy } = devEnvironments;
 
-export default webpackMerge(baseConfig(parcel), {
+export default webpackMerge(baseConfig('development'), {
     mode: 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
@@ -31,29 +29,8 @@ export default webpackMerge(baseConfig(parcel), {
             ...proxyConfig(proxy)
         }
     },
-    module: {
-        rules: [{
-            /**
-             * eslint代码规范校验
-             */
-            test: /\.(js|jsx)$/,
-            enforce: 'pre',
-            include: path.resolve(__dirname, 'src'),
-            use: [{
-                loader: 'eslint-loader',
-                options: {
-                    fix: true,
-                    configFile: '.eslintrc.json'
-                }
-            }]
-        }]
-    },
     plugins: [
         // 依赖包大写分析
-        // new WebpackBundleAnalyzer.BundleAnalyzerPlugin(),
-        // 配置全局变量
-        new webpack.DefinePlugin({
-            ...defineConfig(globals)
-        })
+        // new WebpackBundleAnalyzer.BundleAnalyzerPlugin()
     ]
 });

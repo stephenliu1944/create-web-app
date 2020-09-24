@@ -1,4 +1,4 @@
-import styles from './home.css';
+import styles from './home.less';
 import React, { Component } from 'react';
 import catPNG from './images/cat.png';
 import { getIPInfo } from './services/demo';

@@ -1,20 +1,14 @@
-import styles from './footer.css';
-import React, { Component } from 'react';
+import styles from './footer.less';
+import React from 'react';
 
 /**
  * @desc 页面底部组件
  */
-export default class Footer extends Component {
+export default function Footer() {
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className={styles.footer}>
-                <h1>Footer</h1>
-            </div>
-        );
-    }
+    return (
+        <div className={styles.footer}>
+            <h1>Footer</h1>
+        </div>
+    );
 }
