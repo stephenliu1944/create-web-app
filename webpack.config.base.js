@@ -74,7 +74,7 @@ export default function(ENV) {
                     loader: 'eslint-loader',
                     options: {
                         fix: true,
-                        configFile: `.eslintrc${ENV === 'production' ? '.prod' : ''}.json`
+                        configFile: `.eslintrc${ENV === 'production' ? '.prod' : ''}.js`
                     }
                 }]
             }, {
