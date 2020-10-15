@@ -18,7 +18,7 @@ export function getPublicPath(publicPath = '') {
     return publicPath.endsWith('/') ? publicPath : publicPath + '/';
 }
 
-export default function(ENV) {
+export default function(env) {
     
     return {
         entry: {
@@ -74,7 +74,7 @@ export default function(ENV) {
                     loader: 'eslint-loader',
                     options: {
                         fix: true,
-                        configFile: `.eslintrc${ENV === 'production' ? '.prod' : ''}.js`
+                        configFile: `.eslintrc${env === 'development' ? '' : '.prod'}.js`
                     }
                 }]
             }, {
@@ -220,7 +220,7 @@ export default function(ENV) {
             }),
             // 配置全局变量
             new webpack.DefinePlugin({
-                ...defineConfig(globals, ENV === 'development')                       // 'false'表示所有自定义全局变量的值设为 false
+                ...defineConfig(globals, env === 'development')                       // 'false'表示所有自定义全局变量的值设为 false
             }),
             // 文件大小写检测
             new CaseSensitivePathsPlugin()
