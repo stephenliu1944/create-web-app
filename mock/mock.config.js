@@ -1,7 +1,7 @@
 var pkg = require('../package.json');
 
-const { server } = pkg.devEnvironments;
-const mock = server.mock;
+const { servers } = pkg.devEnvironments;
+const mock = servers.mock;
 const port = mock.port || mock;
 const proxy = mock.proxy;
 

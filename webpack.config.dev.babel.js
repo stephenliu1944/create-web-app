@@ -5,7 +5,7 @@ import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
 import { devEnvironments, parcel } from './package.json';
 import baseConfig, { getPublicPath } from './webpack.config.base';
 
-const { server, proxy } = devEnvironments;
+const { servers, proxies } = devEnvironments;
 
 export default webpackMerge(baseConfig('development'), {
     mode: 'development',
@@ -16,7 +16,7 @@ export default webpackMerge(baseConfig('development'), {
             'Access-Control-Allow-Credentials': 'true'
         },
         host: '0.0.0.0',
-        port: server.local,
+        port: servers.local,
         https: false,
         inline: true,
         compress: true,             // 开起 gzip 压缩
@@ -26,7 +26,7 @@ export default webpackMerge(baseConfig('development'), {
         },   
         contentBase: path.resolve(__dirname, 'build'),
         proxy: {
-            ...proxyConfig(proxy)
+            ...proxyConfig(proxies)
         }
     },
     plugins: [

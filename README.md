@@ -127,7 +127,7 @@ npm install
 
 ### 服务
 ```js
-"server": {
+"servers": {
     "local": 8080,      // web服务端口
     "mock": 3000        // mock服务端口
 },
@@ -139,7 +139,7 @@ proxy 的 key 为拦截的URL前缀, value 为最终访问的服务地址.
 ()内的字符串会被代理从URL中移除再请求目标服务器, 类似 pathRewrite: {'/proxy' : ''} 的功能.
 如: http://localhost:8080/proxy/user/1 > proxy > http://www.example.org/user/1
 ```js
-"proxy": {
+"proxies": {
     "/api": "http://localhost:3000",
     "(/proxy)": "http://api.xxx.com"
 }
@@ -148,14 +148,14 @@ proxy 的 key 为拦截的URL前缀, value 为最终访问的服务地址.
 ### Mock
 mock server 会先查找本地模拟数据, 如果没有找到(或配置为ignore), 则会将请求转发到代理服务.
 ```js
-"server": {
+"servers": {
     "local": 8080,
     "mock": {
         port: 3000,
         proxy: 'http://api.xxx.com'     // 代理服务
     }
 },
-"proxy": {
+"proxies": {
     "/api": "http://localhost:3000"
 }
 ```

@@ -112,12 +112,15 @@
     "webpack-merge": "^4.1.4"
   },
   "devEnvironments": {
-    "server": {
+    "servers": {
       "local": 8080,
-      "mock": 3000
+      "mock": {
+        "port": 3000,
+        "proxy": "http://ip-api.com"
+      }
     },
-    "proxy": {
-      "(/proxy)": "http://ip-api.com"
+    "proxies": {
+      "(/proxy)": "http://localhost:3000"
     },
     "globals": {
       "__DEV__": true
