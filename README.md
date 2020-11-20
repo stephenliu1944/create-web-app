@@ -61,6 +61,7 @@ src                                         // 项目源码目录
         |-mainLayout.less
 |-services                                  // 公共接口请求目录, 所有公共的HTTP请求都封装在这里.
     |-demo.js                               // HTTP服务文件, 文件名对应请求的URL模块, 如: /user/add, 则文件应该命名为user.js
+|-store                                     // 用于创建全局的状态, 如: createContext, useContext.
 |-styles                                    // 公共样式目录
     |-main.less                             // 全局css文件
     |-fonts.less                            // 字体样式和字体图标css文件
@@ -81,6 +82,7 @@ test                                        // 测试代码目录, 目录结构�
 .gitignore                                  // git 忽略提交配置文件.
 .stylelintignore                            // stylelint 忽略校验配置文件.
 babel.config.js                             // babel 配置文件.
+CHANGELOG.md                                // 项目更新日志.
 enzyme.config.js                            // enzyme 配置文件.
 fileTransformer.js                          // jest 文件转换配置文件.
 gulpfile.babel.js                           // 项目打包, 发布脚本.
