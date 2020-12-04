@@ -35,6 +35,7 @@ module.exports = {
         '^Layouts(.*)$': '<rootDir>/src/layouts$1',
         '^Routes(.*)$': '<rootDir>/src/routes$1',
         '^Services(.*)$': '<rootDir>/src/services$1',
+        '^Store(.*)$': '<rootDir>/src/store$1',
         '^Styles(.*)$': '<rootDir>/src/styles$1',
         '^Utils(.*)$': '<rootDir>/src/utils$1',
         '\\.(css|less|scss)$': 'identity-obj-proxy'

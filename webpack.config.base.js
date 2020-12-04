@@ -43,6 +43,7 @@ export default function(config) {
                 Layouts: path.resolve(__dirname, 'src/layouts/'),
                 Routes: path.resolve(__dirname, 'src/routes/'),
                 Services: path.resolve(__dirname, 'src/services/'),
+                Store: path.resolve(__dirname, 'src/store/'),
                 Styles: path.resolve(__dirname, 'src/styles/'),
                 Utils: path.resolve(__dirname, 'src/utils/')
             }
