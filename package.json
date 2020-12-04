@@ -113,13 +113,10 @@
   "devEnvironments": {
     "servers": {
       "local": 8080,
-      "mock": {
-        "port": 3000,
-        "proxy": "http://ip-api.com"
-      }
+      "mock": 3000
     },
     "proxies": {
-      "(/proxy)": "http://localhost:3000"
+      "/api": "http://api.xxx.com"
     },
     "globals": {
       "__DEV__": true
