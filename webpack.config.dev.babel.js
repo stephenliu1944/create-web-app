@@ -1,13 +1,14 @@
-import path from 'path';
 import webpackMerge from 'webpack-merge';
 import proxyConfig from '@easytool/proxy-config';
 import WebpackBundleAnalyzer from 'webpack-bundle-analyzer';
-import { devEnvironments, parcel } from './package.json';
-import baseConfig, { getPublicPath } from './webpack.config.base';
+import { devEnvironments } from './package.json';
+import getBaseConfig from './webpack.config.base';
 
 const { servers, proxies } = devEnvironments;
+const baseConfig = getBaseConfig();
+const output = baseConfig.output;
 
-export default webpackMerge(baseConfig('development'), {
+export default webpackMerge(baseConfig, {
     mode: 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
@@ -22,9 +23,9 @@ export default webpackMerge(baseConfig('development'), {
         compress: true,             // 开起 gzip 压缩
         disableHostCheck: true,
         historyApiFallback: {       // browserHistory路由
-            index: getPublicPath(parcel.publicPath)
+            index: output.publicPath
         },   
-        contentBase: path.resolve(__dirname, 'build'),
+        contentBase: output.path,
         proxy: {
             ...proxyConfig(proxies)
         }

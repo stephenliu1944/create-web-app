@@ -13,19 +13,17 @@ const { globals } = devEnvironments;
 const BUILD_PATH = 'build';
 const ASSETS_PATH = 'assets';
 const CONTENT_HASH = '[contenthash:8]';
+const NODE_ENV = process.env.NODE_ENV;
+const publicPath = parcel.publicPath.endsWith('/') ? publicPath : publicPath + '/';
 
-export function getPublicPath(publicPath = '') {
-    return publicPath.endsWith('/') ? publicPath : publicPath + '/';
-}
-
-export default function(env) {
+export default function(config) {
     
     return {
         entry: {
             main: ['./src/index.js']
         },
         output: {
-            publicPath: getPublicPath(parcel.publicPath),
+            publicPath,
             path: path.resolve(__dirname, BUILD_PATH),
             filename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.js`,
             chunkFilename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.chunk.js`,
@@ -38,7 +36,8 @@ export default function(env) {
                 Components: path.resolve(__dirname, 'src/components/'),
                 Config: path.resolve(__dirname, 'src/config/'),
                 Constants: path.resolve(__dirname, 'src/constants/'),
-                Containers: path.resolve(__dirname, 'src/containers/'),
+                Pages: path.resolve(__dirname, 'src/pages/'),
+                Hooks: path.resolve(__dirname, 'src/hooks/'),
                 Fonts: path.resolve(__dirname, 'src/fonts/'),
                 Images: path.resolve(__dirname, 'src/images/'),
                 Layouts: path.resolve(__dirname, 'src/layouts/'),
@@ -74,7 +73,7 @@ export default function(env) {
                     loader: 'eslint-loader',
                     options: {
                         fix: true,
-                        configFile: `.eslintrc${env === 'development' ? '' : '.prod'}.js`
+                        configFile: `.eslintrc${NODE_ENV === 'development' ? '' : '.prod'}.js`
                     }
                 }]
             }, {
@@ -220,7 +219,7 @@ export default function(env) {
             }),
             // 配置全局变量
             new webpack.DefinePlugin({
-                ...defineConfig(globals, env === 'development')                       // 'false'表示所有自定义全局变量的值设为 false
+                ...defineConfig(globals, NODE_ENV === 'development')                       // 'false'表示所有自定义全局变量的值设为 false
             }),
             // 文件大小写检测
             new CaseSensitivePathsPlugin()

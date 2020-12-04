@@ -8,8 +8,7 @@
 ## 目录结构
 ```
 bin                                         // 可执行命令目录.
-|-build-dev.bat                             // 将 src 目录中的源码通过 webpack.config.dev.babel.js 编译到 build 目录.
-|-build-prod.bat                            // 将 src 目录中的源码通过 webpack.config.prod.babel.js 编译到 build 目录.
+|-build.bat                                 // 将 src 目录中的源码通过 webpack.config.dev.babel.js 编译到 build 目录.
 |-deploy.bat                                // 将代码部署到服务器, 需在 package.json 中配置 deployments 相关信息.
 |-package.bat                               // 将 src 目录中的源码通过生产环境配置打包到 dist 目录生成 zip 文件供发布使用(window).
 |-package.sh                                // 将 src 目录中的源码通过生产环境配置打包到 dist 目录生成 zip 文件供发布使用(linux).
@@ -35,25 +34,29 @@ src                                         // 项目源码目录
         |-component1.less                   // 组件引用的 css 文件, 文件首字母小写, 驼峰标识.
     ...
 |-config                                    // 生产环境配置文件目录
-    |-settings.js                           // 项目生产环境配置文件
+    |-global.js                             // 项目生产环境配置文件
+    |-http.js                               // 全局http请求配置
 |-constants                                 // 常量目录
     |-common.js                             // 存放一些通用常量
     |-enum.js                               // 存放一些枚举常量
-|-containers                                // 容器组件目录(一个容器组件就是一个页面, 它将各种功能组件组合在一起, 其主要负责组装功能组件, 接口调用以及整个页面的状态管理).
-    |-home                                  // 首页容器组件
-        |-Home.jsx                          // 容器组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
-        |-home.less                         // 容器组件样式文件, 文件首字母小写, 驼峰标识.
-        |-images                            // 容器组件私有图片
-        |-services                          // 容器组件私有接口请求, 所有组件私有的数据请求都封装在这里.
-        |-components                        // 容器组件私有功能组件
+|-pages                                     // 页面组件(它将各种功能组件组合在一起, 其主要负责组装功能组件, 调用接口以及管理页面的状态), 注意: 页面组件可以嵌套, 目录结构与 pages 相同.
+    |-home                                  // 首页组件.
+        |-components                        // 首页组件私有的功能组件, 仅供当前页面和子页面组件使用, 注意: 功能组件不能嵌套, 是原子级.
             |-component1
                 |-images                    // 功能组件私有图片
                 |-Component1.jsx            // 功能组件 jsx 文件
                 |-component1.less           // 功能组件样式文件
             ...
+        |-hooks                             // 首页组件私有的自定义hook, 仅供当前页面和子页面组件使用, 注意: 自定义hook不是函数组件.
+        |-images                            // 首页组件的私有图片.
+        |-pages                             // 首页组件的子页面组件, 注意: 页面组件可以嵌套, 目录结构和 pages 相同.
+        |-services                          // 首页组件私有的接口请求, 所有组件私有的数据请求都封装在这里.
+        |-Home.jsx                          // 首页组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
+        |-home.less                         // 首页组件样式文件, 文件首字母小写, 驼峰标识.
     ...
 |-data                                      // 存放copy的资源
 |-fonts                                     // 公共字体文件
+|-hooks                                     // 公共自定义hook, 注意: 自定义hook不是函数组件.
 |-images                                    // 公共图片存放目录
 |-layouts                                   // 公共布局组件目录
     |-mainLayout                            // 主要布局组件
@@ -74,7 +77,8 @@ src                                         // 项目源码目录
 |-template.ejs                              // 页面模板文件.
 test                                        // 测试代码目录, 目录结构同src
 |-components
-|-containers
+|-hooks
+|-pages
     ...
 .eslintignore                               // eslint 忽略校验配置文件.
 .eslintrc.js                                // eslint 开发环境代码校验配置文件.

@@ -5,8 +5,8 @@ import lazyload from 'Components/lazyload/Lazyload';
 import Header from 'Components/header/Header';
 import Footer from 'Components/footer/Footer';
 
-const Home = lazyload(() => import(/* webpackPrefetch: true */ 'Containers/home/Home'));
-const NotFound = lazyload(() => import(/* webpackPrefetch: true */ 'Containers/notFound/NotFound'));
+const Home = lazyload(() => import(/* webpackPrefetch: true */ 'Pages/home/Home'));
+const NotFound = lazyload(() => import(/* webpackPrefetch: true */ 'Pages/notFound/NotFound'));
 
 /**
  * @desc 页面整体框架组件
