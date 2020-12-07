@@ -9,12 +9,12 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import defineConfig from '@easytool/define-config';
 import { name, devEnvironments, parcel } from './package.json';
 
-const { globals } = devEnvironments;
 const BUILD_PATH = 'build';
 const ASSETS_PATH = 'assets';
 const CONTENT_HASH = '[contenthash:8]';
+const { globals } = devEnvironments;
+const publicPath = parcel.publicPath;
 const NODE_ENV = process.env.NODE_ENV;
-const publicPath = parcel.publicPath.endsWith('/') ? publicPath : publicPath + '/';
 
 export default function(config) {
     
@@ -23,7 +23,7 @@ export default function(config) {
             main: ['./src/index.js']
         },
         output: {
-            publicPath,
+            publicPath: publicPath.endsWith('/') ? publicPath : publicPath + '/',
             path: path.resolve(__dirname, BUILD_PATH),
             filename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.js`,
             chunkFilename: `${ASSETS_PATH}/js/[name].${CONTENT_HASH}.chunk.js`,
@@ -205,13 +205,13 @@ export default function(config) {
                 chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`   // chunk css file
             }),
             // 用于文件拷贝
-            // new CopyWebpackPlugin({
-            //     patterns: [{
-            //         from: './src/data',
-            //         to: `${ASSETS_PATH}/data/`,
-            //         toType: 'dir'
-            //     }]
-            // }),
+            new CopyWebpackPlugin({
+                patterns: [{
+                    from: './src/data',
+                    to: `${ASSETS_PATH}/data/`,
+                    toType: 'dir'
+                }]
+            }),
             // index.html 模板插件
             new HtmlWebpackPlugin({                             
                 filename: 'index.html',
