@@ -31,6 +31,8 @@ export default function(config) {
             jsonpFunction: name
         },
         resolve: {
+            // 确保 npm link 时, 优先使用本项目依赖包
+            modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
             extensions: ['.js', '.jsx', '.css', '.less', '.scss', '.sass'],
             alias: {
                 Components: path.resolve(__dirname, 'src/components/'),
