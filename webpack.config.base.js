@@ -71,7 +71,7 @@ export default function(config) {
                  */
                 test: /\.(js|jsx)$/,
                 enforce: 'pre',
-                include: path.resolve(__dirname, 'src'),
+                exclude: path.resolve(__dirname, 'node_modules'),
                 use: [{
                     loader: 'eslint-loader',
                     options: {
@@ -88,7 +88,7 @@ export default function(config) {
                      * 主项目js
                      */
                     test: /\.(js|jsx)?$/,
-                    include: path.resolve(__dirname, 'src'),
+                    exclude: path.resolve(__dirname, 'node_modules'),
                     use: [{
                         loader: 'babel-loader',
                         options: {
@@ -100,7 +100,7 @@ export default function(config) {
                      * 主项目样式
                      */
                     test: /\.(css|less)$/,
-                    include: path.resolve(__dirname, 'src'),
+                    exclude: path.resolve(__dirname, 'node_modules'),
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
