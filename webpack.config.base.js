@@ -88,7 +88,7 @@ export default function(config) {
                      * 主项目js
                      */
                     test: /\.(js|jsx)?$/,
-                    exclude: path.resolve(__dirname, 'node_modules'),
+                    include: path.resolve(__dirname, 'src'),
                     use: [{
                         loader: 'babel-loader',
                         options: {
@@ -100,7 +100,7 @@ export default function(config) {
                      * 主项目样式
                      */
                     test: /\.(css|less)$/,
-                    exclude: path.resolve(__dirname, 'node_modules'),
+                    include: path.resolve(__dirname, 'src'),
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
