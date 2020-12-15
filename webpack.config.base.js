@@ -71,12 +71,12 @@ export default function(config) {
                  */
                 test: /\.(js|jsx)$/,
                 enforce: 'pre',
-                exclude: path.resolve(__dirname, 'node_modules'),
+                include: path.resolve(__dirname, 'src'),
                 use: [{
                     loader: 'eslint-loader',
                     options: {
                         fix: true,
-                        configFile: `.eslintrc${NODE_ENV === 'development' ? '' : '.prod'}.js`
+                        configFile: `.eslintrc${NODE_ENV === 'production' ? '.prod' : ''}.js`
                     }
                 }]
             }, {
