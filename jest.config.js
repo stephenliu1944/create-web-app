@@ -28,6 +28,7 @@ module.exports = {
         '^Components(.*)$': '<rootDir>/src/components$1',
         '^Config(.*)$': '<rootDir>/src/config$1',
         '^Constants(.*)$': '<rootDir>/src/constants$1',
+        '^Contexts(.*)$': '<rootDir>/src/contexts$1',
         '^Pages(.*)$': '<rootDir>/src/pages$1',
         '^Hooks(.*)$': '<rootDir>/src/hooks$1',
         '^Fonts(.*)$': '<rootDir>/src/fonts$1',
@@ -35,7 +36,6 @@ module.exports = {
         '^Layouts(.*)$': '<rootDir>/src/layouts$1',
         '^Routes(.*)$': '<rootDir>/src/routes$1',
         '^Services(.*)$': '<rootDir>/src/services$1',
-        '^Store(.*)$': '<rootDir>/src/store$1',
         '^Styles(.*)$': '<rootDir>/src/styles$1',
         '^Utils(.*)$': '<rootDir>/src/utils$1',
         '\\.(css|less|scss)$': 'identity-obj-proxy'

@@ -43,6 +43,15 @@ src                                         // 项目源码目录
 |-constants                                 // 常量目录
     |-common.js                             // 存放一些通用常量
     |-enum.js                               // 存放一些枚举常量
+|-contexts                                  // 用于创建全局的状态, 如: createContext, useContext.
+|-data                                      // 存放copy的资源
+|-fonts                                     // 公共字体文件
+|-hooks                                     // 公共自定义hook, 注意: 自定义hook不是函数组件.
+|-images                                    // 公共图片存放目录
+|-layouts                                   // 公共布局组件目录
+    |-mainLayout                            // 主要布局组件
+        |-MainLayout.jsx
+        |-mainLayout.less
 |-pages                                     // 页面组件(它将各种功能组件组合在一起, 其主要负责组装功能组件, 调用接口以及管理页面的状态), 注意: 页面组件可以嵌套, 目录结构与 pages 相同.
     |-home                                  // 首页组件.
         |-components                        // 首页组件私有的功能组件, 仅供当前页面和子页面组件使用, 注意: 功能组件不能嵌套, 是原子级.
@@ -58,17 +67,8 @@ src                                         // 项目源码目录
         |-Home.jsx                          // 首页组件jsx文件, 文件首字母大写, 驼峰标识, 代码采用ES6风格编码.
         |-home.less                         // 首页组件样式文件, 文件首字母小写, 驼峰标识.
     ...
-|-data                                      // 存放copy的资源
-|-fonts                                     // 公共字体文件
-|-hooks                                     // 公共自定义hook, 注意: 自定义hook不是函数组件.
-|-images                                    // 公共图片存放目录
-|-layouts                                   // 公共布局组件目录
-    |-mainLayout                            // 主要布局组件
-        |-MainLayout.jsx
-        |-mainLayout.less
 |-services                                  // 公共接口请求目录, 所有公共的HTTP请求都封装在这里.
     |-demo.js                               // HTTP服务文件, 文件名对应请求的URL模块, 如: /user/add, 则文件应该命名为user.js
-|-store                                     // 用于创建全局的状态, 如: createContext, useContext.
 |-styles                                    // 公共样式目录
     |-main.less                             // 全局css文件
     |-fonts.less                            // 字体样式和字体图标css文件

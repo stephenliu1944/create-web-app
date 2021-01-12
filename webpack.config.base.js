@@ -38,6 +38,7 @@ export default function(config) {
                 Components: path.resolve(__dirname, 'src/components/'),
                 Config: path.resolve(__dirname, 'src/config/'),
                 Constants: path.resolve(__dirname, 'src/constants/'),
+                Contexts: path.resolve(__dirname, 'src/contexts/'),
                 Pages: path.resolve(__dirname, 'src/pages/'),
                 Hooks: path.resolve(__dirname, 'src/hooks/'),
                 Fonts: path.resolve(__dirname, 'src/fonts/'),
@@ -45,7 +46,6 @@ export default function(config) {
                 Layouts: path.resolve(__dirname, 'src/layouts/'),
                 Routes: path.resolve(__dirname, 'src/routes/'),
                 Services: path.resolve(__dirname, 'src/services/'),
-                Store: path.resolve(__dirname, 'src/store/'),
                 Styles: path.resolve(__dirname, 'src/styles/'),
                 Utils: path.resolve(__dirname, 'src/utils/')
             }
