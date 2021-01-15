@@ -2,6 +2,7 @@ let fs = require('fs');
 let minimist = require('minimist');
 let argv = minimist(process.argv.slice(2));
 
+// npm run environment --branch=$CI_COMMIT_REF_NAME
 function configureEnvironment(args) {
     let code;
 
