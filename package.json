@@ -23,6 +23,7 @@
     "lint-js": "eslint -c .eslintrc.prod.js src/ --ext .js,.jsx --fix",
     "lint-css": "stylelint \"src/**/*.{css,less,scss}\" --cache --fix",
     "test": "jest",
+    "environment": "cross-env node environment.js",
     "package": "cross-env NODE_ENV=production webpack --config webpack.config.prod.babel.js --colors --display-error-details",
     "deploy": "npm run package && gulp deploy",
     "git-push": "gulp git-push"
@@ -96,6 +97,7 @@
     "lint-staged": "^9.3.0",
     "merge-stream": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.2",
+    "minimist": "^1.2.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.0",
