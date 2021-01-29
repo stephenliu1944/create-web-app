@@ -1,6 +1,6 @@
 import styles from './mainLayout.less';
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import lazyload from 'Components/lazyload/Lazyload';
 import Header from 'Components/header/Header';
 import Footer from 'Components/footer/Footer';
@@ -19,7 +19,9 @@ export default class MainLayout extends Component {
                 <Header />
                 <div className={styles.container}>
                     <Switch>
-                        <Route exact path="/" component={Home} />
+                        <Route exact path="/home" component={Home} />
+                        {/* 路由加在这里 */}
+                        <Redirect exact from="/" to="/home" />
                         <Route path="*" component={NotFound} />
                     </Switch>
                 </div>

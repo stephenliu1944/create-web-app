@@ -47,6 +47,7 @@
     "@babel/runtime": "^7.0.0",
     "@easytool/http": "^0.1.4",
     "classnames": "^2.2.6",
+    "path-to-regexp": "^1.7.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
