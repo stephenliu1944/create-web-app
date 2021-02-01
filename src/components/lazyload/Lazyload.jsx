@@ -37,7 +37,7 @@ export default function Lazyload(loader, options = {}) {
         ]).then(loader => loader()).catch(err => Promise.reject(new Error(err)));
     });
 
-    return function(props) {
+    return function WrappedComponent(props) {
         return (
             <Error>
                 <Suspense fallback={<Spin />}>
