@@ -1,12 +1,10 @@
 import styles from './component1.less';
 import React from 'react';
-import PropTypes from 'prop-types';
 
 /** 
  * 示例代码, 熟悉后请删除
  */
-export default function Component1(props) {
-    let { data = {} } = props;
+export default function Component1({ data = {} }) {
     
     return (
         <div className={styles.component1}>
@@ -17,7 +15,3 @@ export default function Component1(props) {
         </div>
     );
 }
-
-Component1.propTypes = {
-    data: PropTypes.object
-};

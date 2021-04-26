@@ -1,11 +1,5 @@
 module.exports = {
-    'settings': {
-        'react': {
-            'version': 'detect'
-        }
-    },
-    'plugins': ['react'],
-    'parser': '@babel/eslint-parser',
+    'parser': '@typescript-eslint/parser',
     'parserOptions': {
         'ecmaVersion': 6,
         'sourceType': 'module',
@@ -18,6 +12,21 @@ module.exports = {
         'browser': true,
         'commonjs': true
     },
+    'settings': {
+        'react': {
+            'pragma': 'React',
+            'version': 'detect'
+        }
+    },
+    'plugins': [
+        '@typescript-eslint',
+        'react-hooks',
+        'react'
+    ],
+    // "extends": [
+    //     "plugin:react/recommended",
+    //     "plugin:@typescript-eslint/recommended"
+    // ],
     'rules': {
         'no-cond-assign': 'error',
         'no-constant-condition': 'error',
@@ -78,10 +87,10 @@ module.exports = {
         'react/no-is-mounted': 'error',
         'react/no-multi-comp': 'error',
         'react/no-string-refs': 'error',
-        'react/no-unused-prop-types': 'error',
-        'react/prop-types': 'warn',
         'react/prefer-es6-class': 'error',
         'react/jsx-uses-vars': 'warn',
-        'react/jsx-uses-react': 'error'
+        'react/jsx-uses-react': 'error',
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn'
     }
 };

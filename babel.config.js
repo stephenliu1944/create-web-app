@@ -12,17 +12,18 @@ module.exports = function(api) {
         ['@babel/preset-env', {
             targets: [
                 'last 2 version',
-                'ie >= 9'
+                'ie >= 10'
             ]
         }],
-        '@babel/preset-react'
+        '@babel/preset-react',
+        '@babel/preset-typescript'
     ];
     var plugins = [
         '@babel/plugin-transform-runtime', 
         '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-proposal-class-properties', 
         '@babel/plugin-proposal-optional-chaining',
-        ['@babel/plugin-proposal-pipeline-operator', { 
+        ['@babel/plugin-proposal-pipeline-operator', {
             'proposal': 'minimal' 
         }],
         '@babel/plugin-proposal-export-default-from',

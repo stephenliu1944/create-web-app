@@ -4,6 +4,7 @@ import ESLintPlugin from 'eslint-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -20,8 +21,9 @@ const NODE_ENV = process.env.NODE_ENV;
 export default function(config) {
     
     return {
+        target: ['web', 'es5'],
         entry: {
-            main: ['./src/index.js']
+            main: ['./src/index.ts']
         },
         output: {
             publicPath: publicPath,
@@ -34,7 +36,7 @@ export default function(config) {
         resolve: {
             // 确保 npm link 时, 优先使用本项目依赖包
             modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
-            extensions: ['.js', '.jsx', '.css', '.less', '.scss', '.sass'],
+            extensions: ['.js', '.jsx', '.ts', '.tsx', '.less', '.css'],
             alias: {
                 Components: path.resolve(__dirname, 'src/components/'),
                 Config: path.resolve(__dirname, 'src/config/'),
@@ -73,14 +75,14 @@ export default function(config) {
                     /**
                      * 主项目js
                      */
-                    test: /\.(js|jsx)?$/,
-                    include: path.resolve(__dirname, 'src'),
-                    use: [{
+                    test: /\.(js|ts)x?$/,
+                    exclude: /node_modules/,
+                    use: {
                         loader: 'babel-loader',
                         options: {
                             cacheDirectory: true
                         }
-                    }]
+                    }
                 }, {
                     /**
                      * 主项目样式
@@ -173,13 +175,20 @@ export default function(config) {
         plugins: [
             // 清除编译目录
             new CleanWebpackPlugin(),
-            // JS规范校验
+            // TypeScript 类型检测
+            new ForkTsCheckerWebpackPlugin({
+                // async 为 false，同步的将错误信息反馈给 webpack，如果报错了，webpack 就会编译失败           
+                // async 默认为 true，异步的将错误信息反馈给 webpack，如果报错了，不影响 webpack 的编译           
+                async: false
+            }),
+            // JS 规范检测
             new ESLintPlugin({
                 fix: true,
-                extensions: ['js', 'jsx'],
+                cache: true,
+                extensions: ['js', 'jsx', 'ts', 'tsx'],
                 overrideConfigFile: `.eslintrc${NODE_ENV === 'development' ? '' : '.prod'}.js`
             }),
-            // CSS规范校验
+            // CSS 规范校验
             new StyleLintPlugin({
                 context: 'src',
                 files: '**/*.(c|sc|sa|le)ss',

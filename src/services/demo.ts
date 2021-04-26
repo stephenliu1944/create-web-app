@@ -6,7 +6,7 @@ import { HttpMethod } from 'Constants/enum';
  * 公共接口
  */
 // 通过 post data 传参
-export function addUser(user) {
+export function addUser(user: object) {
     return http({
         url: `${API}/user`,
         method: HttpMethod.POST,
@@ -17,7 +17,7 @@ export function addUser(user) {
 }
 
 // 文件下载
-export function downloadFile(filename) {
+export function downloadFile(filename: string) {
     return http({
         url: `${API}/download/${filename}`,
         responseType: 'blob'                // IE10+
@@ -25,7 +25,7 @@ export function downloadFile(filename) {
 }
 
 // 返回一个预请求对象
-export function uploadURL(user) {
+export function uploadURL(user: object) {
     return prepare({
         url: `${API}/upload`,
         params: {

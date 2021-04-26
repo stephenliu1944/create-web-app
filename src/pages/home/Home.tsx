@@ -5,9 +5,16 @@ import { getUser } from './services/demo';
 import { downloadFile } from 'Services/demo';
 import Component1 from './components/component1/Component1';
 
-export default class Home extends Component {
+interface Props {  
+}
 
-    constructor(props) {
+interface State {  
+    data: object;  
+}
+
+export default class Home extends Component<Props, State> {
+
+    constructor(props: Props) {
         super(props);
         this.state = {
             data: null
@@ -16,18 +23,16 @@ export default class Home extends Component {
 
     componentDidMount() {
         /** 
-         * 请求数据示例
+         * 请求数据示例, 熟悉后请删除
          */
-        getUser(1).then(({ data }) => {
+        getUser(1).then((resp: { data: object }) => {
             this.setState({
-                data
+                data: resp.data
             });
-        }, (error) => {
-            console.error(error);
         });
-        
+
         /** 
-         * 下载文件示例
+         * 下载文件示例, 熟悉后请删除
          */
         // downloadFile('file').then((blob) => {                    
         //     // IE10-Edge

@@ -1,0 +1,39 @@
+{
+    "include": ["src", "test", "declaration"],
+    "exclude": [],
+    "compilerOptions": {
+        // "noImplicitAny": true,
+        // "module": "es6",
+        // "target": "es5",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "Components/*": ["src/components/*"],
+            "Config/*": ["src/config/*"],
+            "Constants/*": ["src/constants/*"],
+            "Contexts/*": ["src/contexts/*"],
+            "Fonts/*": ["src/fonts/*"],
+            "Hooks/*": ["src/hooks/*"],
+            "Images/*": ["src/images/*"],
+            "Layouts/*": ["src/layouts/*"],
+            "Pages/*": ["src/pages/*"],
+            "Services/*": ["src/services/*"],
+            "Styles/*": ["src/styles/*"],
+            "Utils/*": ["src/utils/*"]
+        },
+        "strict": true,
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "strictNullChecks": false,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        // 阻止 TS 生成代码, 由 babel 生成
+        "noEmit": true,
+        "jsx": "react"
+    }
+}

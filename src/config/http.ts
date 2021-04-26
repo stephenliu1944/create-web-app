@@ -4,11 +4,11 @@
 export default {
     isDev: __DEV__,                     // 显示 请求,响应 的日志
     proxyPath: __DEV__,                 // 代理根路径
-    // validateStatus(status) {            // 默认有效的状态码
+    // validateStatus(status: number): boolean {            // 默认有效的状态码
     //     return status >= 200 && status < 500;
     // },
     // beforeRequest(resolve, reject, options) {},          // 拦截请求
-    afterResponse(resolve, reject, response, options) {     // 拦截响应
+    afterResponse(resolve: Function, reject: Function, response: {data: object, status: number}, options: object) {     // 拦截响应
         let { data, status } = response;
 
         switch (status) {

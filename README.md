@@ -8,6 +8,7 @@
 
 ## 依赖项
 ```
+typescript      v4
 react           v16
 react-dom       v16
 react-router    v5
@@ -38,8 +39,10 @@ bin                                         // 可执行命令目录.
 |-test.sh                                   // 执行 jest 单元测试(linux)
 build                                       // 代码编译后生成的临时目录
 dist                                        // 代码打包后生成的临时目录
-etc                                         // 其他配置文件.
-|-nginx.conf                                // nginx服务配置文件.
+declaration                                 // TS 外部变量声明文件
+|-index.d.ts                                // 默认配置的外部变量声明
+etc                                         // 其他服务配置文件
+|-nginx.conf                                // nginx配置文件
 mock                                        // mock 服务目录
 |-data                                      // mock 数据存放目录
 |-static                                    // mock 静态资源存放目录

@@ -1,18 +1,26 @@
 import styles from './errorBoundary.less';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-export default class ErrorBoundary extends Component {
-    constructor(props) {
+interface Props {
+    children: JSX.Element[] | JSX.Element
+}
+
+interface State {
+    hasError: boolean,
+    errorMsg: string | null
+}
+
+export default class ErrorBoundary extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
             hasError: false,
-            errorMsg: '页面加载出错'
+            errorMsg: null
         };
     }
 
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError(error: { message: string }) {
         // 更新 state 使下一次渲染能够显示降级后的 UI
         return { hasError: true, errorMsg: error.message };
     }
@@ -35,7 +43,3 @@ export default class ErrorBoundary extends Component {
         return this.props.children;
     }
 }
-
-ErrorBoundary.propTypes = {
-    children: PropTypes.any
-};
