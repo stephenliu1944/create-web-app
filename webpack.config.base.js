@@ -20,6 +20,7 @@ const NODE_ENV = process.env.NODE_ENV;
 export default function(config) {
     
     return {
+        target: ['web', 'es5'],
         entry: {
             main: ['./src/index.js']
         },
