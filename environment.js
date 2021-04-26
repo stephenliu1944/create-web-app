@@ -1,27 +1,5 @@
-let fs = require('fs');
-let minimist = require('minimist');
-let argv = minimist(process.argv.slice(2));
+// 该配置文件随源码所在git分支而变化, 具体参考 ./script/env.js
+export default {
+    // 本地环境
 
-// npm run environment --branch=$CI_COMMIT_REF_NAME
-function configureEnvironment(args) {
-    let code;
-
-    switch (args.branch) {
-        // 开发分支
-        case 'dev':
-            code = `export default {
-
-            };`;
-            break;
-        // 测试分支
-        case 'test': 
-            code = `export default {
-                
-            };`;
-            break;
-    }
-    
-    code && fs.writeFileSync('src/config/environment.js', code);
-}
-
-// configureEnvironment(argv);
+};

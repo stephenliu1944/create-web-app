@@ -5,7 +5,7 @@ module.exports = {
         }
     },
     'plugins': ['react'],
-    'parser': 'babel-eslint',
+    'parser': '@babel/eslint-parser',
     'parserOptions': {
         'ecmaVersion': 6,
         'sourceType': 'module',
@@ -47,8 +47,7 @@ module.exports = {
         'no-delete-var': 'error',
         'no-lonely-if': 'error',
         'no-self-assign': 'error',
-        'no-multiple-empty-lines': ['warn', {'max': 1}],
-        'no-unused-vars': 'warn',
+        'no-multiple-empty-lines': ['warn', { 'max': 1 }],
         'space-infix-ops': 'error',
         'spaced-comment': 'warn',
         'comma-spacing': 'error',
@@ -64,14 +63,14 @@ module.exports = {
         'eqeqeq': 'error',
         'radix': 'error',
         'quotes': ['error', 'single'],
-        'indent': ['warn', 4, {'SwitchCase': 1, 'MemberExpression': 2, 'ignoredNodes': ['TemplateLiteral']}],
+        'indent': ['warn', 4, { 'SwitchCase': 1, 'MemberExpression': 2, 'ignoredNodes': ['TemplateLiteral'] }],
         'keyword-spacing': 'error',
         'arrow-spacing': 'error',
         'array-bracket-spacing': ['error', 'never'],
         'object-curly-spacing': ['error', 'always'],
         'space-before-blocks': ['error', 'always'],
         'space-before-function-paren': ['error', 'never'],
-        'space-unary-ops': ['error', {'words': true, 'nonwords': false}],
+        'space-unary-ops': ['error', { 'words': true, 'nonwords': false }],
         'jsx-quotes': 'error',
         'react/no-array-index-key': 'warn',
         'react/no-deprecated': 'error',
@@ -85,4 +84,4 @@ module.exports = {
         'react/jsx-uses-vars': 'warn',
         'react/jsx-uses-react': 'error'
     }
-}
+};

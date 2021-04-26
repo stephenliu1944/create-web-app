@@ -1,13 +1,25 @@
-# my-app
+# 项目名称
 
-## 依赖
-
-## 安装
 
 ***
 
 # 脚手架介绍
 用于开发基于 React 的 Web 应用.
+
+## 依赖项
+```
+react           v16
+react-dom       v16
+react-router    v5
+webpack:        v5
+babel:          v7
+gulp:           v4
+eslint:         v7
+stylelint       v13
+jest            v26
+enzyme          v3
+node            v10+
+```
 
 ## 目录结构
 ```
@@ -26,26 +38,29 @@ bin                                         // 可执行命令目录.
 |-test.sh                                   // 执行 jest 单元测试(linux)
 build                                       // 代码编译后生成的临时目录
 dist                                        // 代码打包后生成的临时目录
+etc                                         // 其他配置文件.
+|-nginx.conf                                // nginx服务配置文件.
 mock                                        // mock 服务目录
 |-data                                      // mock 数据存放目录
 |-static                                    // mock 静态资源存放目录
 |-mock.config.js                            // mock 服务全局配置
 |-README.md                                 // mock 服务文档
+script                                      // 脚本文件
+|-env.js                                    // 根据源码所在 git 分支, 动态修改 environment.js 配置文件
 src                                         // 项目源码目录
-|-components                                // 公共组件目录
+|-components                                // 公共组件目录, 注意: 功能组件不能嵌套, 是原子级.
     |-component1
         |-Component1.jsx                    // 组件 jsx 文件, 文件首字母大写, 驼峰标识, 代码采用 ES6 风格编码.
         |-component1.less                   // 组件引用的 css 文件, 文件首字母小写, 驼峰标识.
     ...
 |-config                                    // 生产环境配置文件目录
-    |-environment.js                        // 环境变量配置, 根据不同环境参数可能发生变化
     |-global.js                             // 项目全局配置文件, 不区分环境
     |-http.js                               // 全局http请求配置
 |-constants                                 // 常量目录
     |-common.js                             // 存放一些通用常量
     |-enum.js                               // 存放一些枚举常量
 |-contexts                                  // 用于创建全局的状态, 如: createContext, useContext.
-|-data                                      // 存放copy的资源
+|-data                                      // 用于存放拷贝的资源
 |-fonts                                     // 公共字体文件
 |-hooks                                     // 公共自定义hook, 注意: 自定义hook不是函数组件.
 |-images                                    // 公共图片存放目录
@@ -85,6 +100,7 @@ test                                        // 测试代码目录, 目录结构�
 |-hooks
 |-pages
     ...
+.dockerignore                               // docker 忽略打包的配置文件.
 .eslintignore                               // eslint 忽略校验配置文件.
 .eslintrc.js                                // eslint 开发环境代码校验配置文件.
 .eslintrc.prod.js                           // eslint 生产环境代码校验配置文件, 比开发环境更加严格, 发版和提交代码时会自动执行此配置校验代码.
@@ -92,10 +108,11 @@ test                                        // 测试代码目录, 目录结构�
 .stylelintignore                            // stylelint 忽略校验配置文件.
 babel.config.js                             // babel 配置文件.
 CHANGELOG.md                                // 项目更新日志.
-environment.js                              // 环境变量配置脚本, 根据代码所在分支动态修改变量配置.
+Dockerfile                                  // docker镜像配置文件.
+environment.js                              // 环境变量配置, 根据不同 git 分支动态发生变化.
 enzyme.config.js                            // enzyme 配置文件.
 fileTransformer.js                          // jest 文件转换配置文件.
-gulpfile.babel.js                           // 项目打包, 发布脚本.
+gulpfile.babel.js                           // 项目手动发布脚本.
 jest.config.js                              // jest 配置文件.
 package.json                                // npm 配置文件.
 postcss.config.js                           // postcss 插件配置文件.
@@ -104,21 +121,6 @@ stylelint.config.js                         // stylelint 校验规则配置文�
 webpack.config.base.js                      // webpack 公共配置.
 webpack.config.dev.babel.js                 // webpack 开发环境配置文件.
 webpack.config.prod.babel.js                // webpack 生产环境配置文件.
-```
-
-## 项目依赖
-```
-webpack:        v4
-babel:          v7
-gulp:           v4
-react           v16
-react-dom       v16
-react-router    v5
-jest            v24
-enzyme          v3
-eslint:         v5
-stylelint       v10
-node            v8+
 ```
 
 ## 安装
@@ -147,7 +149,7 @@ npm install
 
 ### 代理
 代理会根据URL拦截请求, 从而解决跨域问题.  
-proxy 的 key 为拦截的URL前缀, value 为最终访问的服务地址.  
+proxies 的 key 为拦截的URL前缀, value 为最终访问的服务地址.  
 ()内的字符串会被代理从URL中移除再请求目标服务器, 类似 pathRewrite: {'/proxy' : ''} 的功能.
 如: http://localhost:8080/proxy/user/1 > proxy > http://www.example.org/user/1
 ```js

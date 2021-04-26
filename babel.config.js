@@ -1,7 +1,7 @@
 const ENV = {
     DEVELOPMENT: 'development',
-    PRODUCTION: 'production',
-    TEST: 'test'
+    TEST: 'test',
+    PRODUCTION: 'production'
 };
 
 module.exports = function(api) {
@@ -32,9 +32,9 @@ module.exports = function(api) {
     switch (env) {
         case ENV.DEVELOPMENT:
             break;
-        case ENV.PRODUCTION:        
-            break;
         case ENV.TEST:
+            break;
+        case ENV.PRODUCTION:        
             break;
     }
 

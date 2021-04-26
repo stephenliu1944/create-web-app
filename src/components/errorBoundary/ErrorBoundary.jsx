@@ -8,26 +8,27 @@ export default class ErrorBoundary extends Component {
 
         this.state = {
             hasError: false,
-            error: null
+            errorMsg: '页面加载出错'
         };
     }
 
     static getDerivedStateFromError(error) {
-        return { hasError: true, error };
+        // 更新 state 使下一次渲染能够显示降级后的 UI
+        return { hasError: true, errorMsg: error.message };
     }
 
     // componentDidCatch (error, errorInfo) {
-    //     // 可以将错误日志上报给服务器
+    //     // 你同样可以将错误日志上报给服务器
     //     logErrorToMyService(error, errorInfo);
     // }
 
     render() {
-        let { hasError } = this.state;
+        let { hasError, errorMsg } = this.state;
 
-        if (hasError) {
+        if (hasError !== false) {
             // 你可以自定义降级后的 UI 并渲染
             return (
-                <p className={styles.errorBoundary}>页面加载出错</p>
+                <p className={styles.errorBoundary}>{errorMsg}</p>
             );
         }
 

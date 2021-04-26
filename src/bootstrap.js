@@ -11,7 +11,7 @@ import App from './App';
 http.settings(httpSettings);
 
 render(
-    <BrowserRouter>
+    <BrowserRouter basename="/">
         <App />
     </BrowserRouter>,
     document.getElementById('app')

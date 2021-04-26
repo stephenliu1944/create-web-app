@@ -1,1 +1,1 @@
-export const TOKEN = 'TOKEN';
+export const API = '/api';

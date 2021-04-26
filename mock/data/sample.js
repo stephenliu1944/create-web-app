@@ -1,49 +1,65 @@
 module.exports = [{
     request: {
-        url: '/user/123'
+        url: '/api/user/123'
     },
     response: {
         body: {
-            id: 123,
-            name: 'Stephen',
-            email: 'xxx@gmail.com'
+            code: 'ok',
+            message: '成功',
+            data: {
+                id: 123,
+                name: 'Stephen',
+                email: 'xxx@email.com'
+            }
         }
     }
 }, {
     request: {
-        url: '/user/:id'
+        url: '/api/user/:id'
     },
     response: {
         body: {
-            id: 123,
-            name: 'Stephen',
-            email: 'xxx@gmail.com'
+            code: 'ok',
+            message: '成功',
+            data: {
+                id: 123,
+                name: 'Stephen',
+                email: 'xxx@email.com'
+            }
         }
     }
 }, {
     request: {
-        url: '/user/*.do'
+        url: '/api/user/*.do'
     },
     response: {
         body: {
-            id: 123,
-            name: 'Stephen',
-            email: 'xxx@gmail.com'
+            code: 'ok',
+            message: '成功',
+            data: {
+                id: 123,
+                name: 'Stephen',
+                email: 'xxx@email.com'
+            }
         }
     }
 }, {
     request: {
-        url: '/user/**/list'
+        url: '/api/user/**/list'
     },
     response: {
-        body: [{
-            id: 123, 
-            name: 'Stephen',
-            age: 30
-        }, {
-            id: 124, 
-            name: 'Ricky',
-            age: 20				
-        }]
+        body: {
+            code: 'ok',
+            message: '成功',
+            data: [{
+                id: 123, 
+                name: 'Stephen',
+                age: 30
+            }, {
+                id: 124, 
+                name: 'Ricky',
+                age: 20				
+            }]
+        }
     }
 }];

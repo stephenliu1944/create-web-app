@@ -1,6 +1,6 @@
 module.exports = [{
     request: {
-        url: '/download/:filename',
+        url: '/api/download/:filename',
         method: 'get'
     },
     response: {

@@ -12,8 +12,8 @@ module.exports = {
             ignoreProperties: ['composes']
         }],
         'declaration-block-no-duplicate-properties': true,
-        'selector-id-pattern': '^[a-z][a-zA-Z0-9]+$',          // camel case selectors, use the disable commands to turn off the rule.
-        'selector-class-pattern': '^[a-z][a-zA-Z0-9]+$',       // camel case selectors, use the disable commands to turn off the rule.
+        'selector-id-pattern': '^[a-z][a-zA-Z0-9]+$',             // camel case selectors, use the disable commands to turn off the rule.
+        'selector-class-pattern': '^[a-z][a-zA-Z0-9]+$|^ant-',    // camel case selectors, use the disable commands to turn off the rule.
         'selector-pseudo-class-no-unknown': [true, {
             ignorePseudoClasses: ['global']
         }],

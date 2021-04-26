@@ -1,7 +1,6 @@
 import { task, src } from 'gulp';
 import sftp from 'gulp-sftp-up4';
 import mergeStream from 'merge-stream';
-import { execSync } from 'child_process';
 import { name, parcel, deployments } from './package.json';
 
 const DIST_PATH = 'dist';                      // 目的地文件
@@ -25,11 +24,4 @@ task('deploy', () => {
     });
 
     return mergeStream(...streams);
-});
-
-task('git-push', (done) => {
-    execSync('git add -A :/');
-    execSync('git commit -m "quick commit"');
-    execSync('git push');
-    done();
 });

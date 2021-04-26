@@ -7,9 +7,8 @@ import Footer from 'Components/footer/Footer';
 
 const Home = lazyload(() => import(/* webpackPrefetch: true */ 'Pages/home/Home'));
 const NotFound = lazyload(() => import(/* webpackPrefetch: true */ 'Pages/notFound/NotFound'));
-
 /**
- * @desc 页面整体框架组件
+ * @desc 页面主框架组件
  */
 export default class MainLayout extends Component {
  

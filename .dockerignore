@@ -1,0 +1,10 @@
+.git
+.idea
+bin
+etc
+build
+mock
+script
+node_modules
+src
+test
