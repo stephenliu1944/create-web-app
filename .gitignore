@@ -10,3 +10,4 @@ bin/*.log
 *.project
 .DS_Store
 .stylelintcache
+.eslintcache

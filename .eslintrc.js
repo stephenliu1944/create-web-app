@@ -76,7 +76,6 @@ module.exports = {
         'react/no-deprecated': 'error',
         'react/no-find-dom-node': 'error',
         'react/no-is-mounted': 'error',
-        'react/no-multi-comp': 'error',
         'react/no-string-refs': 'error',
         'react/no-unused-prop-types': 'error',
         'react/prop-types': 'warn',
