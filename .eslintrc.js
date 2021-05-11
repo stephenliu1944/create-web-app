@@ -85,7 +85,6 @@ module.exports = {
         'react/no-deprecated': 'error',
         'react/no-find-dom-node': 'error',
         'react/no-is-mounted': 'error',
-        'react/no-multi-comp': 'error',
         'react/no-string-refs': 'error',
         'react/prefer-es6-class': 'error',
         'react/jsx-uses-vars': 'warn',
