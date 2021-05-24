@@ -75,13 +75,13 @@ export default function(config) {
                      * 主项目js
                      */
                     test: /\.(js|jsx)?$/,
-                    include: path.resolve(__dirname, 'src'),
-                    use: [{
+                    exclude: /node_modules/,
+                    use: {
                         loader: 'babel-loader',
                         options: {
                             cacheDirectory: true
                         }
-                    }]
+                    }
                 }, {
                     /**
                      * 主项目样式
@@ -177,6 +177,7 @@ export default function(config) {
             // JS规范校验
             new ESLintPlugin({
                 fix: true,
+                cache: true,
                 extensions: ['js', 'jsx'],
                 overrideConfigFile: `.eslintrc${NODE_ENV === 'development' ? '' : '.prod'}.js`
             }),
