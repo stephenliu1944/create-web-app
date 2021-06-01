@@ -20,7 +20,10 @@ const NODE_ENV = process.env.NODE_ENV;
 export default function(config) {
     
     return {
-        target: ['web', 'es5'],
+        target: NODE_ENV === 'development' ? 'web' : ['web', 'es5'],    // TODO: webpack-dev-server4 发布前临时解决方案
+        cache: {
+            type: 'filesystem'              // 默认缓存在: /node_modules/.cache/webpack
+        },
         entry: {
             main: ['./src/index.js']
         },
@@ -135,38 +138,29 @@ export default function(config) {
                      */
                     test: /\.(bmp|png|jpg|jpeg|gif|svg)$/,
                     exclude: path.resolve(__dirname, 'src/fonts'),
-                    use: [{
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10,
-                            name: `${ASSETS_PATH}/images/[name].${CONTENT_HASH}.[ext]`
-                        }
-                    }]
+                    type: 'asset/resource',
+                    generator: {
+                        filename: `${ASSETS_PATH}/images/[name].${CONTENT_HASH}[ext]`
+                    }
                 }, {
                     /**
                      * favicon
                      */
                     test: /\.ico$/,
                     include: path.resolve(__dirname, 'src/images'),
-                    use: [{
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10,
-                            name: `${ASSETS_PATH}/images/[name].[ext]`
-                        }
-                    }]
+                    type: 'asset/resource',
+                    generator: {
+                        filename: `${ASSETS_PATH}/images/[name][ext]`
+                    }
                 }, {
                     /**
                      * 全局字体
                      */
                     test: /\.(woff|eot|ttf|svg)$/,
-                    use: [{
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10,
-                            name: `${ASSETS_PATH}/fonts/[name].${CONTENT_HASH}.[ext]`
-                        }
-                    }]
+                    type: 'asset/resource',
+                    generator: {
+                        filename: `${ASSETS_PATH}/fonts/[name].${CONTENT_HASH}[ext]`
+                    }
                     // 新 loader 需要加在 file-loader 之前
                 }]
             }]

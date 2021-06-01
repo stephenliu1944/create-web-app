@@ -12,10 +12,6 @@ export default merge(baseConfig, {
     mode: 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': 'true'
-        },
         host: '0.0.0.0',
         port: servers.local,
         http2: false,
