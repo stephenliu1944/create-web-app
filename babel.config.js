@@ -14,8 +14,7 @@ module.exports = function(api) {
                 'last 2 version',
                 'ie >= 9'
             ]
-        }],
-        '@babel/preset-react'
+        }]
     ];
     var plugins = [
         '@babel/plugin-transform-runtime', 

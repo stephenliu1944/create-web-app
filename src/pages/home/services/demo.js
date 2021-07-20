@@ -10,3 +10,10 @@ export function getUser(id) {
         url: `${API}/user/${id}`
     });
 }
+
+// 通过 url 传参
+export function getUsers() {
+    return http({
+        url: `${API}/users`
+    });
+}

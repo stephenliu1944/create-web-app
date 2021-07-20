@@ -45,7 +45,7 @@ module.exports = [{
     }
 }, {
     request: {
-        url: '/api/user/**/list'
+        url: '/api/users'
     },
     response: {
         body: {

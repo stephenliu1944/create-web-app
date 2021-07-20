@@ -7,6 +7,7 @@ import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import { VueLoaderPlugin } from 'vue-loader';
 import defineConfig from '@easytool/define-config';
 import { name, devEnvironments, parcel } from './package.json';
 
@@ -38,17 +39,20 @@ export default function(config) {
         resolve: {
             // 确保 npm link 时, 优先使用本项目依赖包
             modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
-            extensions: ['.js', '.jsx', '.css', '.less', '.scss', '.sass'],
+            extensions: ['.js', '.vue', '.css', '.less', '.scss', '.sass'],
             alias: {
+                '@': path.resolve(__dirname, 'src'),
                 Components: path.resolve(__dirname, 'src/components/'),
                 Config: path.resolve(__dirname, 'src/config/'),
                 Constants: path.resolve(__dirname, 'src/constants/'),
-                Contexts: path.resolve(__dirname, 'src/contexts/'),
                 Fonts: path.resolve(__dirname, 'src/fonts/'),
                 Hooks: path.resolve(__dirname, 'src/hooks/'),
                 Images: path.resolve(__dirname, 'src/images/'),
                 Layouts: path.resolve(__dirname, 'src/layouts/'),
                 Pages: path.resolve(__dirname, 'src/pages/'),
+                Public: path.resolve(__dirname, 'public/'),
+                Router: path.resolve(__dirname, 'src/router/'),
+                Store: path.resolve(__dirname, 'src/store/'),
                 Services: path.resolve(__dirname, 'src/services/'),
                 Styles: path.resolve(__dirname, 'src/styles/'),
                 Utils: path.resolve(__dirname, 'src/utils/')
@@ -70,6 +74,9 @@ export default function(config) {
         },
         module: {
             rules: [{
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            }, {
                 /**
                  * webpack会按顺序查找匹配的loader
                  */
@@ -77,7 +84,7 @@ export default function(config) {
                     /**
                      * 主项目js
                      */
-                    test: /\.(js|jsx)?$/,
+                    test: /\.js$/,
                     exclude: /node_modules/,
                     use: {
                         loader: 'babel-loader',
@@ -96,7 +103,9 @@ export default function(config) {
                         options: {
                             esModule: false
                         }
-                    }, {
+                    },
+                    // 'vue-style-loader',          // 会抛出异常: ReferenceError: document is not defined
+                    {
                         loader: 'css-loader',
                         options: {
                             importLoaders: 2,
@@ -147,10 +156,10 @@ export default function(config) {
                      * favicon
                      */
                     test: /\.ico$/,
-                    include: path.resolve(__dirname, 'src/images'),
+                    include: path.resolve(__dirname, 'public'),
                     type: 'asset/resource',
                     generator: {
-                        filename: `${ASSETS_PATH}/images/[name][ext]`
+                        filename: '[name][ext]'
                     }
                 }, {
                     /**
@@ -182,6 +191,8 @@ export default function(config) {
                 fix: true,
                 cache: true
             }),
+            // make sure to include the plugin for the magic
+            new VueLoaderPlugin(),
             // 样式提取插件
             new MiniCssExtractPlugin({
                 filename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.css`,
@@ -198,8 +209,8 @@ export default function(config) {
             // index.html 模板插件
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                template: './src/template.ejs',
-                faviconPath: `${publicPath}${ASSETS_PATH}/images/favicon.ico`
+                template: './public/index.html',
+                faviconPath: `${publicPath}favicon.ico`
             }),
             // 配置全局变量
             new webpack.DefinePlugin({

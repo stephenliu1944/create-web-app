@@ -1,18 +1,13 @@
-import 'Images/favicon.ico';
+import 'Public/favicon.ico';
 import 'Styles/main.less';
 import httpSettings from 'Config/http';
 import http from 'Utils/http';
-import React from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
+import { createApp } from 'vue';
+import store from './store';
+import router from './router';
+import App from './App.vue';
 
 // 设置http请求的默认参数
 http.settings(httpSettings);
 
-render(
-    <BrowserRouter basename="/">
-        <App />
-    </BrowserRouter>,
-    document.getElementById('app')
-);
+createApp(App).use(store).use(router).mount('#app');
