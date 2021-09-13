@@ -20,7 +20,7 @@ const NODE_ENV = process.env.NODE_ENV;
 export default function(config) {
     
     return {
-        target: NODE_ENV === 'development' ? 'web' : ['web', 'es5'],    // TODO: webpack-dev-server4 发布前临时解决方案
+        target: ['web', 'es5'],
         cache: {
             type: 'filesystem'              // 默认缓存在: /node_modules/.cache/webpack
         },
@@ -185,7 +185,8 @@ export default function(config) {
             // 样式提取插件
             new MiniCssExtractPlugin({
                 filename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.css`,
-                chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`   // chunk css file
+                chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`,   // chunk css file
+                ignoreOrder: true
             }),
             // 用于文件拷贝
             new CopyWebpackPlugin({
