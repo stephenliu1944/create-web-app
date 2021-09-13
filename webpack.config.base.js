@@ -192,7 +192,8 @@ export default function(config) {
             // 样式提取插件
             new MiniCssExtractPlugin({
                 filename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.css`,
-                chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`   // chunk css file
+                chunkFilename: `${ASSETS_PATH}/css/[name].${CONTENT_HASH}.chunk.css`,   // chunk css file
+                ignoreOrder: true
             }),
             // 用于文件拷贝
             new CopyWebpackPlugin({
