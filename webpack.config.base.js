@@ -21,7 +21,7 @@ const NODE_ENV = process.env.NODE_ENV;
 export default function(config) {
     
     return {
-        target: NODE_ENV === 'development' ? 'web' : ['web', 'es5'],    // TODO: webpack-dev-server4 发布前临时解决方案
+        target: ['web', 'es5'],
         cache: {
             type: 'filesystem'              // 默认缓存在: /node_modules/.cache/webpack
         },

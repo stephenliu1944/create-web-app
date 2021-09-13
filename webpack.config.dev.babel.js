@@ -16,14 +16,11 @@ export default merge(baseConfig, {
         port: servers.local,
         http2: false,
         https: false,
-        inline: true,
         compress: true,             // gzip 压缩
-        disableHostCheck: true,     // 跳过 host 检查
-        contentBase: output.path,
         historyApiFallback: {
             index: output.publicPath,
             disableDotRule: true
-        },   
+        },
         proxy: {
             ...proxyConfig(proxies)
         }
